@@ -1,0 +1,536 @@
+/* ============================================
+   RESPONSIVE STYLES - Mobile First Approach
+   ============================================ */
+
+/* Hero Section Responsive */
+.hero-section {
+  padding: 120px 0 80px;
+}
+
+.hero-image-container {
+  display: block !important;
+}
+
+.hero-image {
+  display: block !important;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 991px) {
+  .hero-section {
+    padding: 100px 0 60px;
+  }
+  
+  .hero-section .col-lg-6 {
+    text-align: center;
+  }
+  
+  .hero-section .d-md-flex {
+    justify-content: center !important;
+  }
+  
+  .hero-features {
+    justify-content: center;
+  }
+  
+  .hero-image-container {
+    padding: 10px;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 90px 0 50px;
+  }
+  
+  .hero-section h1 {
+    font-size: 2rem !important;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-section .lead {
+    font-size: 1.1rem;
+  }
+  
+  .hero-section p {
+    font-size: 0.95rem;
+  }
+  
+  .hero-features {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .feature-item {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .hero-image-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .hero-image {
+    max-height: 300px;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 80px 0 40px;
+  }
+  
+  .hero-section h1 {
+    font-size: 1.6rem !important;
+  }
+  
+  .hero-section .lead {
+    font-size: 1rem;
+  }
+  
+  .hero-section p {
+    font-size: 0.9rem;
+  }
+  
+  .hero-section .btn {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+  
+  .hero-section .d-grid {
+    gap: 0.75rem !important;
+  }
+  
+  .hero-image-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    padding: 5px;
+  }
+  
+  .hero-image {
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+  }
+  
+  .hero-shape-1,
+  .hero-shape-2 {
+    display: none;
+  }
+}
+
+/* Section Responsive */
+@media (max-width: 768px) {
+  section.py-5 {
+    padding: 3rem 0 !important;
+  }
+  
+  .section-title {
+    font-size: 1.75rem !important;
+    margin-bottom: 1rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.75rem !important;
+  }
+  
+  .section-description {
+    font-size: 0.95rem !important;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  section.py-5 {
+    padding: 2.5rem 0 !important;
+  }
+  
+  .section-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .section-description {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Care Options (FIND YOUR PATH) Responsive */
+@media (max-width: 991px) {
+  .care-option-card {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .care-option-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .care-option-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .care-option-card p {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .care-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .care-option-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .care-option-card h4 {
+    font-size: 1.1rem;
+  }
+  
+  .care-option-card p {
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .care-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    font-size: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .care-option-card .btn {
+    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
+  }
+}
+
+/* Feature Cards Responsive */
+@media (max-width: 768px) {
+  .feature-card {
+    padding: 2rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .feature-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    font-size: 2rem;
+  }
+  
+  .feature-card h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .feature-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .feature-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    font-size: 1.75rem;
+  }
+}
+
+/* Why Choose Us Cards Responsive */
+@media (max-width: 768px) {
+  .why-card {
+    padding: 2rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .icon-wrapper {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .why-card {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* Team/Counsellor Cards Responsive */
+@media (max-width: 768px) {
+  .team-card .card-body {
+    padding: 1.5rem 1rem;
+  }
+  
+  .team-image-wrapper img {
+    height: 250px;
+  }
+  
+  .team-card h5 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .team-card .card-body {
+    padding: 1.25rem 0.875rem;
+  }
+  
+  .team-image-wrapper img {
+    height: 220px;
+  }
+}
+
+/* CTA Section Responsive */
+@media (max-width: 768px) {
+  .cta-card {
+    padding: 2.5rem 2rem !important;
+  }
+  
+  .cta-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cta-card .lead {
+    font-size: 1rem;
+  }
+  
+  .cta-card .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .cta-card {
+    padding: 2rem 1.5rem !important;
+  }
+  
+  .cta-card h2 {
+    font-size: 1.3rem;
+  }
+  
+  .cta-card .lead {
+    font-size: 0.9rem;
+  }
+}
+
+/* Testimonial Cards Responsive */
+@media (max-width: 768px) {
+  .testimonial-card {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .testimonial-text {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .testimonial-card {
+    padding: 1.25rem;
+  }
+  
+  .testimonial-text {
+    font-size: 0.875rem;
+  }
+}
+
+/* Condition Cards Responsive */
+@media (max-width: 768px) {
+  .condition-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .condition-image-wrapper {
+    height: 180px;
+  }
+  
+  .condition-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .condition-image-wrapper {
+    height: 160px;
+  }
+  
+  .condition-content {
+    padding: 1.25rem;
+  }
+}
+
+/* Professional Credentials Section Responsive */
+@media (max-width: 991px) {
+  .credentials-section .col-lg-6 {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .credentials-section .card-body {
+    padding: 1.5rem;
+  }
+  
+  .credentials-section h6 {
+    font-size: 0.95rem;
+  }
+  
+  .credentials-section .fs-3 {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .credentials-section .card-body {
+    padding: 1rem;
+  }
+  
+  .credentials-section h6 {
+    font-size: 0.875rem;
+  }
+}
+
+/* Button Responsive */
+@media (max-width: 768px) {
+  .btn-lg {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn-lg {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+  }
+  
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Container Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+  }
+}
+
+/* Grid Responsive */
+@media (max-width: 768px) {
+  .row {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+  }
+  
+  .row > * {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .row {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+  
+  .row > * {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+/* Marquee Section Responsive */
+@media (max-width: 768px) {
+  .marquee-section {
+    padding: 0.75rem 0;
+  }
+  
+  .marquee-text {
+    font-size: 0.95rem;
+    padding-right: 60px;
+  }
+}
+
+@media (max-width: 576px) {
+  .marquee-text {
+    font-size: 0.875rem;
+    padding-right: 50px;
+  }
+}
+
+/* Modal Responsive */
+@media (max-width: 768px) {
+  .modal-content {
+    margin: 1rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-content {
+    margin: 0.5rem;
+  }
+  
+  .modal-body {
+    padding: 1rem;
+  }
+}
+
+/* Utility Classes for Mobile */
+@media (max-width: 768px) {
+  .mobile-h1 {
+    font-size: 1.75rem !important;
+  }
+  
+  .mobile-h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  .mobile-text-center {
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .mobile-h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  .mobile-h2 {
+    font-size: 1.3rem !important;
+  }
+}

@@ -1,0 +1,251 @@
+/* Counsellor Profile Page Styles */
+.profile-page {
+  padding-bottom: 30px;
+}
+
+.profile-header {
+  margin-bottom: 30px;
+}
+
+.profile-header h1 {
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.header-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(96, 165, 250, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+/* Card Styles */
+.profile-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.profile-card:hover {
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+}
+
+/* Tab Styles */
+.profile-tabs {
+  display: flex;
+  padding: 5px;
+  background-color: rgba(37, 99, 235, 0.05);
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+  position: relative;
+  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+  flex-wrap: nowrap;
+  box-sizing: border-box;
+}
+
+.profile-tab {
+  padding: 12px 10px;
+  border: none;
+  background: none;
+  font-weight: 500;
+  color: var(--light-text);
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  z-index: 1;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.profile-tabs::before {
+  content: '';
+  position: absolute;
+  height: calc(100% - 10px);
+  width: 20%;
+  min-width: 80px;
+  top: 5px;
+  left: 5px;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  z-index: 0;
+}
+
+.profile-tabs.tab-2::before {
+  transform: translateX(calc(100% - 0px));
+}
+
+.profile-tabs.tab-3::before {
+  transform: translateX(calc(200% - 0px));
+}
+
+.profile-tabs.tab-4::before {
+  transform: translateX(calc(300% - 0px));
+}
+
+.profile-tabs.tab-5::before {
+  transform: translateX(calc(400% - 0px));
+}
+
+.profile-tab.active {
+  color: white;
+}
+
+.profile-tab:hover:not(.active) {
+  color: var(--primary-color);
+}
+
+.profile-tab i {
+  margin-right: 8px;
+}
+
+/* Form Styles */
+.form-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.form-control, .form-select {
+  padding: 12px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-text {
+  font-size: 0.85rem;
+  color: var(--light-text);
+  margin-top: 5px;
+}
+
+/* Button Styles */
+.save-button {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.save-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+}
+
+.save-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Alert Styles */
+.alert {
+  border-radius: var(--border-radius);
+  border: none;
+  padding: 15px 20px;
+}
+
+.alert-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--secondary-color);
+}
+
+.alert-danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.alert-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+/* Qualification Card Styles */
+.qualification-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: none;
+  margin-bottom: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.qualification-card:hover {
+  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.08);
+}
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .profile-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    width: 100%;
+  }
+  
+  .profile-tab {
+    white-space: nowrap;
+    padding: 10px 8px;
+    font-size: 0.8rem;
+    min-width: 80px;
+    flex: 1 0 auto;
+  }
+  
+  .profile-tab i {
+    margin-right: 4px;
+    font-size: 0.9rem;
+  }
+  
+  .profile-tabs::before {
+    min-width: 70px;
+  }
+}

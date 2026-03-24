@@ -1,0 +1,428 @@
+/* ============================================
+   GLOBAL OVERRIDES - Apply New Design System
+   ============================================ */
+
+/* Force new fonts */
+body, p, span, div, a, button, input, textarea, select {
+  font-family: var(--font-primary) !important;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--font-heading) !important;
+}
+
+/* Remove all gradient text */
+.text-gradient {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  color: var(--color-primary-600) !important;
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Update all card gradients to flat design */
+.card-gradient-blue,
+.card-gradient-green,
+.card-gradient-purple,
+.card-gradient-orange,
+.card-gradient-pink {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border-light) !important;
+  border-left: 4px solid var(--color-primary-500) !important;
+}
+
+.card-gradient-green {
+  border-left-color: var(--color-secondary-500) !important;
+}
+
+/* Update all sections */
+section {
+  padding: var(--space-16) 0;
+}
+
+section.py-5 {
+  padding: var(--space-16) 0 !important;
+}
+
+/* Update all headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-primary);
+}
+
+/* Update buttons */
+.btn {
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-base);
+}
+
+.btn-primary {
+  background-color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+  transform: translateY(-1px);
+}
+
+.btn-secondary, .btn-success {
+  background-color: var(--color-secondary-500);
+  border-color: var(--color-secondary-500);
+}
+
+.btn-secondary:hover, .btn-success:hover {
+  background-color: var(--color-secondary-600);
+  border-color: var(--color-secondary-600);
+  transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+  color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+}
+
+/* Update cards */
+.card {
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Update text colors */
+.text-primary {
+  color: var(--color-primary-500) !important;
+}
+
+.text-secondary {
+  color: var(--color-secondary-500) !important;
+}
+
+.text-success {
+  color: var(--color-secondary-500) !important;
+}
+
+.text-muted {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Update spacing */
+.mb-2 { margin-bottom: var(--space-2) !important; }
+.mb-3 { margin-bottom: var(--space-3) !important; }
+.mb-4 { margin-bottom: var(--space-4) !important; }
+.mb-5 { margin-bottom: var(--space-6) !important; }
+
+.mt-2 { margin-top: var(--space-2) !important; }
+.mt-3 { margin-top: var(--space-3) !important; }
+.mt-4 { margin-top: var(--space-4) !important; }
+.mt-5 { margin-top: var(--space-6) !important; }
+
+.p-4 { padding: var(--space-4) !important; }
+.p-5 { padding: var(--space-6) !important; }
+
+/* Update shadows */
+.shadow-sm {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.shadow {
+  box-shadow: var(--shadow-md) !important;
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* Update border radius */
+.rounded-4 {
+  border-radius: var(--radius-xl) !important;
+}
+
+.rounded-3 {
+  border-radius: var(--radius-lg) !important;
+}
+
+/* Update backgrounds */
+.bg-light {
+  background-color: var(--color-neutral-50) !important;
+}
+
+.bg-primary {
+  background-color: var(--color-primary-500) !important;
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary-500) !important;
+}
+
+/* Update forms */
+.form-control {
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.form-control:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.form-label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+/* Update all icon wrappers */
+[class*="-icon-wrapper"] {
+  background-color: var(--color-primary-50) !important;
+  color: var(--color-primary-500) !important;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+}
+
+.card:hover [class*="-icon-wrapper"] {
+  background-color: var(--color-primary-100) !important;
+  transform: scale(1.05);
+}
+
+/* Update all links */
+a {
+  color: var(--color-primary-500);
+  text-decoration: none;
+  transition: all var(--transition-base);
+}
+
+a:hover {
+  color: var(--color-primary-600);
+}
+
+/* Ensure consistent spacing in containers */
+.container {
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+  max-width: 100%;
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* Update all section titles */
+.section-title {
+  color: var(--color-text-primary) !important;
+  font-weight: var(--font-weight-bold);
+}
+
+.section-subtitle {
+  color: var(--color-primary-500) !important;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  font-size: var(--font-size-xs);
+}
+
+/* Remove old gradient backgrounds */
+[style*="linear-gradient"] {
+  background: var(--color-surface) !important;
+}
+
+/* Update spinner colors */
+.spinner-border {
+  color: var(--color-primary-500);
+}
+
+.text-warning {
+  color: #D4A574 !important;
+}
+
+/* Force all old gradient cards to new design */
+.why-card,
+.feature-card,
+.condition-card,
+.testimonial-card,
+.care-option-card,
+.value-card,
+.team-card {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border-light) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: all var(--transition-base) !important;
+}
+
+.why-card:hover,
+.feature-card:hover,
+.condition-card:hover,
+.testimonial-card:hover,
+.care-option-card:hover,
+.value-card:hover,
+.team-card:hover {
+  box-shadow: var(--shadow-lg) !important;
+  transform: translateY(-4px) !important;
+  border-color: var(--color-primary-200) !important;
+}
+
+/* Remove all ::before and ::after gradient backgrounds */
+.why-card::before,
+.feature-card::before,
+.condition-card::before,
+.testimonial-card::before,
+.care-option-card::before,
+.condition-card::after {
+  display: none !important;
+}
+
+/* Force icon wrapper styles */
+.why-icon-wrapper,
+.feature-icon-wrapper,
+.condition-icon-wrapper,
+.care-icon-wrapper,
+.value-icon-wrapper,
+.icon-wrapper {
+  background: var(--color-primary-50) !important;
+  color: var(--color-primary-500) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+/* Force section backgrounds */
+.why-section,
+.conditions-section,
+.values-section {
+  background-color: var(--color-neutral-50) !important;
+}
+
+/* Force all text to use new colors */
+.text-primary {
+  color: var(--color-primary-500) !important;
+}
+
+.text-success {
+  color: var(--color-secondary-500) !important;
+}
+
+/* Force CTA card styling */
+.cta-card {
+  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700)) !important;
+  border-radius: var(--radius-2xl) !important;
+  padding: var(--space-12) var(--space-8) !important;
+}
+
+/* Force navbar styling */
+.navbar {
+  font-family: var(--font-heading) !important;
+}
+
+.brand-text {
+  font-family: var(--font-heading) !important;
+  color: var(--color-primary-600) !important;
+  background: none !important;
+  -webkit-text-fill-color: unset !important;
+}
+
+/* Global Responsive Styles */
+@media (max-width: 992px) {
+  .container {
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+  }
+  
+  .row {
+    margin-left: calc(var(--space-2) * -1);
+    margin-right: calc(var(--space-2) * -1);
+  }
+  
+  .row > * {
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+}
+
+@media (max-width: 768px) {
+  h1, .h1 {
+    font-size: 1.75rem !important;
+  }
+  
+  h2, .h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  h3, .h3 {
+    font-size: 1.25rem !important;
+  }
+  
+  h4, .h4 {
+    font-size: 1.1rem !important;
+  }
+  
+  .lead {
+    font-size: 1rem !important;
+  }
+  
+  .btn-lg {
+    padding: var(--space-3) var(--space-5) !important;
+    font-size: var(--font-size-base) !important;
+  }
+  
+  .cta-card {
+    padding: var(--space-8) var(--space-6) !important;
+  }
+  
+  section {
+    padding: var(--space-12) 0 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  h1, .h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2, .h2 {
+    font-size: 1.3rem !important;
+  }
+  
+  h3, .h3 {
+    font-size: 1.1rem !important;
+  }
+  
+  h4, .h4 {
+    font-size: 1rem !important;
+  }
+  
+  .btn {
+    padding: var(--space-2) var(--space-4) !important;
+    font-size: var(--font-size-sm) !important;
+  }
+  
+  .btn-lg {
+    padding: var(--space-3) var(--space-4) !important;
+  }
+  
+  .card {
+    margin-bottom: var(--space-4) !important;
+  }
+  
+  .cta-card {
+    padding: var(--space-6) var(--space-4) !important;
+  }
+  
+  section {
+    padding: var(--space-10) 0 !important;
+  }
+}

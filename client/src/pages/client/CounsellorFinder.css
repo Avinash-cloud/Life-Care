@@ -1,0 +1,359 @@
+/* Counsellor Finder Page Styles */
+.finder-page {
+  padding-bottom: 30px;
+}
+
+.finder-header {
+  margin-bottom: 30px;
+}
+
+.finder-header h1 {
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Search and Filter Section */
+.search-filter-section {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.filters-inline {
+  display: flex;
+  gap: 15px;
+  align-items: stretch;
+}
+
+.search-bar {
+  position: relative;
+  flex: 2;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-color);
+}
+
+.search-input {
+  width: 100%;
+  height: 48px;
+  padding: 12px 20px 12px 45px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.filter-select {
+  flex: 1;
+  min-width: 150px;
+  height: 48px;
+  padding: 12px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: white;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Results Section */
+.results-count {
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.counsellors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+/* Counsellor Card */
+.counsellor-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.counsellor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(37, 99, 235, 0.1);
+}
+
+.counsellor-header {
+  position: relative;
+}
+
+.counsellor-photo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.counsellor-photo-placeholder {
+  width: 100%;
+  height: 200px;
+  background-color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-size: 0.9rem;
+  gap: 8px;
+}
+
+.counsellor-photo-placeholder i {
+  font-size: 3rem;
+}
+
+.counsellor-badges {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.badge-item {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+}
+
+.badge-experience {
+  background-color: var(--secondary-color);
+}
+
+.badge-rating {
+  background-color: #f59e0b;
+}
+
+.counsellor-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.counsellor-name {
+  margin-bottom: 5px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.counsellor-title {
+  color: var(--primary-color);
+  font-weight: 500;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.tag-container {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.tag-language {
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--primary-color);
+}
+
+.tag-expertise {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--secondary-color);
+}
+
+.counsellor-bio {
+  font-size: 0.9rem;
+  color: var(--light-text);
+  margin-bottom: 15px;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.counsellor-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.fee-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.fee-amount {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.fee-label {
+  font-size: 0.8rem;
+  color: var(--light-text);
+}
+
+.availability {
+  font-size: 0.85rem;
+  color: var(--light-text);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.counsellor-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-view {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--primary-color);
+  background-color: transparent;
+  color: var(--primary-color);
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-view:hover {
+  background-color: rgba(37, 99, 235, 0.05);
+}
+
+.btn-book {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-book:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Empty State */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 50px 20px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.no-results i {
+  font-size: 3rem;
+  color: #d1d5db;
+  margin-bottom: 15px;
+}
+
+.no-results h3 {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.no-results p {
+  color: var(--light-text);
+  margin-bottom: 20px;
+}
+
+/* Loading Container */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.loading-container p {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .filters-inline {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .search-bar {
+    width: 100%;
+  }
+  
+  .filter-select {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .counsellor-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .availability {
+    width: 100%;
+  }
+}
