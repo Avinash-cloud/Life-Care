@@ -11,6 +11,7 @@ import IconCard from '../../components/ui/IconCard';
 import ConditionsSection from '../../components/home/ConditionsSection';
 import GalleryCarousel from '../../components/home/GalleryCarousel';
 import WelcomePopup from '../../components/shared/WelcomePopup';
+import OffersSection from '../../components/home/OffersSection';
 import CounsellorGallery from '../../components/home/CounsellorGallery';
 import FounderSection from '../../components/home/FounderSection';
 import ClinicGallery from '../../components/home/ClinicGallery';
@@ -142,6 +143,8 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Offers & Schemes Section */}
+      <OffersSection />
       
 {/* Featured Counsellors */}
       <section className="py-5 bg-light">

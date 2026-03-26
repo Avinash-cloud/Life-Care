@@ -23,6 +23,8 @@ build/
 .next/
 out/
 
+uploads/
+
 # Cache
 .cache/
 .parcel-cache/

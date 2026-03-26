@@ -548,6 +548,7 @@ exports.getAppointments = async (req, res, next) => {
           select: 'name avatar'
         }
       })
+      .populate('appliedOffer', 'offerCode title')
       .sort({ [sortBy]: sortOrder })
       .skip(startIndex)
       .limit(limit);

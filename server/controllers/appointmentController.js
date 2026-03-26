@@ -119,7 +119,7 @@ exports.getAvailableSlots = async (req, res, next) => {
 // @access  Private (Client)
 exports.bookAppointment = async (req, res, next) => {
   try {
-    const { counsellorId, date, startTime, endTime, sessionType, notes } = req.body;
+    const { counsellorId, date, startTime, endTime, sessionType, notes, offerCode } = req.body;
     
     // Prevent booking past dates and times
     const appointmentDate = new Date(date);
@@ -165,20 +165,36 @@ exports.bookAppointment = async (req, res, next) => {
 
     // Calculate amount
     const duration = getTimeDifference(startTime, endTime);
-    let amount = 0;
+    let baseAmount = 0;
     
     switch (sessionType) {
       case 'video':
-        amount = counsellor.fees.video || counsellor.fees;
+        baseAmount = counsellor.fees.video || counsellor.fees;
         break;
       case 'chat':
-        amount = counsellor.fees.chat || counsellor.fees;
+        baseAmount = counsellor.fees.chat || counsellor.fees;
         break;
       case 'in-person':
-        amount = counsellor.fees.inPerson || counsellor.fees;
+        baseAmount = counsellor.fees.inPerson || counsellor.fees;
         break;
       default:
-        amount = counsellor.fees.video || counsellor.fees;
+        baseAmount = counsellor.fees.video || counsellor.fees;
+    }
+
+    let amount = baseAmount;
+    let discountAmount = 0;
+    let appliedOfferId = null;
+
+    // Check offer code
+    if (offerCode) {
+      const Offer = require('../models/Offer');
+      const offer = await Offer.findOne({ offerCode: offerCode.toUpperCase(), isActive: true });
+      
+      if (offer && (!offer.validUntil || new Date(offer.validUntil) >= new Date())) {
+        discountAmount = (baseAmount * offer.discountPercentage) / 100;
+        amount = baseAmount - discountAmount;
+        appliedOfferId = offer._id;
+      }
     }
 
     // Create Razorpay order
@@ -203,6 +219,8 @@ exports.bookAppointment = async (req, res, next) => {
       duration,
       sessionType,
       amount,
+      discountAmount,
+      appliedOffer: appliedOfferId,
       notes,
       payment: {
         id: razorpayOrder.id,
@@ -257,6 +275,12 @@ exports.verifyPayment = async (req, res, next) => {
     appointment.status = 'confirmed';
 
     await appointment.save();
+
+    // Increment usage count if offer was applied
+    if (appointment.appliedOffer) {
+      const Offer = require('../models/Offer');
+      await Offer.findByIdAndUpdate(appointment.appliedOffer, { $inc: { usageCount: 1 } });
+    }
 
     res.status(200).json({
       success: true,

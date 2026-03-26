@@ -253,6 +253,7 @@ const Appointments = () => {
                   <th>Type</th>
                   <th>Status</th>
                   <th>Amount</th>
+                  <th>Promo</th>
                   <th>Payment</th>
                   <th>Actions</th>
                 </tr>
@@ -277,6 +278,16 @@ const Appointments = () => {
                       </Badge>
                     </td>
                     <td>{formatCurrency(appointment.amount)}</td>
+                    <td>
+                      {appointment.appliedOffer ? (
+                        <div>
+                          <Badge bg="info">{appointment.appliedOffer.offerCode || 'YES'}</Badge>
+                          {appointment.discountAmount > 0 && <div className="small text-success mt-1">-₹{appointment.discountAmount}</div>}
+                        </div>
+                      ) : (
+                        '-'
+                      )}
+                    </td>
                     <td>
                       <Badge bg={appointment.payment?.status === 'completed' ? 'primary' : getPaymentBadge(appointment.payment?.status || 'pending')}>
                         {(appointment.payment?.status || 'pending').charAt(0).toUpperCase() + 
@@ -328,6 +339,12 @@ const Appointments = () => {
                   <p className="mb-1"><strong>Date:</strong> {formatDate(selectedAppointment.date)}</p>
                   <p className="mb-1"><strong>Time:</strong> {selectedAppointment.startTime} - {selectedAppointment.endTime}</p>
                   <p className="mb-0"><strong>Amount:</strong> {formatCurrency(selectedAppointment.amount)}</p>
+                  {selectedAppointment.appliedOffer && (
+                    <p className="mb-0 mt-1">
+                      <strong>Promo:</strong> <Badge bg="info">{selectedAppointment.appliedOffer.offerCode}</Badge>
+                      <span className="text-success ms-2">(-{formatCurrency(selectedAppointment.discountAmount)})</span>
+                    </p>
+                  )}
                 </div>
               </Form.Group>
               

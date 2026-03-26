@@ -87,6 +87,7 @@ app.use('/api/cms', require('./routes/cms'));
 app.use('/api/post-session', require('./routes/postSession'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/callback', require('./routes/callback'));
+app.use('/api/offers', require('./routes/offerRoutes'));
 
 // Socket.IO for video calls
 const rooms = new Map();
@@ -147,6 +148,15 @@ app.get('/api', (req, res) => {
 
 // Error handler middleware
 app.use(errorHandler);
+
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder pointing to the Vite build output
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+  // Any route that doesn't match an API route will be sent to the React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
+  });
+}
 
 // Start server
 server.listen(PORT, () => {

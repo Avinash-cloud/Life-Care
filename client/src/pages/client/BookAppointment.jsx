@@ -20,6 +20,13 @@ const BookAppointment = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   
+  // Offer / Discount State
+  const [offerCode, setOfferCode] = useState('');
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [validatingOffer, setValidatingOffer] = useState(false);
+  const [offerError, setOfferError] = useState('');
+  const [offerSuccess, setOfferSuccess] = useState('');
+  
   // Get counsellor details
   useEffect(() => {
     const fetchCounsellorDetails = async () => {
@@ -55,6 +62,35 @@ const BookAppointment = () => {
       setSlotLoading(false);
     }
   };
+
+  // Get base fee based on session type
+  const getBaseFee = () => {
+    if (!counsellor) return 0;
+    if (sessionType === 'video' && counsellor.fees?.video) return counsellor.fees.video;
+    if (sessionType === 'chat' && counsellor.fees?.chat) return counsellor.fees.chat;
+    if (sessionType === 'in-person' && counsellor.fees?.inPerson) return counsellor.fees.inPerson;
+    return counsellor.fees || 0;
+  };
+  
+  // Validate selected offer code
+  const handleValidateOffer = async () => {
+    try {
+      setValidatingOffer(true);
+      setOfferError('');
+      setOfferSuccess('');
+      const res = await api.post('/offers/validate', { code: offerCode });
+      const offer = res.data.data;
+      const baseFee = getBaseFee();
+      const calculatedDiscount = (baseFee * offer.discountPercentage) / 100;
+      setDiscountAmount(calculatedDiscount);
+      setOfferSuccess(`Code applied! You save ₹${calculatedDiscount.toFixed(2)}`);
+    } catch (err) {
+      setOfferError(err.response?.data?.error || 'Invalid offer code');
+      setDiscountAmount(0);
+    } finally {
+      setValidatingOffer(false);
+    }
+  };
   
   // Handle booking submission with Razorpay
   const handleBookAppointment = async (e) => {
@@ -73,7 +109,8 @@ const BookAppointment = () => {
         startTime: selectedSlot.startTime,
         endTime: selectedSlot.endTime,
         sessionType,
-        notes
+        notes,
+        ...(discountAmount > 0 && { offerCode })
       };
       
       const res = await api.post('/appointments/book', appointmentData);
@@ -304,6 +341,52 @@ const BookAppointment = () => {
                   placeholder="Any specific concerns or topics you'd like to discuss"
                 />
               </div>
+
+              <div className="form-section">
+                <div className="section-title">
+                  <i className="bi bi-tag"></i>
+                  Promo Code
+                </div>
+                <div className="d-flex gap-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={offerCode}
+                    onChange={(e) => setOfferCode(e.target.value.toUpperCase())}
+                    placeholder="Enter code here"
+                    disabled={discountAmount > 0}
+                  />
+                  {discountAmount > 0 ? (
+                    <button type="button" className="btn btn-outline-danger" onClick={() => {setOfferCode(''); setDiscountAmount(0); setOfferSuccess('');}}>Remove</button>
+                  ) : (
+                    <button type="button" className="btn btn-primary" onClick={handleValidateOffer} disabled={!offerCode || validatingOffer}>
+                      {validatingOffer ? 'Checking...' : 'Apply'}
+                    </button>
+                  )}
+                </div>
+                {offerError && <div className="text-danger mt-2 small">{offerError}</div>}
+                {offerSuccess && <div className="text-success mt-2 small">{offerSuccess}</div>}
+              </div>
+
+              {counsellor && (
+                <div className="mt-3 mb-4 p-3 bg-light rounded shadow-sm">
+                  <div className="d-flex justify-content-between mb-2">
+                    <span>Session Fee:</span>
+                    <span>₹{getBaseFee().toFixed(2)}</span>
+                  </div>
+                  {discountAmount > 0 && (
+                    <div className="d-flex justify-content-between mb-2 text-success">
+                      <span>Discount Applied:</span>
+                      <span>-₹{discountAmount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <hr />
+                  <div className="d-flex justify-content-between fw-bold">
+                    <span>Total Amount:</span>
+                    <span>₹{(getBaseFee() - discountAmount).toFixed(2)}</span>
+                  </div>
+                </div>
+              )}
               
               <button 
                 type="submit" 

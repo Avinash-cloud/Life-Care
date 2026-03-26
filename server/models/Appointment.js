@@ -44,6 +44,14 @@ const appointmentSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  appliedOffer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Offer'
+  },
+  discountAmount: {
+    type: Number,
+    default: 0
+  },
   payment: {
     id: String,
     status: {

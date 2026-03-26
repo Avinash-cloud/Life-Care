@@ -22,6 +22,7 @@ import Contact from './pages/public/Contact';
 import CounsellorsDemo from './pages/public/CounsellorsDemo';
 import Consilar from './pages/public/Consilar';
 import ConditionDetail from './pages/public/conditions/ConditionDetail';
+import AnxietyTest from './pages/public/AnxietyTest';
 
 // Auth Pages
 import Login from './pages/auth/Login';
@@ -62,6 +63,7 @@ import AdminCounsellors from './pages/admin/Counsellors';
 import AdminAppointments from './pages/admin/Appointments';
 import AdminWithdrawals from './pages/admin/Withdrawals';
 import AdminContent from './pages/admin/Content';
+import AdminOffers from './pages/admin/Offers';
 import BlogEditor from './pages/admin/BlogEditor';
 import AdminReports from './pages/admin/Reports';
 import AdminSettings from './pages/admin/Settings';
@@ -93,6 +95,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="consilar" element={<Consilar />} />
             <Route path="conditions/:condition" element={<ConditionDetail />} />
+            <Route path="anxiety-test" element={<AnxietyTest />} />
           </Route>
           
           {/* Auth Routes */}
@@ -152,6 +155,7 @@ function App() {
               <Route path="content" element={<AdminContent />} />
               <Route path="content/blog/new" element={<BlogEditor />} />
               <Route path="content/blog/edit/:id" element={<BlogEditor />} />
+              <Route path="offers" element={<AdminOffers />} />
               <Route path="reports" element={<AdminReports />} />
               <Route path="disputes" element={<AdminDisputes />} />
               <Route path="settings" element={<AdminSettings />} />

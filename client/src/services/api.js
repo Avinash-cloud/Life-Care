@@ -286,6 +286,12 @@ export const adminAPI = {
   uploadGalleryImage: (imageData) => api.post('/admin/cms/gallery', imageData),
   deleteGalleryImage: (id) => api.delete(`/admin/cms/gallery/${id}`),
   
+  // Offers
+  getOffers: (params) => api.get('/offers/admin', { params }),
+  createOffer: (offerData) => api.post('/offers', offerData),
+  updateOffer: (id, offerData) => api.put(`/offers/${id}`, offerData),
+  deleteOffer: (id) => api.delete(`/offers/${id}`),
+  
   // Reports
   getReports: (params) => api.get('/admin/reports', { params }),
   
@@ -309,7 +315,9 @@ export const cmsAPI = {
   getVideoCategories: () => api.get('/cms/videos/categories'),
   getGallery: (params) => api.get('/cms/gallery', { params }),
   getGalleryCategories: () => api.get('/cms/gallery/categories'),
-  getPublicCounsellors: () => api.get('/cms/counsellors')
+  getPublicCounsellors: () => api.get('/cms/counsellors'),
+  getOffers: (params) => api.get('/offers', { params }),
+  validateOfferCode: (code) => api.post('/offers/validate', { code })
 };
 
 // Payment API
