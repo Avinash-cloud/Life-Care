@@ -88,6 +88,7 @@ app.use('/api/post-session', require('./routes/postSession'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/callback', require('./routes/callback'));
 app.use('/api/offers', require('./routes/offerRoutes'));
+app.use('/api/assessment', require('./routes/assessmentRoutes'));
 
 // Socket.IO for video calls
 const rooms = new Map();

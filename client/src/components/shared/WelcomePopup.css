@@ -204,6 +204,64 @@
   color: #4a5568;
 }
 
+.welcome-popup-actions .btn-test {
+  background: linear-gradient(135deg, #FF6B6B 0%, #EE5A24 100%);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-popup-actions .btn-test::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.welcome-popup-actions .btn-test:hover::before {
+  left: 100%;
+}
+
+.welcome-popup-actions .btn-test:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+  color: white;
+}
+
+.welcome-popup-actions .btn-game {
+  background: linear-gradient(135deg, #10ac84 0%, #01a3a4 100%);
+  box-shadow: 0 4px 15px rgba(16, 172, 132, 0.4);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-popup-actions .btn-game::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.welcome-popup-actions .btn-game:hover::before {
+  left: 100%;
+}
+
+.welcome-popup-actions .btn-game:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 172, 132, 0.6);
+  color: white;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

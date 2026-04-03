@@ -58,6 +58,7 @@ const Sidebar = ({ userRole, onToggle, mobileOpen, setMobileOpen }) => {
           { path: '/admin/disputes', icon: 'bi-exclamation-triangle', label: 'Disputes' },
           { path: '/admin/content', icon: 'bi-file-earmark-text', label: 'Content' },
           { path: '/admin/offers', icon: 'bi-tags', label: 'Offers & Schemes' },
+          { path: '/admin/assessments', icon: 'bi-clipboard2-pulse', label: 'Assessments' },
           { path: '/admin/reports', icon: 'bi-graph-up', label: 'Reports' },
           { path: '/admin/settings', icon: 'bi-gear', label: 'Settings' }
         ];

@@ -38,15 +38,15 @@ const Header = () => {
         <Link className="navbar-brand" to="/" onClick={closeNavbar}>
           <div className="d-flex align-items-center">
             <img src={Logo} alt="Life Care Logo" className="logo-img me-2" style={{ height: '70px' }} />
-            <span className="brand-text">SS Psychologist Life Care</span>
+            <span className="brand-text">SS Psych Life Care</span>
           </div>
         </Link>
-        
+
         <button className="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
           <i className="bi bi-list"></i>
         </button>
-        
-        <div className="collapse navbar-collapse" id="navbarContent">
+
+        <div className=" navbar-collapse" id="navbarContent">
           <ul className="navbar-nav mx-auto">
             <li className="nav-item">
               <Link className={`nav-link ${isActive('/') ? 'active' : ''}`} to="/" onClick={closeNavbar}>Home</Link>
@@ -70,7 +70,7 @@ const Header = () => {
               <Link className={`nav-link ${isActive('/consilar') ? 'active' : ''}`} to="/consilar" onClick={closeNavbar}>Book Session</Link>
             </li>
           </ul>
-          
+
           <div className="d-flex align-items-center">
             {!loading && isAuthenticated && user ? (
               <>

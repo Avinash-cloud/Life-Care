@@ -1,0 +1,588 @@
+{
+  "assessment": {
+    "title": "Mental Health Assessment Questionnaire",
+    "description": "A comprehensive questionnaire to assess mood, energy, cognition, physical health, and emotional well-being",
+    "sections": [
+      {
+        "id": 1,
+        "title": "Mood & Emotions",
+        "questions": [
+          {
+            "id": 1,
+            "text": "How often do you feel low or sad?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Frequently"
+              },
+              {
+                "value": 3,
+                "label": "Almost always"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "text": "How often do you feel hopeless about the future?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Constantly"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "text": "How often do you feel emotionally empty or numb?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Rarely"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Nearly all the time"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "text": "How often do you feel guilty without a clear reason?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Frequently"
+              },
+              {
+                "value": 3,
+                "label": "Almost always"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "text": "How often do you feel like you are not good enough?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Always"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Energy & Interest",
+        "questions": [
+          {
+            "id": 6,
+            "text": "How often do you feel tired even after rest?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Always"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "text": "How often do you lose interest in activities you once enjoyed?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Slightly less interested"
+              },
+              {
+                "value": 2,
+                "label": "Much less interested"
+              },
+              {
+                "value": 3,
+                "label": "No interest at all"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "text": "How often do you struggle to start tasks?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Almost always"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "text": "How often do you avoid social interactions?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Frequently"
+              },
+              {
+                "value": 3,
+                "label": "Always"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "text": "How often do you feel unmotivated?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Constantly"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Thinking & Self-Perception",
+        "questions": [
+          {
+            "id": 11,
+            "text": "How often do you have difficulty concentrating?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Almost always"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "text": "How often do you feel indecisive?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Always"
+              }
+            ]
+          },
+          {
+            "id": 13,
+            "text": "How often do you overthink negative situations?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Constantly"
+              }
+            ]
+          },
+          {
+            "id": 14,
+            "text": "How often do you criticize yourself?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Frequently"
+              },
+              {
+                "value": 3,
+                "label": "Always"
+              }
+            ]
+          },
+          {
+            "id": 15,
+            "text": "How often do you feel like a failure?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Constantly"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Physical & Behavioral Changes",
+        "questions": [
+          {
+            "id": 16,
+            "text": "How has your sleep changed?",
+            "options": [
+              {
+                "value": 0,
+                "label": "No change"
+              },
+              {
+                "value": 1,
+                "label": "Slight change"
+              },
+              {
+                "value": 2,
+                "label": "Significant change"
+              },
+              {
+                "value": 3,
+                "label": "Extreme change"
+              }
+            ]
+          },
+          {
+            "id": 17,
+            "text": "How has your appetite changed?",
+            "options": [
+              {
+                "value": 0,
+                "label": "No change"
+              },
+              {
+                "value": 1,
+                "label": "Slight increase/decrease"
+              },
+              {
+                "value": 2,
+                "label": "Noticeable change"
+              },
+              {
+                "value": 3,
+                "label": "Extreme change"
+              }
+            ]
+          },
+          {
+            "id": 18,
+            "text": "How often do you feel restless or slowed down?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Almost always"
+              }
+            ]
+          },
+          {
+            "id": 19,
+            "text": "How often do you feel physically exhausted?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Constantly"
+              }
+            ]
+          },
+          {
+            "id": 20,
+            "text": "How often do you avoid responsibilities?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Always"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Serious Emotional Indicators",
+        "questions": [
+          {
+            "id": 21,
+            "text": "How often do you feel life lacks meaning?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Constantly"
+              }
+            ]
+          },
+          {
+            "id": 22,
+            "text": "How often do you feel disconnected from others?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Always"
+              }
+            ]
+          },
+          {
+            "id": 23,
+            "text": "How often do you feel overwhelmed by daily life?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Almost always"
+              }
+            ]
+          },
+          {
+            "id": 24,
+            "text": "How often do you feel like giving up?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Sometimes"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Very frequently"
+              }
+            ]
+          },
+          {
+            "id": 25,
+            "text": "How often do you feel you need professional help?",
+            "options": [
+              {
+                "value": 0,
+                "label": "Not at all"
+              },
+              {
+                "value": 1,
+                "label": "Occasionally"
+              },
+              {
+                "value": 2,
+                "label": "Often"
+              },
+              {
+                "value": 3,
+                "label": "Definitely"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

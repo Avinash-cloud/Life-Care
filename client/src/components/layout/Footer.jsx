@@ -4,7 +4,7 @@ import './Footer.css';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  
+
   return (
     <footer className="footer-premium">
       <div className="container">
@@ -14,7 +14,7 @@ const Footer = () => {
             <div className="footer-logo-wrapper">
               <img src={Logo} alt="Life Care Logo" className="footer-logo-img" />
               <div className="footer-brand-text">
-                <span className="footer-brand-name">SS Psychologist</span>
+                <span className="footer-brand-name">SS Psych</span>
                 <span className="footer-brand-tagline">Life Care</span>
               </div>
             </div>

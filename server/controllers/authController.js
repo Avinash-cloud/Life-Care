@@ -54,7 +54,7 @@ exports.register = async (req, res, next) => {
     // Send verification email
     const message = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #2563eb;">Welcome to SS Psychologist Life Care!</h2>
+        <h2 style="color: #2563eb;">Welcome to SS Psych Life Care!</h2>
         <p>Hello ${user.name},</p>
         <p>Thank you for registering with us. Please verify your email address by clicking the button below:</p>
         <div style="text-align: center; margin: 20px 0;">
@@ -64,14 +64,14 @@ exports.register = async (req, res, next) => {
         <p style="word-break: break-all; color: #2563eb;">${verificationUrl}</p>
         <p><strong>Note:</strong> You can start using your account immediately, but some features may be limited until you verify your email.</p>
         <p>This link will expire in 24 hours.</p>
-        <p>Best regards,<br>SS Psychologist Life Care Team</p>
+        <p>Best regards,<br>SS Psych Life Care Team</p>
       </div>
     `;
 
     try {
       await sendEmail({
         email: user.email,
-        subject: 'Verify Your Email - SS Psychologist Life Care',
+        subject: 'Verify Your Email - SS Psych Life Care',
         html: message
       });
     } catch (error) {
@@ -319,7 +319,7 @@ exports.getMe = async (req, res, next) => {
 exports.updateDetails = async (req, res, next) => {
   try {
     const fieldsToUpdate = {};
-    
+
     if (req.body.name) {
       fieldsToUpdate.name = req.body.name;
     }
@@ -338,7 +338,7 @@ exports.updateDetails = async (req, res, next) => {
         const oldPath = path.join(__dirname, '..', req.user.avatar);
         deleteOldFile(oldPath);
       }
-      
+
       fieldsToUpdate.avatar = `/${req.file.path.replace(/\\/g, '/')}`;
     }
 
@@ -500,9 +500,9 @@ exports.logout = async (req, res, next) => {
 const sendTokenResponse = (user, statusCode, res) => {
   const accessToken = user.getSignedJwtToken();
   const refreshToken = user.getRefreshToken();
-  
+
   user.save({ validateBeforeSave: false });
-  
+
   const tokenOptions = {
     expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
     httpOnly: true,

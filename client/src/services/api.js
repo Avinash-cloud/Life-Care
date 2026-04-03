@@ -292,6 +292,9 @@ export const adminAPI = {
   updateOffer: (id, offerData) => api.put(`/offers/${id}`, offerData),
   deleteOffer: (id) => api.delete(`/offers/${id}`),
   
+  // Assessments
+  getAssessmentResults: (params) => api.get('/assessment/admin', { params }),
+  
   // Reports
   getReports: (params) => api.get('/admin/reports', { params }),
   
@@ -318,6 +321,11 @@ export const cmsAPI = {
   getPublicCounsellors: () => api.get('/cms/counsellors'),
   getOffers: (params) => api.get('/offers', { params }),
   validateOfferCode: (code) => api.post('/offers/validate', { code })
+};
+
+// Assessment API
+export const assessmentAPI = {
+  saveResult: (data) => api.post('/assessment/save', data)
 };
 
 // Payment API
