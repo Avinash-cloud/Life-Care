@@ -67,7 +67,7 @@ const Header = () => {
 
         <div
           ref={collapseRef}
-          className={`navbar-collapse ${mobileOpen ? 'show' : 'collapse'}`}
+          className={`navbar-collapse${mobileOpen ? ' mobile-menu-open' : ''}`}
           id="navbarContent"
         >
           <ul className="navbar-nav mx-auto">
