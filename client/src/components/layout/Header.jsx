@@ -1,24 +1,31 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import Logo from '../../assets/logo.png';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const { user, logout, isAuthenticated, loading } = useAuth();
+  const collapseRef = useRef(null);
 
   const closeNavbar = () => {
-    const navbarCollapse = document.getElementById('navbarContent');
-    if (navbarCollapse?.classList.contains('show')) {
-      const bsCollapse = new window.bootstrap.Collapse(navbarCollapse, { toggle: false });
-      bsCollapse.hide();
-    }
+    setMobileOpen(false);
+  };
+
+  const toggleNavbar = () => {
+    setMobileOpen(prev => !prev);
   };
 
   const isActive = (path) => {
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
   };
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,8 +35,20 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (mobileOpen && collapseRef.current && !collapseRef.current.closest('.navbar').contains(e.target)) {
+        setMobileOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [mobileOpen]);
+
   const handleLogout = async () => {
     await logout();
+    closeNavbar();
   };
 
   return (
@@ -42,11 +61,15 @@ const Header = () => {
           </div>
         </Link>
 
-        <button className="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-          <i className="bi bi-list"></i>
+        <button className="navbar-toggler ms-auto" type="button" onClick={toggleNavbar} aria-expanded={mobileOpen} aria-label="Toggle navigation">
+          <i className={`bi ${mobileOpen ? 'bi-x-lg' : 'bi-list'}`}></i>
         </button>
 
-        <div className=" navbar-collapse" id="navbarContent">
+        <div
+          ref={collapseRef}
+          className={`navbar-collapse ${mobileOpen ? 'show' : 'collapse'}`}
+          id="navbarContent"
+        >
           <ul className="navbar-nav mx-auto">
             <li className="nav-item">
               <Link className={`nav-link ${isActive('/') ? 'active' : ''}`} to="/" onClick={closeNavbar}>Home</Link>
@@ -78,7 +101,7 @@ const Header = () => {
                 <Link to={`/${user.role}/dashboard`} className="btn btn-outline-primary me-2" onClick={closeNavbar}>
                   <i className="bi bi-speedometer2 me-1"></i> Dashboard
                 </Link>
-                <button onClick={() => { handleLogout(); closeNavbar(); }} className="btn btn-primary">
+                <button onClick={handleLogout} className="btn btn-primary">
                   <i className="bi bi-box-arrow-right me-1"></i> Logout
                 </button>
               </>

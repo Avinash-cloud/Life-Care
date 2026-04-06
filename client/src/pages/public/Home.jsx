@@ -86,7 +86,7 @@ const Home = () => {
         <div className="container" style={{ position: 'relative', zIndex: 1, paddingTop: '20px' }}>
           <div className="row align-items-center">
             <div className="col-lg-6 order-2 order-lg-1">
-              <h1 className="display-2 font-bold mb-4 mobile-h1" style={{ color: '#000' }}>Trust S S Psychologist Life Care with your mental health</h1>
+              <h1 className="display-2 font-bold mb-4 mobile-h1" style={{ color: '#000' }}>Trust S S Psych Life Care with your mental health</h1>
               <p className="lead mb-4" style={{ color: '#333' }}>Our mission is simple: to help you feel better, get better and stay better.</p>
               <p className="mb-4" style={{ color: '#555' }}>We bring together self-care, support from qualified therapists and psychiatrists, as well as community access to deliver the best quality mental healthcare for your needs.</p>
               <div className="d-grid gap-3 d-md-flex justify-content-md-start mb-4">
