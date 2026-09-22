@@ -18,10 +18,10 @@ exports.generateAndSendOTP = async (user, email) => {
   try {
     await sendEmail({
       email,
-      subject: 'Your OTP for S S Psychologist Life Care',
+      subject: 'Your OTP for SS Psych Life Care',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #4a5568;">S S Psychologist Life Care</h2>
+          <h2 style="color: #4a5568;">SS Psych Life Care</h2>
           <p>Hello ${user.name},</p>
           <p>Your One Time Password (OTP) for verification is:</p>
           <div style="background-color: #f7fafc; padding: 15px; border-radius: 5px; text-align: center; font-size: 24px; letter-spacing: 5px; font-weight: bold;">
@@ -29,7 +29,7 @@ exports.generateAndSendOTP = async (user, email) => {
           </div>
           <p>This OTP is valid for ${process.env.OTP_EXPIRE || 10} minutes.</p>
           <p>If you didn't request this OTP, please ignore this email.</p>
-          <p>Regards,<br>S S Psychologist Life Care Team</p>
+          <p>Regards,<br>SS Psych Life Care Team</p>
         </div>
       `
     });

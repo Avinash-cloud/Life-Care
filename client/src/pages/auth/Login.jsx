@@ -116,7 +116,7 @@ const Login = () => {
           <div className="auth-form">
               <div className="text-center mb-4">
                 <h2 className="fw-bold">Login</h2>
-                <p className="text-muted">Welcome back to S S Psychologist Life Care</p>
+                <p className="text-muted">Welcome back to SS Psych Life Care</p>
               </div>
 
               {error && <Alert variant="danger">{error}</Alert>}

@@ -81,7 +81,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="footer-bottom">
           <p className="footer-copyright">
-            &copy; {currentYear} S S Psychologist Life Care. All rights reserved.
+            &copy; {currentYear} SS Psych Life Care. All rights reserved.
           </p>
           <div className="footer-legal">
             <Link to="/privacy" className="footer-link">Privacy Policy</Link>

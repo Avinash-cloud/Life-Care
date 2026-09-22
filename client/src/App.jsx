@@ -71,6 +71,7 @@ import AdminReports from './pages/admin/Reports';
 import AdminSettings from './pages/admin/Settings';
 import AdminDisputes from './pages/admin/Disputes';
 import AdminCallbacks from './pages/admin/CallbackRequests';
+import SingleBlog from './pages/public/SingleBlog';
 
 function App() {
   return (
@@ -92,6 +93,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="blog" element={<Blog />} />
+            <Route path="blog/:id" element={<SingleBlog />} />
             <Route path="gallery" element={<Gallery />} />
             <Route path="videos" element={<Videos />} />
             <Route path="contact" element={<Contact />} />

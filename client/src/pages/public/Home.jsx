@@ -315,12 +315,12 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Why S S Psychologist Life Care Section */}
+      {/* Why SS Psych Life Care Section */}
       <section className="why-section">
         <div className="container">
           <SectionHeader 
             subtitle="WHY CHOOSE US" 
-            title="Why S S Psychologist Life Care" 
+            title="Why SS Psych Life Care" 
             description="We're committed to providing comprehensive mental health support with a focus on quality, accessibility, and personalized care."
           />
           <div className="row g-4">

@@ -205,7 +205,7 @@ exports.generateInvoice = async (req, res, next) => {
     doc.pipe(res);
 
     // Header with logo area
-    doc.fontSize(24).fillColor('#2563eb').text('S S PSYCHOLOGIST LIFE CARE', 50, 50);
+    doc.fontSize(24).fillColor('#2563eb').text('SS Psych LIFE CARE', 50, 50);
     doc.fontSize(12).fillColor('#666').text('Mental Health & Wellness Services', 50, 80);
     
     // Invoice title
@@ -266,7 +266,7 @@ exports.generateInvoice = async (req, res, next) => {
     
     // Footer
     doc.fontSize(10).fillColor('#666')
-       .text('Thank you for choosing S S Psychologist Life Care', 50, 500)
+       .text('Thank you for choosing SS Psych Life Care', 50, 500)
        .text('For support, contact: support@sspsychologist.com', 50, 515)
        .text('This is a computer generated invoice.', 50, 530);
 

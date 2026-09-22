@@ -94,7 +94,7 @@ const Consilar = () => {
           key: razorpayOrder.key_id,
           amount: razorpayOrder.amount,
           currency: razorpayOrder.currency,
-          name: 'S S Psychologist Life Care',
+          name: 'SS Psych Life Care',
           description: `Session with ${selectedCounsellor.user?.name}`,
           order_id: razorpayOrder.id,
           handler: async function (response) {

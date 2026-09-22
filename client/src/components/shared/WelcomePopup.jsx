@@ -78,7 +78,7 @@ const WelcomePopup = () => {
                 <i className="bi bi-clipboard2-pulse me-2"></i>Anxiety Test
               </Link>
               <Link to="/game" className="btn btn-game btn-lg flex-grow-1 text-white" onClick={handleClose}>
-                <i className="bi bi-controller me-2"></i>Play Game
+                <i className="bi bi-check-circle me-2"></i>Check your anxiety
               </Link>
             </div>
             <button className="btn btn-outline-secondary btn-lg" onClick={handleClose}>

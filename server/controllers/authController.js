@@ -411,7 +411,7 @@ exports.forgotPassword = async (req, res, next) => {
         </div>
         <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
         <p>This link will expire in 10 minutes.</p>
-        <p>Regards,<br>S S Psychologist Life Care Team</p>
+        <p>Regards,<br>SS Psych Life Care Team</p>
       </div>
     `;
 

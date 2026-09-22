@@ -73,7 +73,7 @@ const Sidebar = ({ userRole, onToggle, mobileOpen, setMobileOpen }) => {
         <Link to="/" className="sidebar-brand">
           <img src={logoImage} alt="Life Care" className="logo-image" />
           <div className="logo-text-container text-center">
-            <span className="logo-text">S S Psychologist</span>
+            <span className="logo-text">SS Psych</span>
             <span className="logo-subtext">Life Care</span>
           </div>
         </Link>

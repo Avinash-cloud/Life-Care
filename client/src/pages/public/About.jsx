@@ -26,7 +26,7 @@ const About = () => {
       <div className="container">
         {/* Hero Section */}
         <div className="text-center mb-5">
-          <h1 className="mb-3">About S S Psychologist Life Care</h1>
+          <h1 className="mb-3">About SS Psych Life Care</h1>
           <p className="text-muted mx-auto" style={{ maxWidth: '700px' }}>
             We're dedicated to making mental healthcare accessible, affordable, and effective for everyone.
           </p>
@@ -39,7 +39,7 @@ const About = () => {
               <img 
                 // src="https://placehold.co/600x400?text=About+Us" 
                 src={Logo} 
-                alt="About S S Psychologist Life Care" 
+                alt="About SS Psych Life Care" 
                 className="img-fluid rounded-4 shadow"
               />
               <div className="about-shape-1"></div>
@@ -51,7 +51,7 @@ const About = () => {
               <h6 className="text-primary fw-bold mb-2">OUR STORY</h6>
               <h2 className="mb-4">Bridging the Gap in Mental Healthcare</h2>
               <p className="mb-4">
-                S S Psychologist Life Care was founded with a simple yet powerful mission: to make quality mental healthcare accessible to everyone. 
+                SS Psych Life Care was founded with a simple yet powerful mission: to make quality mental healthcare accessible to everyone. 
                 Led by an RCI Registered Psychologist with 20 years of counselling experience and clinical knowledge, we provide expert mental health support.
               </p>
               <p className="mb-4">

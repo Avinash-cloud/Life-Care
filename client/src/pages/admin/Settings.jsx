@@ -243,7 +243,7 @@ const Settings = () => {
                         type="text"
                         value={settings.platform.name}
                         onChange={(e) => handleInputChange('platform', 'name', e.target.value)}
-                        placeholder="S S Psychologist Life Care"
+                        placeholder="SS Psych Life Care"
                       />
                     </Form.Group>
                   </Col>

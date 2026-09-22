@@ -1387,7 +1387,7 @@ exports.getSettings = async (req, res, next) => {
     // For now, return default settings
     const settings = {
       platform: {
-        name: 'S S Psychologist Life Care',
+        name: 'SS Psych Life Care',
         description: 'Mental Health Support Platform',
         logo: '/assets/logo.png',
         favicon: '/assets/favicon.ico',
