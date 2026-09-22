@@ -24,6 +24,9 @@ import Consilar from './pages/public/Consilar';
 import ConditionDetail from './pages/public/conditions/ConditionDetail';
 import AnxietyTest from './pages/public/AnxietyTest';
 import Games from './pages/public/Games';
+import Terms from './pages/public/Terms';
+import Privacy from './pages/public/Privacy';
+import FAQ from './pages/public/FAQ';
 
 // Auth Pages
 import Login from './pages/auth/Login';
@@ -101,6 +104,9 @@ function App() {
             <Route path="conditions/:condition" element={<ConditionDetail />} />
             <Route path="anxiety-test" element={<AnxietyTest />} />
             <Route path="game" element={<Games />} />
+            <Route path="terms" element={<Terms />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="faq" element={<FAQ />} />
           </Route>
           
           {/* Auth Routes */}

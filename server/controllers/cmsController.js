@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Blog = require('../models/Blog');
 const Video = require('../models/Video');
 const GalleryImage = require('../models/GalleryImage');
@@ -71,17 +72,19 @@ exports.getBlogs = async (req, res, next) => {
 // @access  Public
 exports.getBlog = async (req, res, next) => {
   try {
-    const blog = await Blog.findOne({
-      slug: req.params.slug,
-      status: 'published'
-    }).populate('author', 'name avatar');
+    const isObjectId = mongoose.Types.ObjectId.isValid(req.params.slug);
+    const filter = isObjectId
+      ? { $or: [{ slug: req.params.slug }, { _id: req.params.slug }], status: 'published' }
+      : { slug: req.params.slug, status: 'published' };
+
+    const blog = await Blog.findOne(filter).populate('author', 'name avatar');
     
     if (!blog) {
-      return next(new ErrorResponse(`Blog not found with slug of ${req.params.slug}`, 404));
+      return next(new ErrorResponse(`Blog not found with identifier of ${req.params.slug}`, 404));
     }
     
     // Increment view count
-    blog.viewCount += 1;
+    blog.viewCount = (blog.viewCount || 0) + 1;
     await blog.save();
     
     res.status(200).json({
