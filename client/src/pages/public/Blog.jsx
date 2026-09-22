@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { cmsAPI } from '../../services/api';
+import { getBlogPlainText } from '../../utils/blogContentParser';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -87,19 +88,33 @@ const Blog = () => {
           <div className="row g-4">
             {filteredPosts.map(post => (
               <div className="col-md-6 col-lg-4" key={post._id}>
-                <div className="card blog-card h-100 border-0 shadow-sm">
-                  <div className="blog-image-wrapper">
-                    <img src={post.featuredImage || 'https://placehold.co/400x300?text=Blog'} alt={post.title} className="card-img-top" />
-                    <div className="blog-category">{post.categories?.[0] || 'General'}</div>
-                  </div>
+                <div className="card blog-card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                  <Link to={`/blog/${post.slug || post._id}`}>
+                    <div className="blog-image-wrapper">
+                      <img 
+                        src={post.featuredImage || 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80'} 
+                        alt={post.title} 
+                        className="card-img-top"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80';
+                        }}
+                      />
+                      <div className="blog-category">{post.categories?.[0] || 'General'}</div>
+                    </div>
+                  </Link>
                   <div className="card-body p-4">
                     <div className="blog-meta mb-2">
                       <span><i className="bi bi-person me-1"></i> {post.author?.name || 'Admin'}</span>
                       <span><i className="bi bi-clock me-1"></i> {post.readTime || '5'} min</span>
                     </div>
-                    <h5 className="card-title mb-3">{post.title}</h5>
-                    <p className="card-text text-muted">{post.excerpt}</p>
-                    <Link to={`/blog/${post.slug}`} className="blog-link">
+                    <Link to={`/blog/${post.slug || post._id}`} className="text-decoration-none text-dark">
+                      <h5 className="card-title mb-3 fw-bold">{post.title}</h5>
+                    </Link>
+                    <p className="card-text text-muted">
+                      {post.excerpt || (post.content ? getBlogPlainText(post.content).substring(0, 120) + '...' : '')}
+                    </p>
+                    <Link to={`/blog/${post.slug || post._id}`} className="blog-link fw-semibold">
                       Read More <i className="bi bi-arrow-right ms-1"></i>
                     </Link>
                   </div>
