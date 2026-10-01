@@ -46,6 +46,7 @@ const Footer = () => {
           <div className="footer-links-group">
             <h6 className="footer-heading">Resources</h6>
             <ul className="footer-links">
+              <li><Link to="/assessments" className="footer-link">Clinical Assessments</Link></li>
               <li><Link to="/videos" className="footer-link">Educational Videos</Link></li>
               <li><Link to="/gallery" className="footer-link">Gallery</Link></li>
               <li><Link to="/faq" className="footer-link">FAQs</Link></li>

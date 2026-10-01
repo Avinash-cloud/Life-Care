@@ -87,6 +87,9 @@ const Header = () => {
               <Link className={`nav-link ${isActive('/videos') ? 'active' : ''}`} to="/videos" onClick={closeNavbar}>Videos</Link>
             </li>
             <li className="nav-item">
+              <Link className={`nav-link ${isActive('/assessments') ? 'active' : ''}`} to="/assessments" onClick={closeNavbar}>Assessments</Link>
+            </li>
+            <li className="nav-item">
               <Link className={`nav-link ${isActive('/contact') ? 'active' : ''}`} to="/contact" onClick={closeNavbar}>Contact</Link>
             </li>
             <li className="nav-item">
