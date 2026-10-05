@@ -23,6 +23,8 @@ import CounsellorsDemo from './pages/public/CounsellorsDemo';
 import Consilar from './pages/public/Consilar';
 import ConditionDetail from './pages/public/conditions/ConditionDetail';
 import AnxietyTest from './pages/public/AnxietyTest';
+import Assessments from './pages/public/Assessments';
+import AssessmentDetail from './pages/public/AssessmentDetail';
 import Games from './pages/public/Games';
 import Terms from './pages/public/Terms';
 import Privacy from './pages/public/Privacy';
@@ -103,6 +105,8 @@ function App() {
             <Route path="consilar" element={<Consilar />} />
             <Route path="conditions/:condition" element={<ConditionDetail />} />
             <Route path="anxiety-test" element={<AnxietyTest />} />
+            <Route path="assessments" element={<Assessments />} />
+            <Route path="assessments/:id" element={<AssessmentDetail />} />
             <Route path="game" element={<Games />} />
             <Route path="terms" element={<Terms />} />
             <Route path="privacy" element={<Privacy />} />
