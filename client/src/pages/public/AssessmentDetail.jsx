@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Container, Form, Alert, Spinner } from 'react-bootstrap';
 import { 
   ArrowLeft, 
   ArrowRight, 
-  Clock, 
   CheckCircle2, 
   ShieldCheck, 
   AlertCircle, 
@@ -13,21 +11,67 @@ import {
   Send, 
   CalendarCheck, 
   FileCheck,
-  AlertTriangle,
   PhoneCall,
-  Activity,
-  Sparkles
+  Sparkles,
+  Check
 } from 'lucide-react';
 import { ASSESSMENTS_LIST } from '../../constants/assessmentsData';
 import { assessmentAPI } from '../../services/api';
+import Logo from '../../assets/logo.png';
 import './AssessmentDetail.css';
 
-const AssessmentDetail = () => {
-  const { id } = useParams();
+const AssessmentDetail = ({ defaultId }) => {
+  const { id: paramId } = useParams();
   const navigate = useNavigate();
+  const id = paramId || defaultId || 'anxiety';
+
+  // Support aliases for IDs (e.g. phq-9 -> depression, gad7 -> gad-7)
+  const idAliases = {
+    'phq-9': 'depression',
+    'phq9': 'depression',
+    'gad7': 'gad-7'
+  };
+  const resolvedId = idAliases[id] || id;
 
   // Find the selected assessment
-  const assessment = ASSESSMENTS_LIST.find((t) => t.id === id);
+  const assessment = ASSESSMENTS_LIST.find((t) => t.id === resolvedId);
+
+  // Hide Jotform agent and floating actions while taking assessment or viewing report
+  useEffect(() => {
+    const hideFloatingElements = () => {
+      const selectors = [
+        '#preact-border-shadow-host',
+        '.embedded-agent-container',
+        '.ai-agent-chat-avatar-container',
+        '.jficc',
+        '.floating-actions'
+      ];
+      selectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+          el.style.setProperty('display', 'none', 'important');
+        });
+      });
+    };
+
+    hideFloatingElements();
+    const interval = setInterval(hideFloatingElements, 400);
+
+    return () => {
+      clearInterval(interval);
+      const selectors = [
+        '#preact-border-shadow-host',
+        '.embedded-agent-container',
+        '.ai-agent-chat-avatar-container',
+        '.jficc',
+        '.floating-actions'
+      ];
+      selectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+          el.style.display = '';
+        });
+      });
+    };
+  }, []);
 
   // Test state
   const [currentStep, setCurrentStep] = useState(0);
@@ -46,9 +90,11 @@ const AssessmentDetail = () => {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState('');
 
-  // Scroll to top on mount or test change
+  // Mobile tab state for zero-scroll on small screens ('score' | 'lead')
+  const [mobileTab, setMobileTab] = useState('score');
+
+  // Reset test state whenever assessment id changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentStep(0);
     setAnswers({});
     setIsCompleted(false);
@@ -56,24 +102,23 @@ const AssessmentDetail = () => {
     setResultBand(null);
     setSaveSuccess(false);
     setSaveError('');
+    setMobileTab('score');
   }, [id]);
 
   // If assessment not found or is the game
   if (!assessment) {
     return (
-      <div className="assessment-detail-page not-found-state">
-        <Container className="py-5 text-center">
-          <div className="not-found-card">
-            <AlertCircle size={48} className="text-warning mb-3" />
-            <h2 className="mb-2">Assessment Not Found</h2>
-            <p className="text-muted mb-4">
-              We couldn't find the assessment you were looking for. Please choose from our available clinical screeners.
-            </p>
-            <Link to="/assessments" className="btn btn-primary rounded-pill px-4">
-              ← View All Assessments
-            </Link>
-          </div>
-        </Container>
+      <div className="zero-scroll-assessment-root">
+        <div className="not-found-card text-center p-4">
+          <AlertCircle size={40} className="text-warning mb-3" />
+          <h3 className="mb-2">Assessment Not Found</h3>
+          <p className="text-muted mb-4 small">
+            We couldn't locate this assessment. Please choose from our catalog of clinical screeners.
+          </p>
+          <Link to="/assessments" className="btn btn-primary rounded-pill px-4">
+            ← Browse All Assessments
+          </Link>
+        </div>
       </div>
     );
   }
@@ -88,24 +133,6 @@ const AssessmentDetail = () => {
   const currentQuestion = questions[currentStep];
   const questionOptions = currentQuestion?.options || assessment.options || [];
   const progressPercentage = Math.round(((currentStep + 1) / questions.length) * 100);
-
-  const handleSelectOption = (score) => {
-    const updatedAnswers = {
-      ...answers,
-      [currentQuestion.id]: score
-    };
-    setAnswers(updatedAnswers);
-
-    // Smooth auto advance after 220ms
-    setTimeout(() => {
-      if (currentStep < questions.length - 1) {
-        setCurrentStep(prev => prev + 1);
-        window.scrollTo({ top: 180, behavior: 'smooth' });
-      } else {
-        calculateResults(updatedAnswers);
-      }
-    }, 220);
-  };
 
   const calculateResults = (finalAnswers) => {
     let total = 0;
@@ -128,20 +155,34 @@ const AssessmentDetail = () => {
 
     setResultBand(matchedBand);
     setIsCompleted(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const handleSelectOption = useCallback((score) => {
+    const updatedAnswers = {
+      ...answers,
+      [currentQuestion.id]: score
+    };
+    setAnswers(updatedAnswers);
+
+    // Smooth auto-advance without scrolling
+    setTimeout(() => {
+      if (currentStep < questions.length - 1) {
+        setCurrentStep(prev => prev + 1);
+      } else {
+        calculateResults(updatedAnswers);
+      }
+    }, 200);
+  }, [answers, currentQuestion, currentStep, questions.length]);
 
   const handlePrev = () => {
     if (currentStep > 0) {
       setCurrentStep(prev => prev - 1);
-      window.scrollTo({ top: 180, behavior: 'smooth' });
     }
   };
 
   const handleNext = () => {
     if (currentStep < questions.length - 1) {
       setCurrentStep(prev => prev + 1);
-      window.scrollTo({ top: 180, behavior: 'smooth' });
     } else {
       calculateResults(answers);
     }
@@ -155,8 +196,32 @@ const AssessmentDetail = () => {
     setResultBand(null);
     setSaveSuccess(false);
     setSaveError('');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setMobileTab('score');
   };
+
+  // Keyboard shortcut listener for options (1, 2, 3, 4)
+  useEffect(() => {
+    if (isCompleted || !questionOptions.length) return;
+
+    const handleKeyDown = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      const num = parseInt(e.key, 10);
+      if (!isNaN(num) && num >= 1 && num <= questionOptions.length) {
+        const option = questionOptions[num - 1];
+        if (option) {
+          handleSelectOption(option.score);
+        }
+      } else if (e.key === 'ArrowLeft' && currentStep > 0) {
+        handlePrev();
+      } else if (e.key === 'ArrowRight' && answers[currentQuestion?.id] !== undefined) {
+        handleNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isCompleted, questionOptions, answers, currentStep, currentQuestion, handleSelectOption]);
 
   const handleSaveResult = async (e) => {
     e.preventDefault();
@@ -165,7 +230,7 @@ const AssessmentDetail = () => {
       return;
     }
     if (!formData.name && !formData.email) {
-      setSaveError('Please provide your name or email address.');
+      setSaveError('Please provide your name or email.');
       return;
     }
 
@@ -189,336 +254,260 @@ const AssessmentDetail = () => {
   const getSeverityBadgeClass = (level) => {
     switch (level) {
       case 'minimal':
-        return 'badge-severity-minimal';
+        return 'severity-badge-minimal';
       case 'mild':
-        return 'badge-severity-mild';
+        return 'severity-badge-mild';
       case 'moderate':
-        return 'badge-severity-moderate';
+        return 'severity-badge-moderate';
       case 'severe':
-        return 'badge-severity-severe';
+        return 'severity-badge-severe';
       default:
-        return 'badge-severity-mild';
+        return 'severity-badge-mild';
     }
   };
 
   return (
-    <div className="assessment-detail-page">
-      {/* Top Banner & Breadcrumb */}
-      <section className="detail-top-hero">
-        <Container>
-          <div className="detail-hero-content">
-            <Link to="/assessments" className="detail-back-link">
-              <ArrowLeft size={16} className="me-1.5" />
-              <span>Back to All Assessments</span>
-            </Link>
-
-            <div className="detail-hero-meta">
-              <span className="detail-scale-badge">{assessment.scaleName}</span>
-              <div className="detail-duration-badge">
-                <Clock size={13} className="me-1" />
-                <span>{assessment.duration}</span>
+    <div className="zero-scroll-assessment-root">
+      {!isCompleted ? (
+        /* ========================================================
+           SCREEN 1: ASSESSMENT QUESTION TAKING VIEW (ZERO-SCROLL)
+           ======================================================== */
+        <div className="screener-flow-container">
+          {/* Unified Compact Top Header with integrated progress line */}
+          <header className="screener-top-header">
+            <div className="screener-header-left">
+              <Link to="/assessments" className="screener-exit-btn" title="Exit to All Assessments">
+                <ArrowLeft size={14} />
+                <span>Exit</span>
+              </Link>
+              <div className="screener-brand-lockup d-none d-sm-flex">
+                <img src={Logo} alt="SS Psych Life Care" className="screener-logo-img" />
+                <span className="screener-brand-name">SS Psych Life Care</span>
               </div>
-              {assessment.badge && (
-                <span className={`detail-status-pill badge-${assessment.badgeColor || 'emerald'}`}>
-                  {assessment.badge}
+            </div>
+
+            <div className="screener-header-center">
+              <span className="screener-step-chip">
+                Question <strong>{currentStep + 1}</strong> of {questions.length}
+              </span>
+              <span className="screener-title-badge d-none d-md-inline">{assessment.title}</span>
+              <span className="screener-scale-pill d-none d-md-inline">{assessment.scaleName}</span>
+            </div>
+
+            <div className="screener-header-right">
+              <div className="screener-guarantee-chip d-none d-sm-inline-flex">
+                <ShieldCheck size={13} className="text-success" />
+                <span>100% Confidential</span>
+              </div>
+              <span className="screener-percent-pill">{progressPercentage}%</span>
+            </div>
+
+            {/* Seamless 3px progress line directly under header */}
+            <div className="screener-header-progress-line">
+              <div 
+                className="screener-header-progress-fill" 
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
+          </header>
+
+          {/* Center Stage: Question Card */}
+          <main className="screener-stage">
+            <div className="screener-card">
+              {/* Question Context Header */}
+              <div className="screener-question-meta">
+                <span className="screener-qnumber-tag">
+                  {currentQuestion.sectionTitle || `Question ${currentStep + 1}`}
                 </span>
-              )}
-            </div>
-
-            <h1 className="detail-title">{assessment.title}</h1>
-            <p className="detail-subtitle">{assessment.description}</p>
-
-            {/* Quick Guarantees */}
-            <div className="detail-guarantees-bar">
-              <span className="guarantee-item">
-                <ShieldCheck size={15} className="text-success me-1" />
-                100% Confidential
-              </span>
-              <span className="guarantee-divider">•</span>
-              <span className="guarantee-item">
-                <Sparkles size={15} className="text-primary me-1" />
-                Evidence-Based Scoring
-              </span>
-              <span className="guarantee-divider">•</span>
-              <span className="guarantee-item">
-                <AlertCircle size={15} className="text-amber me-1" />
-                Indicative & Non-Diagnostic
-              </span>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Main Assessment Container */}
-      <section className="detail-main-section">
-        <Container>
-          <div className="detail-content-wrapper">
-            {!isCompleted ? (
-              /* Active Test Taking View */
-              <div className="test-runner-container">
-                {/* Progress Tracker */}
-                <div className="test-progress-bar-card">
-                  <div className="d-flex justify-content-between align-items-center mb-2">
-                    <span className="test-step-label">
-                      Question <strong>{currentStep + 1}</strong> of {questions.length}
-                    </span>
-                    <span className="test-percent-label">{progressPercentage}% Completed</span>
-                  </div>
-
-                  <div className="progress-track">
-                    <div 
-                      className="progress-fill" 
-                      style={{ width: `${progressPercentage}%` }}
-                    />
-                  </div>
-                </div>
-
-                {/* Instruction Reminder */}
-                <div className="test-instruction-box">
-                  <AlertCircle size={17} className="text-primary flex-shrink-0 mt-0.5" />
-                  <p className="mb-0">
-                    Over the <strong>past 2 weeks</strong>, how frequently have you been bothered by this occurrence?
-                  </p>
-                </div>
-
-                {/* Active Question Box */}
-                <div className="question-display-card">
-                  <div className="question-header d-flex align-items-center gap-2 flex-wrap mb-2">
-                    <span className="question-idx">Question {currentStep + 1}</span>
-                    {currentQuestion.sectionTitle && (
-                      <span className="question-section-pill">{currentQuestion.sectionTitle}</span>
-                    )}
-                  </div>
-                  <h2 className="question-prompt">{currentQuestion.text}</h2>
-
-                  {/* Options List */}
-                  <div className="options-container">
-                    {questionOptions.map((opt) => {
-                      const isSelected = answers[currentQuestion.id] === opt.score;
-                      return (
-                        <button
-                          key={opt.score}
-                          type="button"
-                          onClick={() => handleSelectOption(opt.score)}
-                          className={`detail-option-card ${isSelected ? 'selected' : ''}`}
-                        >
-                          <div className="option-text-group">
-                            <span className="option-main-text">{opt.text}</span>
-                            {opt.score !== undefined && (
-                              <span className="option-sub-text">{opt.score} point{opt.score === 1 ? '' : 's'}</span>
-                            )}
-                          </div>
-
-                          <div className={`option-radio-circle ${isSelected ? 'active' : ''}`}>
-                            {isSelected && <CheckCircle2 size={18} />}
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Navigation Controls */}
-                  <div className="test-navigation-footer">
-                    <button
-                      type="button"
-                      onClick={handlePrev}
-                      disabled={currentStep === 0}
-                      className="btn-nav-prev"
-                    >
-                      <ArrowLeft size={16} />
-                      <span>Previous Question</span>
-                    </button>
-
-                    <div className="test-counter-text">
-                      {answers[currentQuestion.id] !== undefined ? (
-                        <span className="text-success small fw-semibold">
-                          <CheckCircle2 size={14} className="me-1" />
-                          Answer Selected
-                        </span>
-                      ) : (
-                        <span className="text-muted small">Please select an option to proceed</span>
-                      )}
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={handleNext}
-                      disabled={answers[currentQuestion.id] === undefined}
-                      className="btn-nav-next"
-                    >
-                      <span>{currentStep === questions.length - 1 ? 'Calculate My Score' : 'Next Question'}</span>
-                      <ArrowRight size={16} />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Privacy Assurance */}
-                <div className="text-center mt-4 text-muted small">
-                  <p className="mb-0">
-                    <ShieldCheck size={14} className="me-1 text-success" />
-                    All responses are confidential and handled under strict healthcare privacy standards.
-                  </p>
-                </div>
+                <span className="screener-context-note">
+                  Over the past 2 weeks:
+                </span>
               </div>
-            ) : (
-              /* Full Page Results View (No Zoom-Out Needed!) */
-              <div className="test-results-container">
-                {/* Result Header & Score Metric */}
-                <div className="results-hero-card">
-                  <div className="results-badge-top">
-                    <Activity size={18} className="me-1.5 text-primary" />
-                    <span>Official Screener Results</span>
-                  </div>
 
-                  <h2 className="results-main-title">{assessment.title}</h2>
-                  <p className="text-muted mb-4">
-                    Based on standard clinical scoring thresholds for the <strong>{assessment.scaleName}</strong>.
-                  </p>
+              {/* Main Prompt */}
+              <h2 className="screener-prompt-text">{currentQuestion.text}</h2>
 
-                  <div className="results-score-row">
-                    <div className="score-box-prominent">
-                      <span className="score-number-large">{finalScore}</span>
-                      <span className="score-scale-denom">/ {assessment.maxScore}</span>
-                      <span className="score-label-caption">Total Points</span>
+              {/* Options Grid */}
+              <div className="screener-options-grid">
+                {questionOptions.map((opt, idx) => {
+                  const isSelected = answers[currentQuestion.id] === opt.score;
+                  return (
+                    <button
+                      key={opt.score}
+                      type="button"
+                      onClick={() => handleSelectOption(opt.score)}
+                      className={`screener-option-btn ${isSelected ? 'selected' : ''}`}
+                    >
+                      <div className="option-key-badge">{idx + 1}</div>
+                      <div className="option-content-body">
+                        <span className="option-label-text">{opt.text}</span>
+                        {opt.score !== undefined && (
+                          <span className="option-score-text">
+                            {opt.score} {opt.score === 1 ? 'pt' : 'pts'}
+                          </span>
+                        )}
+                      </div>
+                      <div className={`option-check-circle ${isSelected ? 'active' : ''}`}>
+                        {isSelected && <Check size={12} strokeWidth={3} />}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </main>
+
+          {/* Bottom Navigation Footer */}
+          <footer className="screener-nav-footer">
+            <div className="screener-footer-inner">
+              <button
+                type="button"
+                onClick={handlePrev}
+                disabled={currentStep === 0}
+                className="screener-btn-prev"
+              >
+                <ArrowLeft size={15} />
+                <span>Prev</span>
+              </button>
+
+              <div className="screener-footer-hint d-none d-sm-block">
+                {answers[currentQuestion.id] !== undefined ? (
+                  <span className="status-selected">
+                    <CheckCircle2 size={14} className="me-1" />
+                    Answer Selected
+                  </span>
+                ) : (
+                  <span className="status-prompt">
+                    Click an option or press <kbd>1</kbd>–<kbd>{questionOptions.length}</kbd>
+                  </span>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={handleNext}
+                disabled={answers[currentQuestion.id] === undefined}
+                className="screener-btn-next"
+              >
+                <span>{currentStep === questions.length - 1 ? 'Calculate Score' : 'Next'}</span>
+                <ArrowRight size={15} />
+              </button>
+            </div>
+          </footer>
+        </div>
+      ) : (
+        /* ========================================================
+           SCREEN 2: ASSESSMENT REPORT VIEW (ZERO-SCROLL DASHBOARD)
+           ======================================================== */
+        <div className="screener-flow-container report-view">
+          {/* Top Bar: Brand, Report Title, Retake & Exit */}
+          <header className="screener-top-header">
+            <div className="screener-header-left">
+              <Link to="/assessments" className="screener-exit-btn">
+                <ArrowLeft size={14} />
+                <span>All Tests</span>
+              </Link>
+              <div className="screener-brand-lockup d-none d-sm-flex">
+                <img src={Logo} alt="SS Psych Life Care" className="screener-logo-img" />
+                <span className="screener-brand-name">SS Psych Life Care</span>
+              </div>
+            </div>
+
+            <div className="screener-header-center">
+              <span className="screener-title-badge">Report: {assessment.title}</span>
+              <span className="screener-scale-pill d-none d-md-inline">{assessment.scaleName}</span>
+            </div>
+
+            <div className="screener-header-right">
+              <button onClick={handleRestart} className="btn-retake-header" title="Retake this assessment">
+                <RotateCcw size={13} className="me-1" />
+                <span>Retake</span>
+              </button>
+            </div>
+          </header>
+
+          {/* Mobile Tab Switcher (Visible only on small screens for zero-scroll) */}
+          <div className="report-mobile-tabs d-flex d-md-none">
+            <button 
+              className={`report-tab-btn ${mobileTab === 'score' ? 'active' : ''}`}
+              onClick={() => setMobileTab('score')}
+            >
+              📊 Score & Guidance
+            </button>
+            <button 
+              className={`report-tab-btn ${mobileTab === 'lead' ? 'active' : ''}`}
+              onClick={() => setMobileTab('lead')}
+            >
+              📩 Full Report & Helplines
+            </button>
+          </div>
+
+          {/* Main Report Dashboard (2-column layout fitted to viewport) */}
+          <main className="report-dashboard-stage">
+            <div className="report-dashboard-grid">
+              {/* LEFT COLUMN: Clinical Score, Meter & Guidance */}
+              <div className={`report-col-left ${mobileTab !== 'score' ? 'd-none d-md-flex' : 'd-flex'}`}>
+                {/* Score & Severity Card */}
+                <div className="report-card score-summary-card">
+                  <div className="score-card-header">
+                    <div className="score-figure-box">
+                      <span className="score-digit">{finalScore}</span>
+                      <span className="score-denom">/{assessment.maxScore}</span>
+                      <span className="score-caption">Points</span>
                     </div>
 
-                    <div className="score-interpretation-col">
-                      <div className="mb-2">
-                        <span className={`severity-tag-large ${resultBand ? getSeverityBadgeClass(resultBand.level) : ''}`}>
+                    <div className="severity-info-block">
+                      <div className="severity-badge-row">
+                        <span className={`severity-badge-pill ${resultBand ? getSeverityBadgeClass(resultBand.level) : ''}`}>
                           {resultBand?.label || 'Assessment Complete'}
                         </span>
                       </div>
-                      <p className="score-desc-para">
-                        {resultBand?.description || 'Your assessment score has been computed based on standardized clinical criteria.'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Personalized Recommendations Box */}
-                {resultBand?.recommendation && (
-                  <div className="recommendations-full-card">
-                    <div className="rec-header">
-                      <HeartHandshake size={22} className="text-primary me-2 flex-shrink-0" />
-                      <h4 className="rec-title">Therapeutic Insights & Next Steps</h4>
-                    </div>
-                    <p className="rec-body">{resultBand.recommendation}</p>
-                  </div>
-                )}
-
-                {/* Important Clinical Disclaimer */}
-                <div className="clinical-disclaimer-box">
-                  <AlertCircle size={18} className="text-muted me-2 flex-shrink-0 mt-0.5" />
-                  <p className="mb-0 text-muted small leading-relaxed">
-                    <strong>Clinical Note:</strong> This self-assessment is an evidence-based screening tool designed to help identify emotional distress patterns. It does not constitute a formal psychiatric or neurological diagnosis. If symptoms are interfering with your daily life, consulting a licensed psychologist or psychiatrist is highly recommended.
-                  </p>
-                </div>
-
-                {/* Lead Form: Deliver Report to WhatsApp / Email */}
-                <div className="lead-capture-section">
-                  <div className="lead-card-header">
-                    <FileCheck size={22} className="text-primary me-2.5 flex-shrink-0" />
-                    <div>
-                      <h4 className="mb-1 fw-bold">Receive Your Full Confidential Report</h4>
-                      <p className="text-muted small mb-0">
-                        Enter your contact details below to receive a detailed symptom breakdown and personalized self-care tools on WhatsApp & Email.
+                      <p className="score-interpretation-text mb-0">
+                        {resultBand?.description || 'Your score has been computed using validated clinical scoring ranges.'}
                       </p>
                     </div>
                   </div>
 
-                  {saveSuccess ? (
-                    <Alert variant="success" className="mt-4 p-4 text-center border-0 shadow-sm rounded-4">
-                      <CheckCircle2 size={32} className="text-success mb-2 d-block mx-auto" />
-                      <h5 className="fw-bold mb-1">Your Report Has Been Saved!</h5>
-                      <p className="small text-muted mb-0">
-                        Our psychology team has securely filed your profile. If you have chosen to speak with a counselor, we will reach out shortly.
-                      </p>
-                    </Alert>
-                  ) : (
-                    <Form onSubmit={handleSaveResult} className="lead-form-grid mt-4">
-                      {saveError && (
-                        <Alert variant="danger" className="py-2.5 small mb-3">
-                          {saveError}
-                        </Alert>
-                      )}
-
-                      <div className="row g-3">
-                        <div className="col-12 col-md-4">
-                          <Form.Group>
-                            <Form.Label className="fw-semibold small">Full Name</Form.Label>
-                            <Form.Control
-                              type="text"
-                              placeholder="e.g. Priya Sharma"
-                              value={formData.name}
-                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                              className="lead-input"
-                            />
-                          </Form.Group>
-                        </div>
-
-                        <div className="col-12 col-md-4">
-                          <Form.Group>
-                            <Form.Label className="fw-semibold small">Phone / WhatsApp Number *</Form.Label>
-                            <Form.Control
-                              type="tel"
-                              placeholder="e.g. 9876543210"
-                              required
-                              value={formData.phone}
-                              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                              className="lead-input"
-                            />
-                          </Form.Group>
-                        </div>
-
-                        <div className="col-12 col-md-4">
-                          <Form.Group>
-                            <Form.Label className="fw-semibold small">Email Address</Form.Label>
-                            <Form.Control
-                              type="email"
-                              placeholder="e.g. priya@gmail.com"
-                              value={formData.email}
-                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                              className="lead-input"
-                            />
-                          </Form.Group>
-                        </div>
-                      </div>
-
-                      <div className="lead-form-footer mt-4">
-                        <span className="privacy-pill">
-                          <ShieldCheck size={14} className="text-success me-1" />
-                          Zero Spam • Encrypted Health Privacy
-                        </span>
-
-                        <button
-                          type="submit"
-                          disabled={isSaving}
-                          className="btn-send-report"
-                        >
-                          {isSaving ? (
-                            <>
-                              <Spinner animation="border" size="sm" className="me-2" />
-                              Saving Report...
-                            </>
-                          ) : (
-                            <>
-                              <Send size={16} className="me-2" />
-                              Send My Confidential Report
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    </Form>
+                  {/* Multi-tier Severity Meter */}
+                  {assessment.bands && assessment.bands.length > 0 && (
+                    <div className="severity-meter-track">
+                      {assessment.bands.map((band, idx) => {
+                        const isCurrentBand = resultBand?.label === band.label;
+                        // Clean short label for crisp display: "Minimal", "Mild", "Moderate", "Severe"
+                        const shortLabel = band.level ? band.level.charAt(0).toUpperCase() + band.level.slice(1) : band.label.split(' ')[0];
+                        return (
+                          <div 
+                            key={idx} 
+                            className={`severity-meter-segment seg-${band.level || 'mild'} ${isCurrentBand ? 'active-needle' : ''}`}
+                            title={`${band.label} (${band.min} - ${band.max} pts)`}
+                          >
+                            <span className="segment-label">{shortLabel}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   )}
                 </div>
 
-                {/* Primary Action Buttons (Spacious, Clear, Scroll-Friendly!) */}
-                <div className="results-actions-grid">
-                  <Link to="/consilar" className="btn-action-primary">
-                    <CalendarCheck size={18} className="me-2" />
-                    <span>Book Session with a Psychologist</span>
-                  </Link>
+                {/* Personalized Therapeutic Insights Card */}
+                {resultBand?.recommendation && (
+                  <div className="report-card guidance-card">
+                    <div className="guidance-card-header">
+                      <HeartHandshake size={16} className="text-teal me-1.5 flex-shrink-0" />
+                      <h4 className="guidance-card-title">Therapeutic Insights & Next Steps</h4>
+                    </div>
+                    <p className="guidance-card-body mb-0">
+                      {resultBand.recommendation}
+                    </p>
+                  </div>
+                )}
 
+                {/* Primary Action Buttons */}
+                <div className="report-actions-row">
+                  <Link to="/consilar" className="btn-action-consult">
+                    <CalendarCheck size={15} className="me-1.5" />
+                    <span>Book Session</span>
+                  </Link>
                   <a
                     href={`https://wa.me/9716129129?text=${encodeURIComponent(
                       `Hello SS Psych Life Care, I completed the ${assessment.title} assessment (Score: ${finalScore}/${assessment.maxScore} - ${resultBand?.label}) and would like to speak with a psychologist.`
@@ -527,53 +516,129 @@ const AssessmentDetail = () => {
                     rel="noopener noreferrer"
                     className="btn-action-whatsapp"
                   >
-                    <i className="bi bi-whatsapp me-2"></i>
-                    <span>Discuss Report on WhatsApp</span>
+                    <i className="bi bi-whatsapp me-1.5"></i>
+                    <span>Discuss on WhatsApp</span>
                   </a>
-
-                  <button
-                    type="button"
-                    onClick={handleRestart}
-                    className="btn-action-secondary"
-                  >
-                    <RotateCcw size={16} className="me-1.5" />
-                    <span>Retake Assessment</span>
-                  </button>
-
-                  <Link to="/assessments" className="btn-action-secondary">
-                    <span>Explore Other Tests</span>
-                  </Link>
-                </div>
-
-                {/* Emergency Helplines reminder */}
-                <div className="results-crisis-bar">
-                  <div className="d-flex align-items-center gap-2 mb-2">
-                    <AlertTriangle size={18} className="text-amber" />
-                    <h6 className="mb-0 fw-bold text-amber">Need Immediate Crisis Support?</h6>
-                  </div>
-                  <p className="small mb-3 text-muted">
-                    If you are experiencing overwhelming distress, reach out to free 24/7 helplines:
-                  </p>
-                  <div className="d-flex flex-wrap gap-2">
-                    <a href="tel:14416" className="helpline-badge">
-                      <PhoneCall size={13} className="me-1" />
-                      Tele-MANAS: 14416
-                    </a>
-                    <a href="tel:18005990019" className="helpline-badge">
-                      <PhoneCall size={13} className="me-1" />
-                      KIRAN: 1800-599-0019
-                    </a>
-                    <a href="tel:9999666555" className="helpline-badge">
-                      <PhoneCall size={13} className="me-1" />
-                      Vandrevala Foundation: +91 9999 666 555
-                    </a>
-                  </div>
                 </div>
               </div>
-            )}
-          </div>
-        </Container>
-      </section>
+
+              {/* RIGHT COLUMN: Full Report Delivery & Crisis Helplines */}
+              <div className={`report-col-right ${mobileTab !== 'lead' ? 'd-none d-md-flex' : 'd-flex'}`}>
+                {/* Confidential Report Delivery Card */}
+                <div className="report-card lead-capture-card">
+                  <div className="lead-header-row">
+                    <FileCheck size={18} className="text-primary me-2 flex-shrink-0" />
+                    <div>
+                      <h4 className="lead-box-title">Get Your Full Confidential Report</h4>
+                      <p className="lead-box-desc mb-0">
+                        Receive complete symptom analysis & self-care guide on WhatsApp / Email.
+                      </p>
+                    </div>
+                  </div>
+
+                  {saveSuccess ? (
+                    <div className="lead-success-box">
+                      <CheckCircle2 size={22} className="text-success mb-1" />
+                      <h5 className="lead-success-title">Your Report Has Been Saved!</h5>
+                      <p className="lead-success-desc mb-0">
+                        Our psychology team will deliver your full symptom breakdown.
+                      </p>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSaveResult} className="lead-compact-form">
+                      {saveError && (
+                        <div className="alert alert-danger py-1 px-2.5 small mb-1.5">{saveError}</div>
+                      )}
+
+                      <div className="lead-inputs-stack">
+                        <div className="form-group mb-1.5">
+                          <label className="form-label-xs">Full Name</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Priya Sharma"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            className="form-control-xs"
+                          />
+                        </div>
+
+                        <div className="form-group mb-1.5">
+                          <label className="form-label-xs">Phone / WhatsApp Number *</label>
+                          <input
+                            type="tel"
+                            placeholder="e.g. 9876543210"
+                            required
+                            value={formData.phone}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                            className="form-control-xs"
+                          />
+                        </div>
+
+                        <div className="form-group mb-1.5">
+                          <label className="form-label-xs">Email Address</label>
+                          <input
+                            type="email"
+                            placeholder="e.g. priya@gmail.com"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            className="form-control-xs"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="lead-submit-row">
+                        <span className="privacy-chip">
+                          <ShieldCheck size={12} className="text-success me-1" />
+                          100% Private
+                        </span>
+
+                        <button
+                          type="submit"
+                          disabled={isSaving}
+                          className="btn-send-report-compact"
+                        >
+                          {isSaving ? (
+                            <span>Saving...</span>
+                          ) : (
+                            <>
+                              <Send size={13} className="me-1" />
+                              <span>Send Report</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </div>
+
+                {/* 24/7 Crisis Helplines & Non-Diagnostic Disclaimer */}
+                <div className="report-card crisis-disclaimer-card">
+                  <div className="crisis-title-row">
+                    <PhoneCall size={13} className="text-amber me-1" />
+                    <span className="crisis-title-text">24/7 Free Helplines</span>
+                  </div>
+
+                  <div className="crisis-pills-row">
+                    <a href="tel:14416" className="helpline-compact-pill">
+                      Tele-MANAS: <strong>14416</strong>
+                    </a>
+                    <a href="tel:18005990019" className="helpline-compact-pill">
+                      KIRAN: <strong>1800-599-0019</strong>
+                    </a>
+                    <a href="tel:9999666555" className="helpline-compact-pill">
+                      Vandrevala: <strong>9999 666 555</strong>
+                    </a>
+                  </div>
+
+                  <p className="clinical-disclaimer-text mb-0">
+                    <strong>Note:</strong> Validated screener, not a psychiatric diagnosis. For care, consult a mental health professional.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      )}
     </div>
   );
 };
