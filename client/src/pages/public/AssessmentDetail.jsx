@@ -110,12 +110,7 @@ const AssessmentDetail = () => {
   const calculateResults = (finalAnswers) => {
     let total = 0;
     questions.forEach((q) => {
-      let scoreVal = finalAnswers[q.id] || 0;
-      if (q.reverse) {
-        const qOptions = q.options || assessment.options || [];
-        const maxVal = qOptions.length - 1;
-        scoreVal = maxVal - scoreVal;
-      }
+      const scoreVal = finalAnswers[q.id] !== undefined ? finalAnswers[q.id] : 0;
       total += scoreVal;
     });
 
