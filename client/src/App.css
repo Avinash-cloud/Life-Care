@@ -450,12 +450,13 @@
 
 .navbar .nav-link {
   color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
-  margin: 0 var(--space-1);
-  padding: var(--space-2) var(--space-4);
+  font-weight: 500;
+  margin: 0 3px;
+  padding: 6px 12px;
   border-radius: var(--radius-md);
   transition: all var(--transition-base);
-  font-size: var(--font-size-sm);
+  font-size: 0.92rem;
+  white-space: nowrap;
 }
 
 .navbar .nav-link:hover {
@@ -466,12 +467,38 @@
 .navbar .nav-link.active {
   color: var(--color-primary-600);
   background-color: var(--color-primary-50);
+  font-weight: 600;
 }
 
 .navbar .navbar-brand {
   font-weight: var(--font-weight-bold);
   color: var(--color-primary-600);
-  font-size: var(--font-size-lg);
+  padding: 0;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand-text-wrapper {
+  line-height: 1.15;
+}
+
+.brand-text-main {
+  color: #1b3c59;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  display: block;
+}
+
+.brand-text-sub {
+  color: var(--color-primary-600, #2563eb);
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: block;
 }
 
 .brand-text {
@@ -479,6 +506,24 @@
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-base);
   letter-spacing: var(--letter-spacing-tight);
+}
+
+@media (max-width: 991px) {
+  .brand-text-main {
+    font-size: 0.95rem;
+  }
+  .brand-text-sub {
+    font-size: 0.68rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .brand-text-main {
+    font-size: 0.88rem;
+  }
+  .brand-text-sub {
+    font-size: 0.62rem;
+  }
 }
 
 @media (max-width: 767px) {

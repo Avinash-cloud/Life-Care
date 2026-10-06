@@ -54,7 +54,7 @@ exports.register = async (req, res, next) => {
     // Send verification email
     const message = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #2563eb;">Welcome to SS Psych Life Care!</h2>
+        <h2 style="color: #2563eb;">Welcome to SS Psychological Life Care Centre!</h2>
         <p>Hello ${user.name},</p>
         <p>Thank you for registering with us. Please verify your email address by clicking the button below:</p>
         <div style="text-align: center; margin: 20px 0;">
@@ -64,14 +64,14 @@ exports.register = async (req, res, next) => {
         <p style="word-break: break-all; color: #2563eb;">${verificationUrl}</p>
         <p><strong>Note:</strong> You can start using your account immediately, but some features may be limited until you verify your email.</p>
         <p>This link will expire in 24 hours.</p>
-        <p>Best regards,<br>SS Psych Life Care Team</p>
+        <p>Best regards,<br>SS Psychological Life Care Centre Team</p>
       </div>
     `;
 
     try {
       await sendEmail({
         email: user.email,
-        subject: 'Verify Your Email - SS Psych Life Care',
+        subject: 'Verify Your Email - SS Psychological Life Care Centre',
         html: message
       });
     } catch (error) {
@@ -411,7 +411,7 @@ exports.forgotPassword = async (req, res, next) => {
         </div>
         <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
         <p>This link will expire in 10 minutes.</p>
-        <p>Regards,<br>SS Psych Life Care Team</p>
+        <p>Regards,<br>SS Psychological Life Care Centre Team</p>
       </div>
     `;
 

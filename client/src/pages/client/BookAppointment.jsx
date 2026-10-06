@@ -123,7 +123,7 @@ const BookAppointment = () => {
           key: razorpayOrder.key_id,
           amount: razorpayOrder.amount,
           currency: razorpayOrder.currency,
-          name: 'SS Psych Life Care',
+          name: 'SS Psychological Life Care Centre',
           description: `Session with ${counsellor.user?.name || counsellor.name}`,
           order_id: razorpayOrder.id,
           handler: async function (response) {

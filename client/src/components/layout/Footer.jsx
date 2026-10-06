@@ -12,10 +12,10 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="footer-brand">
             <div className="footer-logo-wrapper">
-              <img src={Logo} alt="Life Care Logo" className="footer-logo-img" />
+              <img src={Logo} alt="SS Psychological Life Care Centre Logo" className="footer-logo-img" />
               <div className="footer-brand-text">
-                <span className="footer-brand-name">SS Psych</span>
-                <span className="footer-brand-tagline">Life Care</span>
+                <span className="footer-brand-name">SS Psychological</span>
+                <span className="footer-brand-tagline">Life Care Centre</span>
               </div>
             </div>
             <p className="footer-description">
@@ -82,7 +82,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="footer-bottom">
           <p className="footer-copyright">
-            &copy; {currentYear} SS Psych Life Care. All rights reserved.
+            &copy; {currentYear} SS Psychological Life Care Centre. All rights reserved.
           </p>
           <div className="footer-legal">
             <Link to="/privacy" className="footer-link">Privacy Policy</Link>

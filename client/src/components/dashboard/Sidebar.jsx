@@ -71,10 +71,10 @@ const Sidebar = ({ userRole, onToggle, mobileOpen, setMobileOpen }) => {
     <div className={`sidebar ${collapsed ? 'collapsed' : ''} ${mobileOpen ? 'mobile-open' : ''}`}>
       <div className="sidebar-header">
         <Link to="/" className="sidebar-brand">
-          <img src={logoImage} alt="Life Care" className="logo-image" />
+          <img src={logoImage} alt="SS Psychological Life Care Centre" className="logo-image" />
           <div className="logo-text-container text-center">
-            <span className="logo-text">SS Psych</span>
-            <span className="logo-subtext">Life Care</span>
+            <span className="logo-text">SS Psychological</span>
+            <span className="logo-subtext">Life Care Centre</span>
           </div>
         </Link>
         <button className="sidebar-close d-md-none" onClick={closeMobileSidebar} title="Close">

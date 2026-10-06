@@ -30,7 +30,7 @@ export const FREQUENTLY_ASKED_QUESTIONS = [
   },
   {
     question: "Are these assessments completely free?",
-    answer: "Yes, 100% free. SS Psych Life Care provides these screening tools freely to break mental health stigma, encourage proactive self-awareness, and help you take the first step towards emotional well-being."
+    answer: "Yes, 100% free. SS Psychological Life Care Centre provides these screening tools freely to break mental health stigma, encourage proactive self-awareness, and help you take the first step towards emotional well-being."
   },
   {
     question: "What should I do if my score indicates moderate or severe distress?",

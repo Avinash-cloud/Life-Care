@@ -101,7 +101,7 @@ const Home = () => {
                 Registered Psychological Healthcare
               </span>
               <h1 className="display-4 fw-bold mb-3 mobile-h1" style={{ color: '#1b3c59', lineHeight: 1.2 }}>
-                Trust S S Psych Life Care with your mental health
+                Trust SS Psychological Life Care Centre with your mental health
               </h1>
               <p className="lead mb-3" style={{ color: '#2a3441', fontWeight: 500 }}>
                 Our mission is simple: to help you feel better, get better and stay better.
@@ -437,12 +437,12 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Why SS Psych Life Care Section */}
+      {/* Why SS Psychological Life Care Centre Section */}
       <section className="why-section">
         <div className="container">
           <SectionHeader 
             subtitle="WHY CHOOSE US" 
-            title="Why SS Psych Life Care" 
+            title="Why SS Psychological Life Care Centre" 
             description="We're committed to providing comprehensive mental health support with a focus on quality, accessibility, and personalized care."
           />
           <div className="row g-4">

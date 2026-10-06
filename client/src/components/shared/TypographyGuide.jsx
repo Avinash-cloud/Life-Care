@@ -7,7 +7,7 @@ const TypographyGuide = () => {
         <div className="col-12">
           <h1 className="display-1 mb-4">Typography Guide</h1>
           <p className="lead mb-5">
-            This guide demonstrates the typography system used throughout the SS Psych Life Care platform.
+            This guide demonstrates the typography system used throughout the SS Psychological Life Care Centre platform.
           </p>
 
           {/* Display Headings */}

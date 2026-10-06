@@ -9,8 +9,8 @@ const FAQ = () => {
   const faqs = [
     {
       category: 'general',
-      q: 'What is SS Psych Life Care?',
-      a: 'SS Psych Life Care is a premier clinical psychology and mental health platform led by RCI-registered psychologists with over 20 years of counselling and clinical experience. We provide individual psychotherapy, couples counselling, child/adolescent guidance, clinical assessments, and professional internship training.'
+      q: 'What is SS Psychological Life Care Centre?',
+      a: 'SS Psychological Life Care Centre is a premier clinical psychology and mental health platform led by RCI-registered psychologists with over 20 years of counselling and clinical experience. We provide individual psychotherapy, couples counselling, child/adolescent guidance, clinical assessments, and professional internship training.'
     },
     {
       category: 'general',
@@ -45,7 +45,7 @@ const FAQ = () => {
     {
       category: 'emergency',
       q: 'What should I do in a psychiatric emergency?',
-      a: 'SS Psych Life Care provides scheduled therapy consultations. If you or someone you know is in immediate crisis, please call our direct clinic helplines at 9716129129 / 9899555507, national emergency services at 112, or visit the nearest hospital emergency room immediately.'
+      a: 'SS Psychological Life Care Centre provides scheduled therapy consultations. If you or someone you know is in immediate crisis, please call our direct clinic helplines at 9716129129 / 9899555507, national emergency services at 112, or visit the nearest hospital emergency room immediately.'
     }
   ];
 
@@ -57,7 +57,7 @@ const FAQ = () => {
     <div className="faq-page py-5" style={{ backgroundColor: '#fcfcfd' }}>
       <SEOHead
         title="Frequently Asked Questions"
-        description="Find answers to common questions about mental health counselling, appointments, confidentiality, and services at SS Psych Life Care."
+        description="Find answers to common questions about mental health counselling, appointments, confidentiality, and services at SS Psychological Life Care Centre."
         url="/faq"
       />
 

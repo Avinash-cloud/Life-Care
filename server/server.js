@@ -144,7 +144,7 @@ io.on('connection', (socket) => {
 
 // Root route
 app.get('/api', (req, res) => {
-  res.send('SS Psych Life Care API is running');
+  res.send('SS Psychological Life Care Centre API is running');
 });
 
 // Error handler middleware

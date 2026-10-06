@@ -281,8 +281,8 @@ const AssessmentDetail = ({ defaultId }) => {
                 <span>Exit</span>
               </Link>
               <div className="screener-brand-lockup d-none d-sm-flex">
-                <img src={Logo} alt="SS Psych Life Care" className="screener-logo-img" />
-                <span className="screener-brand-name">SS Psych Life Care</span>
+                <img src={Logo} alt="SS Psychological Life Care Centre" className="screener-logo-img" />
+                <span className="screener-brand-name">SS Psychological Life Care Centre</span>
               </div>
             </div>
 
@@ -408,8 +408,8 @@ const AssessmentDetail = ({ defaultId }) => {
                 <span>All Tests</span>
               </Link>
               <div className="screener-brand-lockup d-none d-sm-flex">
-                <img src={Logo} alt="SS Psych Life Care" className="screener-logo-img" />
-                <span className="screener-brand-name">SS Psych Life Care</span>
+                <img src={Logo} alt="SS Psychological Life Care Centre" className="screener-logo-img" />
+                <span className="screener-brand-name">SS Psychological Life Care Centre</span>
               </div>
             </div>
 
@@ -511,7 +511,7 @@ const AssessmentDetail = ({ defaultId }) => {
                   </Link>
                   <a
                     href={`https://wa.me/9716129129?text=${encodeURIComponent(
-                      `Hello SS Psych Life Care, I completed the ${assessment.title} assessment (Score: ${finalScore}/${assessment.maxScore} - ${resultBand?.label}) and would like to speak with a psychologist.`
+                      `Hello SS Psychological Life Care Centre, I completed the ${assessment.title} assessment (Score: ${finalScore}/${assessment.maxScore} - ${resultBand?.label}) and would like to speak with a psychologist.`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"

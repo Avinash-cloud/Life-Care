@@ -38,11 +38,11 @@ const WelcomePopup = () => {
 
         <div className="welcome-popup-content">
           <div className="welcome-popup-logo">
-            <img src={Logo} alt="SS Psych Life Care" />
+            <img src={Logo} alt="SS Psychological Life Care Centre" />
           </div>
 
           <h2 className="welcome-popup-title">
-            Welcome to <span className="text-gradient">SS Psychare</span>
+            Welcome to <span className="text-gradient">SS Psychological Life Care Centre</span>
           </h2>
 
           <div className="welcome-popup-badge">

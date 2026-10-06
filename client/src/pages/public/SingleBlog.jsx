@@ -148,7 +148,7 @@ const SingleBlog = () => {
         keywords={blog.metaKeywords || (blog.tags && blog.tags.join(', '))}
         image={blog.featuredImage || defaultImage}
         url={`/blog/${blog.slug || blog._id}`}
-        author={blog.author?.name || 'SS Psych Life Care'}
+        author={blog.author?.name || 'SS Psychological Life Care Centre'}
         publishedTime={blog.publishedAt || blog.createdAt}
         modifiedTime={blog.updatedAt}
         type="article"
@@ -219,7 +219,7 @@ const SingleBlog = () => {
                 }}
               />
               <div>
-                <h6 className="mb-0 fw-bold text-dark">{blog.author?.name || 'SS Psych Life Care Team'}</h6>
+                <h6 className="mb-0 fw-bold text-dark">{blog.author?.name || 'SS Psychological Life Care Centre Team'}</h6>
                 <small className="text-muted">Mental Health Professional</small>
               </div>
             </div>
@@ -354,7 +354,7 @@ const SingleBlog = () => {
                   }}
                 />
                 <div>
-                  <h6 className="fw-bold mb-1">{blog.author?.name || 'SS Psych Life Care Team'}</h6>
+                  <h6 className="fw-bold mb-1">{blog.author?.name || 'SS Psychological Life Care Centre Team'}</h6>
                   <p className="text-muted small mb-0">
                     Dedicated to spreading evidence-based awareness and practical strategies for mental health, emotional wellness, and balanced living.
                   </p>
