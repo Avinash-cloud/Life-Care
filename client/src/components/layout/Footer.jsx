@@ -60,7 +60,12 @@ const Footer = () => {
               <div className="footer-contact-item">
                 <i className="bi bi-geo-alt footer-contact-icon"></i>
                 <div>
-                  <p className="footer-contact-text"><strong>Main Branch:</strong> A15, 2nd Floor, LIC Colony, Paschim Vihar, 110087 (Near St Marks School Meerabagh)</p>
+                  <p className="footer-contact-text">
+                    <strong>Main Branch:</strong> A15, 2nd Floor, LIC Colony, Paschim Vihar, 110087 (Near St Marks School Meerabagh){' '}
+                    <a href="https://share.google/pWEO0c1h3q46el5zY" target="_blank" rel="noopener noreferrer" className="text-decoration-none" style={{ color: 'var(--primary-color, #2b6cb0)', whiteSpace: 'nowrap' }}>
+                      <i className="bi bi-geo-alt-fill me-1"></i>Directions ↗
+                    </a>
+                  </p>
                   <p className="footer-contact-text"><strong>Dwarka Branch:</strong> Flat No 30A DDA Flat Pocket 2, Dr Lean, Dwarka Sector 6, 110075</p>
                   <p className="footer-contact-text"><strong>South Delhi Branch:</strong> 773, Sector A Main Rd, Desu Colony, Vasant Kunj, 110070</p>
                 </div>

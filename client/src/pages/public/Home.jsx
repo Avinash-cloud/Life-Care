@@ -393,7 +393,19 @@ const Home = () => {
                       <i className="bi bi-geo-alt-fill text-primary me-2 mt-1 fs-5"></i>
                       <div>
                         <strong className="text-dark">Main Branch - Paschim Vihar</strong>
-                        <p className="mb-0 text-muted">A15 Second Floor LIC Colony, Paschim Vihar, 110087<br/><span className="text-secondary">(Near St Marks School Meerabagh)</span></p>
+                        <p className="mb-0 text-muted">
+                          A15 Second Floor LIC Colony, Paschim Vihar, 110087<br/>
+                          <span className="text-secondary">(Near St Marks School Meerabagh)</span>{' '}
+                          <a 
+                            href="https://share.google/pWEO0c1h3q46el5zY" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="badge bg-primary-subtle text-primary text-decoration-none ms-1"
+                            style={{ fontSize: '0.75rem' }}
+                          >
+                            <i className="bi bi-geo-alt-fill me-1"></i>Google Maps ↗
+                          </a>
+                        </p>
                       </div>
                     </div>
                   </div>
