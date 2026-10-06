@@ -75,7 +75,16 @@ const Contact = () => {
                     <p className="mb-2 text-dark">
                       <strong className="text-primary">Main Branch:</strong><br />
                       A15 Second Floor LIC Colony, Paschim Vihar, 110087<br />
-                      <span className="small text-muted">(Near St Marks School Meerabagh)</span>
+                      <span className="small text-muted">(Near St Marks School Meerabagh)</span>{' '}
+                      <a 
+                        href="https://share.google/pWEO0c1h3q46el5zY" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="badge bg-primary-subtle text-primary text-decoration-none ms-1"
+                        title="Open in Google Maps"
+                      >
+                        <i className="bi bi-geo-alt-fill me-1"></i>Google Maps ↗
+                      </a>
                     </p>
                     <p className="mb-2 text-dark">
                       <strong className="text-primary">Dwarka Branch:</strong><br />
@@ -265,21 +274,39 @@ const Contact = () => {
 
         {/* Map Section */}
         <div className="card map-card mb-5 border-0 shadow-sm overflow-hidden">
-          <div className="card-header bg-white py-3 border-0">
-            <h5 className="mb-0 fw-bold">
-              <i className="bi bi-geo-alt-fill text-primary me-2"></i>
-              Main Branch Location: Paschim Vihar, New Delhi
-            </h5>
+          <div className="card-header bg-white py-3 border-0 d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div>
+              
+              <h5 className="mb-1 fw-bold">
+                <i className="bi bi-geo-alt-fill text-danger me-2"></i>
+                SS Psychological Life Care Center — Main Branch
+              </h5>
+              <p className="small text-muted mb-0">
+                A15, Second Floor, Jeevan Niketan (LIC Colony), Paschim Vihar, New Delhi - 110087 (Near St. Mark's School, Meera Bagh)
+              </p>
+            </div>
+            <a 
+              href="https://share.google/pWEO0c1h3q46el5zY" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn btn-primary rounded-pill px-3 py-2 fw-semibold d-inline-flex align-items-center shadow-sm"
+              style={{ fontSize: '0.875rem' }}
+            >
+              <i className="bi bi-google me-2"></i>
+              Open in Google Maps / Directions
+              <i className="bi bi-box-arrow-up-right ms-2 small"></i>
+            </a>
           </div>
           <div className="card-body p-0">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.8660309990715!2d77.08722!3d28.66378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d046f481c9a63%3A0x6b7cfc8cf5c6bf7b!2sLIC%20Colony%2C%20Paschim%20Vihar%2C%20New%20Delhi%2C%20Delhi%20110087!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.911933007253!2d77.082426!3d28.6623524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d05909056b4eb%3A0x8062831ac8ae440d!2sSS%20Psychological%20Life%20Care%20Center!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
               width="100%" 
-              height="400" 
+              height="430" 
               style={{ border: 0 }} 
               allowFullScreen="" 
               loading="lazy"
-              title="Office Location - Paschim Vihar"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="SS Psychological Life Care Center Location - Paschim Vihar"
             ></iframe>
           </div>
         </div>
