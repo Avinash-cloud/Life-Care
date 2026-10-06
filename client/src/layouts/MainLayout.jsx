@@ -11,7 +11,7 @@ const MainLayout = () => {
 
   if (isAssessmentFlow) {
     return (
-      <div className="assessment-flow-layout" style={{ height: '100vh', maxHeight: '100vh', overflow: 'hidden' }}>
+      <div className="assessment-flow-layout">
         <Outlet />
       </div>
     );

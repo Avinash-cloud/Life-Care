@@ -100,7 +100,7 @@ const Privacy = () => {
               <section className="mb-5">
                 <h3 className="fw-bold text-dark mb-3">6. Your Rights</h3>
                 <p className="text-muted leading-relaxed">
-                  You have the right to request a summary of your treatment records, update personal contact details, or request account closure at any time through your client portal or by emailing our privacy desk at <strong>contact@plcc.in</strong>.
+                  You have the right to request a summary of your treatment records, update personal contact details, or request account closure at any time through your client portal or by emailing our privacy desk at <strong>sspsychological5@gmail.com</strong>.
                 </p>
               </section>
 
@@ -111,9 +111,9 @@ const Privacy = () => {
                 </p>
                 <p className="text-muted mb-0">
                   <strong>SS Psych Life Care</strong><br />
-                  Dwarka Sector 6, New Delhi - 110075<br />
-                  Email: <a href="mailto:contact@plcc.in" className="text-primary text-decoration-none">contact@plcc.in</a><br />
-                  Phone: <a href="tel:9716129129" className="text-primary text-decoration-none">+91 9716129129</a>
+                  Main Branch: A15 Second Floor LIC Colony, Paschim Vihar, 110087<br />
+                  Email: <a href="mailto:sspsychological5@gmail.com" className="text-primary text-decoration-none">sspsychological5@gmail.com</a><br />
+                  Phone: <a href="tel:9716129129" className="text-primary text-decoration-none">+91 9716129129</a> / <a href="tel:9899555507" className="text-primary text-decoration-none">+91 9899555507</a>
                 </p>
               </section>
 

@@ -34,7 +34,7 @@ export const FREQUENTLY_ASKED_QUESTIONS = [
   },
   {
     question: "What should I do if my score indicates moderate or severe distress?",
-    answer: "A moderate or severe score indicates that you may be carrying significant emotional or psychological strain. We encourage you to reach out to one of our licensed psychologists for a compassionate, non-judgmental 1-on-1 consultation. In urgent or crisis situations, please reach out immediately to telephonic helplines like Tele-MANAS (14416) or KIRAN (1800-599-0019)."
+    answer: "A moderate or severe score indicates that you may be carrying significant emotional or psychological strain. We encourage you to reach out to one of our licensed psychologists for a compassionate, non-judgmental 1-on-1 consultation. In urgent or crisis situations, please reach out immediately to our clinic helplines at 9716129129 / 9899555507."
   }
 ];
 

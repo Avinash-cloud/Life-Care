@@ -62,6 +62,10 @@ const publicRoutes = [
   '/cms/blogs',
   '/cms/videos', 
   '/cms/gallery',
+  '/cms/counsellors',
+  '/appointments/available-slots',
+  '/appointments/public-book',
+  '/callback',
   '/auth/login',
   '/auth/register',
   '/auth/verify-email',
@@ -190,7 +194,13 @@ export const clientAPI = {
 export const appointmentAPI = {
   getAvailableSlots: (counsellorId, date) => api.get(`/appointments/available-slots?counsellorId=${counsellorId}&date=${date}`),
   bookAppointment: (appointmentData) => api.post('/appointments/book', appointmentData),
+  publicBookAppointment: (appointmentData) => api.post('/appointments/public-book', appointmentData),
   verifyPayment: (paymentData) => api.post('/appointments/verify-payment', paymentData)
+};
+
+// Lead / Callback API
+export const leadAPI = {
+  createCallback: (leadData) => api.post('/callback', leadData)
 };
 
 // Counsellor API

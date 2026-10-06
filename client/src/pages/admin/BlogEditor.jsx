@@ -221,6 +221,7 @@ const BlogEditor = () => {
               <Form.Group className="mb-3">
                 <Form.Label>Content *</Form.Label>
                 <LexicalEditor
+                  key={id || 'new'}
                   initialContent={blog.content}
                   onChange={handleContentChange}
                   placeholder="Start writing your blog post..."

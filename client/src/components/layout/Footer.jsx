@@ -54,29 +54,29 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div className="footer-contact">
-            <h6 className="footer-heading">Get in Touch</h6>
-            <div className="footer-contact-item">
-              <i className="bi bi-geo-alt footer-contact-icon"></i>
-              <div>
-                <p className="footer-contact-text">Dwarka Sector 6, 110075</p>
-                <p className="footer-contact-text">A15, Paschim Vihar, 110087</p>
-                <p className="footer-contact-text">773, Sector A, Vasant Kunj, 110070</p>
+            {/* Contact Info */}
+            <div className="footer-contact">
+              <h6 className="footer-heading">Get in Touch</h6>
+              <div className="footer-contact-item">
+                <i className="bi bi-geo-alt footer-contact-icon"></i>
+                <div>
+                  <p className="footer-contact-text"><strong>Main Branch:</strong> A15, 2nd Floor, LIC Colony, Paschim Vihar, 110087 (Near St Marks School Meerabagh)</p>
+                  <p className="footer-contact-text"><strong>Dwarka Branch:</strong> Flat No 30A DDA Flat Pocket 2, Dr Lean, Dwarka Sector 6, 110075</p>
+                  <p className="footer-contact-text"><strong>South Delhi Branch:</strong> 773, Sector A Main Rd, Desu Colony, Vasant Kunj, 110070</p>
+                </div>
+              </div>
+              <div className="footer-contact-item">
+                <i className="bi bi-telephone footer-contact-icon"></i>
+                <div>
+                  <a href="tel:9716129129" className="footer-link">9716129129</a>
+                  <a href="tel:9899555507" className="footer-link">9899555507</a>
+                </div>
+              </div>
+              <div className="footer-contact-item">
+                <i className="bi bi-envelope footer-contact-icon"></i>
+                <a href="mailto:sspsychological5@gmail.com" className="footer-link">sspsychological5@gmail.com</a>
               </div>
             </div>
-            <div className="footer-contact-item">
-              <i className="bi bi-telephone footer-contact-icon"></i>
-              <div>
-                <a href="tel:9716129129" className="footer-link">9716129129</a>
-                <a href="tel:9899555507" className="footer-link">9899555507</a>
-              </div>
-            </div>
-            <div className="footer-contact-item">
-              <i className="bi bi-envelope footer-contact-icon"></i>
-              <a href="mailto:contact@plcc.in" className="footer-link">contact@plcc.in</a>
-            </div>
-          </div>
         </div>
 
         {/* Footer Bottom */}

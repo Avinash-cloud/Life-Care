@@ -132,44 +132,76 @@
 }
 
 .editor-list-ol {
-  padding-left: 24px;
-  margin: 12px 0;
+  padding-left: 36px !important;
+  margin: 12px 0 !important;
+  list-style-type: decimal !important;
+  list-style-position: outside !important;
 }
 
 .editor-list-ul {
-  padding-left: 24px;
-  margin: 12px 0;
+  padding-left: 36px !important;
+  margin: 12px 0 !important;
+  list-style-type: disc !important;
+  list-style-position: outside !important;
 }
 
 .editor-listitem {
-  margin: 6px 0;
-  line-height: 1.6;
+  display: list-item !important;
+  margin: 6px 0 !important;
+  line-height: 1.6 !important;
+  padding-left: 4px !important;
 }
 
-.editor-list-ol .editor-listitem {
-  counter-increment: list-counter;
+.editor-list-ol > .editor-listitem {
+  list-style-type: decimal !important;
+}
+
+.editor-list-ul > .editor-listitem {
+  list-style-type: disc !important;
 }
 
 .editor-list-ul .editor-listitem::marker {
   color: #3498db;
-  font-size: 1.2em;
+  font-size: 1.1em;
+}
+
+.editor-list-ol .editor-listitem::marker {
+  color: #2c3e50;
+  font-weight: 600;
 }
 
 .editor-nested-listitem {
-  list-style-type: none;
+  list-style-type: none !important;
+}
+
+.editor-input ul {
+  list-style-type: disc !important;
+  padding-left: 36px !important;
+  margin: 12px 0 !important;
+}
+
+.editor-input ol {
+  list-style-type: decimal !important;
+  padding-left: 36px !important;
+  margin: 12px 0 !important;
+}
+
+.editor-input li {
+  display: list-item !important;
+  margin: 6px 0 !important;
 }
 
 .editor-link {
-  color: #3498db;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
+  color: #2563eb !important;
+  text-decoration: underline !important;
+  cursor: pointer;
+  font-weight: 500;
   transition: all 0.2s ease;
 }
 
 .editor-link:hover {
-  color: #2980b9;
-  border-bottom-color: #3498db;
-  text-decoration: none;
+  color: #1d4ed8 !important;
+  text-decoration: underline !important;
 }
 
 .editor-text-bold {

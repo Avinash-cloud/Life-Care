@@ -79,7 +79,15 @@ function $createImageNode(src, alt) {
 }
 import { Button, ButtonGroup, Dropdown, Modal, Form } from 'react-bootstrap';
 import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
-import { $createListNode, $createListItemNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list';
+import { 
+  $createListNode, 
+  $createListItemNode, 
+  $isListNode, 
+  $isListItemNode, 
+  INSERT_ORDERED_LIST_COMMAND, 
+  INSERT_UNORDERED_LIST_COMMAND, 
+  REMOVE_LIST_COMMAND 
+} from '@lexical/list';
 import { $createCodeNode } from '@lexical/code';
 import { $createLinkNode, TOGGLE_LINK_COMMAND, $isLinkNode } from '@lexical/link';
 import { $setBlocksType } from '@lexical/selection';
@@ -181,21 +189,59 @@ function ToolbarPlugin() {
       if (selection.hasFormat('underline')) formats.add('underline');
       if (selection.hasFormat('strikethrough')) formats.add('strikethrough');
       if (selection.hasFormat('code')) formats.add('code');
+
+      // Check if current selection or parent is a Link
+      const anchorNode = selection.anchor.getNode();
+      const parent = anchorNode.getParent();
+      if ($isLinkNode(anchorNode) || $isLinkNode(parent)) {
+        formats.add('link');
+      }
+
       setActiveFormats(formats);
       
-      const anchorNode = selection.anchor.getNode();
+      // Check if current selection is inside a list
+      let listNode = null;
+      if ($isListNode(anchorNode)) {
+        listNode = anchorNode;
+      } else if ($isListItemNode(anchorNode)) {
+        listNode = anchorNode.getParent();
+      } else if (parent && $isListItemNode(parent)) {
+        listNode = parent.getParent();
+      } else if (parent && $isListNode(parent)) {
+        listNode = parent;
+      }
+
       const element = anchorNode.getKey() === 'root' ? anchorNode : anchorNode.getTopLevelElementOrThrow();
-      const elementKey = element.getKey();
-      const elementDOM = editor.getElementByKey(elementKey);
-      
-      if (elementDOM !== null) {
-        if (elementDOM.tagName === 'H1') setBlockType('h1');
-        else if (elementDOM.tagName === 'H2') setBlockType('h2');
-        else if (elementDOM.tagName === 'H3') setBlockType('h3');
-        else if (elementDOM.tagName === 'H4') setBlockType('h4');
-        else if (elementDOM.tagName === 'BLOCKQUOTE') setBlockType('quote');
-        else if (elementDOM.tagName === 'CODE') setBlockType('code');
-        else setBlockType('paragraph');
+      if (!listNode && $isListNode(element)) {
+        listNode = element;
+      }
+
+      if ($isListNode(listNode)) {
+        const listType = typeof listNode.getListType === 'function' ? listNode.getListType() : null;
+        const tag = typeof listNode.getTag === 'function' ? listNode.getTag() : null;
+        if (listType === 'number' || tag === 'ol') {
+          setBlockType('number');
+        } else {
+          setBlockType('bullet');
+        }
+      } else {
+        const elementKey = element.getKey();
+        const elementDOM = editor.getElementByKey(elementKey);
+        
+        if (elementDOM !== null) {
+          const tagName = elementDOM.tagName;
+          if (tagName === 'H1') setBlockType('h1');
+          else if (tagName === 'H2') setBlockType('h2');
+          else if (tagName === 'H3') setBlockType('h3');
+          else if (tagName === 'H4') setBlockType('h4');
+          else if (tagName === 'BLOCKQUOTE') setBlockType('quote');
+          else if (tagName === 'CODE') setBlockType('code');
+          else if (tagName === 'UL') setBlockType('bullet');
+          else if (tagName === 'OL') setBlockType('number');
+          else setBlockType('paragraph');
+        } else {
+          setBlockType('paragraph');
+        }
       }
     }
   }, [editor]);
@@ -212,17 +258,20 @@ function ToolbarPlugin() {
     editor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
   };
 
-  const formatBlock = (blockType) => {
+  const formatBlock = (newBlockType) => {
+    if (blockType === 'bullet' || blockType === 'number') {
+      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+    }
     editor.update(() => {
       const selection = $getSelection();
       if (selection) {
-        if (blockType === 'paragraph') {
+        if (newBlockType === 'paragraph') {
           $setBlocksType(selection, () => $createParagraphNode());
-        } else if (blockType.startsWith('h')) {
-          $setBlocksType(selection, () => $createHeadingNode(blockType));
-        } else if (blockType === 'quote') {
+        } else if (newBlockType.startsWith('h')) {
+          $setBlocksType(selection, () => $createHeadingNode(newBlockType));
+        } else if (newBlockType === 'quote') {
           $setBlocksType(selection, () => $createQuoteNode());
-        } else if (blockType === 'code') {
+        } else if (newBlockType === 'code') {
           $setBlocksType(selection, () => $createCodeNode());
         }
       }
@@ -230,39 +279,127 @@ function ToolbarPlugin() {
   };
 
   const insertList = (listType) => {
-    if (listType === 'bullet') {
-      editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+    editor.focus();
+    editor.update(() => {
+      let selection = $getSelection();
+      if (!$isRangeSelection(selection)) {
+        const root = $getRoot();
+        const lastChild = root.getLastChild();
+        if (lastChild && typeof lastChild.selectEnd === 'function') {
+          lastChild.selectEnd();
+        } else {
+          const paragraph = $createParagraphNode();
+          root.append(paragraph);
+          paragraph.select();
+        }
+      }
+    });
+
+    if (blockType === listType) {
+      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
     } else {
-      editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+      if (listType === 'bullet') {
+        editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+      } else {
+        editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+      }
     }
   };
 
   const insertLink = () => {
-    const selection = $getSelection();
-    if ($isRangeSelection(selection)) {
-      const selectedText = selection.getTextContent();
-      setLinkText(selectedText);
-      setLinkUrl('');
-      setShowLinkModal(true);
-    }
+    let selectedText = '';
+    let existingUrl = '';
+
+    // Safely read editor state without throwing
+    editor.getEditorState().read(() => {
+      const selection = $getSelection();
+      if ($isRangeSelection(selection)) {
+        selectedText = selection.getTextContent();
+
+        const anchorNode = selection.anchor.getNode();
+        const parent = anchorNode.getParent();
+        if ($isLinkNode(parent)) {
+          existingUrl = parent.getURL();
+        } else if ($isLinkNode(anchorNode)) {
+          existingUrl = anchorNode.getURL();
+        }
+      }
+    });
+
+    setLinkText(selectedText);
+    setLinkUrl(existingUrl);
+    setShowLinkModal(true);
   };
 
   const handleLinkSubmit = () => {
-    if (linkUrl) {
-      editor.update(() => {
-        const selection = $getSelection();
-        if ($isRangeSelection(selection)) {
-          if (linkText && selection.getTextContent() === '') {
-            const textNode = $createTextNode(linkText);
-            const linkNode = $createLinkNode(linkUrl);
-            linkNode.append(textNode);
-            selection.insertNodes([linkNode]);
-          } else {
-            editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkUrl);
-          }
-        }
-      });
+    if (!linkUrl.trim()) {
+      setShowLinkModal(false);
+      return;
     }
+
+    let formattedUrl = linkUrl.trim();
+    if (
+      !/^https?:\/\//i.test(formattedUrl) && 
+      !/^mailto:/i.test(formattedUrl) && 
+      !/^tel:/i.test(formattedUrl) && 
+      !/^\//i.test(formattedUrl) && 
+      !/^#/i.test(formattedUrl)
+    ) {
+      formattedUrl = 'https://' + formattedUrl;
+    }
+
+    const displayText = linkText.trim() || formattedUrl;
+
+    editor.focus();
+    editor.update(() => {
+      let selection = $getSelection();
+
+      // If selection was lost when modal gained focus, restore or select end of editor
+      if (!$isRangeSelection(selection)) {
+        const root = $getRoot();
+        const lastChild = root.getLastChild();
+        if (lastChild && typeof lastChild.selectEnd === 'function') {
+          lastChild.selectEnd();
+        } else {
+          const paragraph = $createParagraphNode();
+          root.append(paragraph);
+          paragraph.select();
+        }
+        selection = $getSelection();
+      }
+
+      if ($isRangeSelection(selection)) {
+        const currentSelectedText = selection.getTextContent();
+        const anchorNode = selection.anchor.getNode();
+        const parent = anchorNode.getParent();
+        const isCurrentLink = $isLinkNode(anchorNode) || $isLinkNode(parent);
+
+        if (isCurrentLink) {
+          editor.dispatchCommand(TOGGLE_LINK_COMMAND, formattedUrl);
+        } else if (currentSelectedText && currentSelectedText === displayText) {
+          editor.dispatchCommand(TOGGLE_LINK_COMMAND, formattedUrl);
+        } else {
+          const linkNode = $createLinkNode(formattedUrl);
+          const textNode = $createTextNode(displayText);
+          linkNode.append(textNode);
+          selection.insertNodes([linkNode]);
+        }
+      }
+    });
+
+    setShowLinkModal(false);
+    setLinkUrl('');
+    setLinkText('');
+  };
+
+  const handleRemoveLink = () => {
+    editor.focus();
+    editor.update(() => {
+      const selection = $getSelection();
+      if ($isRangeSelection(selection)) {
+        editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+      }
+    });
     setShowLinkModal(false);
     setLinkUrl('');
     setLinkText('');
@@ -272,6 +409,34 @@ function ToolbarPlugin() {
     setImageUrl('');
     setImageAlt('');
     setShowImageModal(true);
+  };
+
+  const handleImageSubmit = () => {
+    if (imageUrl) {
+      editor.focus();
+      editor.update(() => {
+        let selection = $getSelection();
+        if (!$isRangeSelection(selection)) {
+          const root = $getRoot();
+          const lastChild = root.getLastChild();
+          if (lastChild && typeof lastChild.selectEnd === 'function') {
+            lastChild.selectEnd();
+          } else {
+            const paragraph = $createParagraphNode();
+            root.append(paragraph);
+            paragraph.select();
+          }
+          selection = $getSelection();
+        }
+        if ($isRangeSelection(selection)) {
+          const imageNode = $createImageNode(imageUrl, imageAlt);
+          selection.insertNodes([imageNode]);
+        }
+      });
+    }
+    setShowImageModal(false);
+    setImageUrl('');
+    setImageAlt('');
   };
 
   const handleImageUpload = async (file) => {
@@ -296,20 +461,6 @@ function ToolbarPlugin() {
     }
   };
 
-  const handleImageSubmit = () => {
-    if (imageUrl) {
-      editor.update(() => {
-        const selection = $getSelection();
-        if ($isRangeSelection(selection)) {
-          const imageNode = $createImageNode(imageUrl, imageAlt);
-          selection.insertNodes([imageNode]);
-        }
-      });
-    }
-    setShowImageModal(false);
-    setImageUrl('');
-    setImageAlt('');
-  };
 
   const getBlockTypeLabel = () => {
     switch (blockType) {
@@ -319,6 +470,8 @@ function ToolbarPlugin() {
       case 'h4': return 'Heading 4';
       case 'quote': return 'Quote';
       case 'code': return 'Code Block';
+      case 'bullet': return 'Bullet List';
+      case 'number': return 'Numbered List';
       default: return 'Paragraph';
     }
   };
@@ -345,6 +498,7 @@ function ToolbarPlugin() {
           <ButtonGroup size="sm" className="me-2">
             <Button 
               variant={activeFormats.has('bold') ? 'primary' : 'outline-secondary'}
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => formatText('bold')}
               title="Bold (Ctrl+B)"
             >
@@ -352,6 +506,7 @@ function ToolbarPlugin() {
             </Button>
             <Button 
               variant={activeFormats.has('italic') ? 'primary' : 'outline-secondary'}
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => formatText('italic')}
               title="Italic (Ctrl+I)"
             >
@@ -359,6 +514,7 @@ function ToolbarPlugin() {
             </Button>
             <Button 
               variant={activeFormats.has('underline') ? 'primary' : 'outline-secondary'}
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => formatText('underline')}
               title="Underline (Ctrl+U)"
             >
@@ -366,6 +522,7 @@ function ToolbarPlugin() {
             </Button>
             <Button 
               variant={activeFormats.has('strikethrough') ? 'primary' : 'outline-secondary'}
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => formatText('strikethrough')}
               title="Strikethrough"
             >
@@ -375,14 +532,16 @@ function ToolbarPlugin() {
           
           <ButtonGroup size="sm" className="me-2">
             <Button 
-              variant="outline-secondary"
+              variant={blockType === 'bullet' ? 'primary' : 'outline-secondary'}
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => insertList('bullet')}
               title="Bullet List"
             >
               <i className="bi bi-list-ul"></i>
             </Button>
             <Button 
-              variant="outline-secondary"
+              variant={blockType === 'number' ? 'primary' : 'outline-secondary'}
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => insertList('number')}
               title="Numbered List"
             >
@@ -392,9 +551,9 @@ function ToolbarPlugin() {
           
           <ButtonGroup size="sm" className="me-2">
             <Button 
-              variant="outline-secondary"
+              variant={activeFormats.has('link') ? 'primary' : 'outline-secondary'}
               onClick={insertLink}
-              title="Insert Link"
+              title={activeFormats.has('link') ? 'Edit Link' : 'Insert Link'}
             >
               <i className="bi bi-link-45deg"></i>
             </Button>
@@ -407,6 +566,7 @@ function ToolbarPlugin() {
             </Button>
             <Button 
               variant={activeFormats.has('code') ? 'primary' : 'outline-secondary'}
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => formatText('code')}
               title="Inline Code"
             >
@@ -421,41 +581,55 @@ function ToolbarPlugin() {
         show={showLinkModal} 
         onHide={() => setShowLinkModal(false)} 
         centered
-        backdrop={false}
-        style={{ zIndex: 1055 }}
+        style={{ zIndex: 1060 }}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Insert Link</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group className="mb-3">
-            <Form.Label>URL</Form.Label>
-            <Form.Control
-              type="url"
-              value={linkUrl}
-              onChange={(e) => setLinkUrl(e.target.value)}
-              placeholder="https://example.com"
-              autoFocus
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Link Text</Form.Label>
-            <Form.Control
-              type="text"
-              value={linkText}
-              onChange={(e) => setLinkText(e.target.value)}
-              placeholder="Link text"
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowLinkModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleLinkSubmit}>
-            Insert Link
-          </Button>
-        </Modal.Footer>
+        <Form onSubmit={(e) => { e.preventDefault(); handleLinkSubmit(); }}>
+          <Modal.Header closeButton>
+            <Modal.Title>{linkUrl ? 'Edit / Insert Link' : 'Insert Link'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-semibold">URL / Destination Address <span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="text"
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
+                placeholder="https://example.com or /contact"
+                autoFocus
+                required
+              />
+              <Form.Text className="text-muted small">
+                Paste any web address (e.g. https://google.com) or site route (e.g. /about, /consilar)
+              </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-semibold">Link Display Text</Form.Label>
+              <Form.Control
+                type="text"
+                value={linkText}
+                onChange={(e) => setLinkText(e.target.value)}
+                placeholder="Clickable text (defaults to URL or selected text)"
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer className="d-flex justify-content-between">
+            <div>
+              {linkUrl && (
+                <Button variant="outline-danger" size="sm" onClick={handleRemoveLink} type="button">
+                  <i className="bi bi-link-45deg me-1"></i>Remove Link
+                </Button>
+              )}
+            </div>
+            <div className="d-flex gap-2">
+              <Button variant="secondary" onClick={() => setShowLinkModal(false)} type="button">
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit" disabled={!linkUrl.trim()}>
+                Save Link
+              </Button>
+            </div>
+          </Modal.Footer>
+        </Form>
       </Modal>
       
       {/* Image Modal */}
@@ -532,11 +706,14 @@ function ContentPlugin({ onChange }) {
       
       // Smart content output: JSON for rich content, HTML for simple content
       const jsonState = editorState.toJSON();
-      const hasRichContent = JSON.stringify(jsonState).includes('"format"') || 
-                            JSON.stringify(jsonState).includes('"type":"heading"') ||
-                            JSON.stringify(jsonState).includes('"type":"list"');
+      const jsonStr = JSON.stringify(jsonState);
+      const hasRichContent = jsonStr.includes('"format"') || 
+                            jsonStr.includes('"type":"heading"') ||
+                            jsonStr.includes('"type":"list"') ||
+                            jsonStr.includes('"type":"link"') ||
+                            jsonStr.includes('"type":"image"');
       
-      const content = hasRichContent ? JSON.stringify(jsonState) : $generateHtmlFromNodes(editor, null);
+      const content = hasRichContent ? jsonStr : $generateHtmlFromNodes(editor, null);
       onChange?.(content, textContent, editorState);
     });
   };
@@ -546,9 +723,11 @@ function ContentPlugin({ onChange }) {
 
 function InitialContentPlugin({ initialContent }) {
   const [editor] = useLexicalComposerContext();
+  const hasInitializedRef = React.useRef(false);
   
   useEffect(() => {
-    if (initialContent && initialContent.trim()) {
+    if (initialContent && initialContent.trim() && !hasInitializedRef.current) {
+      hasInitializedRef.current = true;
       // Smart detection: JSON starts with { or [, HTML contains < tags
       const isJSON = initialContent.trim().startsWith('{') || initialContent.trim().startsWith('[');
       const isHTML = initialContent.includes('<') && initialContent.includes('>');
@@ -580,7 +759,7 @@ function InitialContentPlugin({ initialContent }) {
         });
       }
     }
-  }, []);
+  }, [initialContent, editor]);
   
   return null;
 }

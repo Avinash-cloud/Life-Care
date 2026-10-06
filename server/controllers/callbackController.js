@@ -6,11 +6,14 @@ const ErrorResponse = require('../utils/errorResponse');
 // @access  Public
 exports.createCallbackRequest = async (req, res, next) => {
   try {
-    const { name, phoneNumber, primaryConcern } = req.body;
+    const { name, phoneNumber, primaryConcern, email, subject, source } = req.body;
 
     const callbackRequest = await CallbackRequest.create({
       name,
       phoneNumber,
+      email: email || '',
+      subject: subject || '',
+      source: source || 'website',
       primaryConcern
     });
 

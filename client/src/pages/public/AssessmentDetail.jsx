@@ -277,7 +277,7 @@ const AssessmentDetail = ({ defaultId }) => {
           <header className="screener-top-header">
             <div className="screener-header-left">
               <Link to="/assessments" className="screener-exit-btn" title="Exit to All Assessments">
-                <ArrowLeft size={14} />
+                <ArrowLeft size={16} />
                 <span>Exit</span>
               </Link>
               <div className="screener-brand-lockup d-none d-sm-flex">
@@ -296,7 +296,7 @@ const AssessmentDetail = ({ defaultId }) => {
 
             <div className="screener-header-right">
               <div className="screener-guarantee-chip d-none d-sm-inline-flex">
-                <ShieldCheck size={13} className="text-success" />
+                <ShieldCheck size={14} className="text-success" />
                 <span>100% Confidential</span>
               </div>
               <span className="screener-percent-pill">{progressPercentage}%</span>
@@ -348,7 +348,7 @@ const AssessmentDetail = ({ defaultId }) => {
                         )}
                       </div>
                       <div className={`option-check-circle ${isSelected ? 'active' : ''}`}>
-                        {isSelected && <Check size={12} strokeWidth={3} />}
+                        {isSelected && <Check size={14} strokeWidth={3} />}
                       </div>
                     </button>
                   );
@@ -366,7 +366,7 @@ const AssessmentDetail = ({ defaultId }) => {
                 disabled={currentStep === 0}
                 className="screener-btn-prev"
               >
-                <ArrowLeft size={15} />
+                <ArrowLeft size={16} />
                 <span>Prev</span>
               </button>
 
@@ -390,7 +390,7 @@ const AssessmentDetail = ({ defaultId }) => {
                 className="screener-btn-next"
               >
                 <span>{currentStep === questions.length - 1 ? 'Calculate Score' : 'Next'}</span>
-                <ArrowRight size={15} />
+                <ArrowRight size={16} />
               </button>
             </div>
           </footer>
@@ -404,7 +404,7 @@ const AssessmentDetail = ({ defaultId }) => {
           <header className="screener-top-header">
             <div className="screener-header-left">
               <Link to="/assessments" className="screener-exit-btn">
-                <ArrowLeft size={14} />
+                <ArrowLeft size={16} />
                 <span>All Tests</span>
               </Link>
               <div className="screener-brand-lockup d-none d-sm-flex">
@@ -414,13 +414,14 @@ const AssessmentDetail = ({ defaultId }) => {
             </div>
 
             <div className="screener-header-center">
-              <span className="screener-title-badge">Report: {assessment.title}</span>
+              <span className="screener-title-badge d-none d-sm-inline">Report: {assessment.title}</span>
+              <span className="screener-title-badge d-inline d-sm-none">Report</span>
               <span className="screener-scale-pill d-none d-md-inline">{assessment.scaleName}</span>
             </div>
 
             <div className="screener-header-right">
               <button onClick={handleRestart} className="btn-retake-header" title="Retake this assessment">
-                <RotateCcw size={13} className="me-1" />
+                <RotateCcw size={15} className="me-1" />
                 <span>Retake</span>
               </button>
             </div>
@@ -611,27 +612,27 @@ const AssessmentDetail = ({ defaultId }) => {
                   )}
                 </div>
 
-                {/* 24/7 Crisis Helplines & Non-Diagnostic Disclaimer */}
+                {/* Clinic Helplines & Non-Diagnostic Disclaimer */}
                 <div className="report-card crisis-disclaimer-card">
                   <div className="crisis-title-row">
-                    <PhoneCall size={13} className="text-amber me-1" />
-                    <span className="crisis-title-text">24/7 Free Helplines</span>
+                    <PhoneCall size={13} className="text-emerald-700 me-1" />
+                    <span className="crisis-title-text">Clinic Helplines & Direct Support</span>
                   </div>
 
                   <div className="crisis-pills-row">
-                    <a href="tel:14416" className="helpline-compact-pill">
-                      Tele-MANAS: <strong>14416</strong>
+                    <a href="tel:9716129129" className="helpline-compact-pill">
+                      Call: <strong>+91 97161 29129</strong>
                     </a>
-                    <a href="tel:18005990019" className="helpline-compact-pill">
-                      KIRAN: <strong>1800-599-0019</strong>
+                    <a href="tel:9899555507" className="helpline-compact-pill">
+                      Call: <strong>+91 98995 55507</strong>
                     </a>
-                    <a href="tel:9999666555" className="helpline-compact-pill">
-                      Vandrevala: <strong>9999 666 555</strong>
+                    <a href="mailto:sspsychological5@gmail.com" className="helpline-compact-pill">
+                      Email: <strong>sspsychological5@gmail.com</strong>
                     </a>
                   </div>
 
                   <p className="clinical-disclaimer-text mb-0">
-                    <strong>Note:</strong> Validated screener, not a psychiatric diagnosis. For care, consult a mental health professional.
+                    <strong>Clinical Disclaimer:</strong> This screener provides an indicative score for self-reflection and educational purposes only. It is not a clinical diagnosis or medical directive. A definitive evaluation requires a session with a licensed clinical psychologist.
                   </p>
                 </div>
               </div>

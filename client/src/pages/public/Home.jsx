@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { clientAPI } from '../../services/api';
 import { TESTIMONIALS, CARE_OPTIONS, WHY_CHOOSE_US, FEATURES } from '../../constants';
+import { ASSESSMENTS_LIST } from '../../constants/assessmentsData';
 import SectionHeader from '../../components/ui/SectionHeader';
 import TestimonialCard from '../../components/ui/TestimonialCard';
 import FeatureCard from '../../components/ui/FeatureCard';
@@ -50,11 +51,11 @@ const Home = () => {
   };
   
   const handleBookSession = (counsellor) => {
-    if (!isAuthenticated) {
-      navigate('/login', { state: { from: '/consilar' } });
-      return;
+    if (counsellor?._id) {
+      navigate(`/consilar?counsellor=${counsellor._id}`);
+    } else {
+      navigate('/consilar');
     }
-    navigate('/client/counsellors');
   };
   
   const handleCloseModal = () => {
@@ -62,8 +63,6 @@ const Home = () => {
   };
   
   const handleCheckAvailability = () => {
-    // In a real app, this would make an API call to check availability
-    // For demo purposes, we'll simulate a check with a timeout
     setBookingStep(2);
     setTimeout(() => {
       setIsAvailable(true);
@@ -72,67 +71,183 @@ const Home = () => {
   };
   
   const handleConfirmBooking = () => {
-    // In a real app, this would make an API call to confirm the booking
     alert(`Booking confirmed with ${selectedCounsellor.name} on ${bookingDate} at ${bookingTime}`);
     setShowBookingModal(false);
   };
+
+  const featuredAssessments = ASSESSMENTS_LIST && ASSESSMENTS_LIST.length > 0 
+    ? ASSESSMENTS_LIST.slice(0, 6) 
+    : [];
 
   return (
     <>
       <WelcomePopup />
       {/* Hero Section */}
-      <section className="hero-section" style={{ backgroundImage: `url(${HeroBg})`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', marginTop: '-100px', paddingTop: '180px', paddingBottom: '80px' }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(255, 255, 255, 0.5)', zIndex: 0 }}></div>
-        <div className="container" style={{ position: 'relative', zIndex: 1, paddingTop: '20px' }}>
+      <section 
+        className="hero-section hero-mobile-adjusted" 
+        style={{ 
+          backgroundImage: `url(${HeroBg})`, 
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center', 
+          position: 'relative' 
+        }}
+      >
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(255, 255, 255, 0.55)', zIndex: 0 }}></div>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="row align-items-center">
-            <div className="col-lg-6 order-2 order-lg-1">
-              <h1 className="display-2 font-bold mb-4 mobile-h1" style={{ color: '#000' }}>Trust S S Psych Life Care with your mental health</h1>
-              <p className="lead mb-4" style={{ color: '#333' }}>Our mission is simple: to help you feel better, get better and stay better.</p>
-              <p className="mb-4" style={{ color: '#555' }}>We bring together self-care, support from qualified therapists and psychiatrists, as well as community access to deliver the best quality mental healthcare for your needs.</p>
-              <div className="d-grid gap-3 d-md-flex justify-content-md-start mb-4">
-                <Link to="/consilar" className="btn btn-primary btn-lg">Book Session</Link>
-                <Link to="/about" className="btn btn-secondary btn-lg">Learn More</Link>
+            {/* Headline and CTAs first on mobile so user sees value & actions without scrolling */}
+            <div className="col-lg-6 order-1 order-lg-1">
+              <span className="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold text-uppercase mb-3 d-inline-block">
+                Registered Psychological Healthcare
+              </span>
+              <h1 className="display-4 fw-bold mb-3 mobile-h1" style={{ color: '#1b3c59', lineHeight: 1.2 }}>
+                Trust S S Psych Life Care with your mental health
+              </h1>
+              <p className="lead mb-3" style={{ color: '#2a3441', fontWeight: 500 }}>
+                Our mission is simple: to help you feel better, get better and stay better.
+              </p>
+              <p className="mb-4 text-muted" style={{ fontSize: '0.95rem', lineHeight: 1.6 }}>
+                We bring together self-care tools, certified clinical psychologists, psychiatrists, and personalized treatment plans to deliver compassionate, confidential mental healthcare.
+              </p>
+              
+              <div className="d-grid gap-2 d-sm-flex justify-content-sm-start mb-4 hero-action-buttons">
+                <Link to="/consilar" className="btn btn-primary btn-lg px-4 shadow-sm">
+                  <i className="bi bi-calendar-check me-2"></i>Book Consultation
+                </Link>
+                <a href="#clinical-assessments" className="btn btn-outline-primary btn-lg px-4">
+                  <i className="bi bi-clipboard-pulse me-2"></i>Take Assessment
+                </a>
               </div>
-              <div className="hero-features d-flex flex-wrap gap-4 mt-4">
+              
+              <div className="hero-features d-flex flex-wrap gap-3 gap-md-4 mt-2">
                 <div className="feature-item d-flex align-items-center">
-                  <div className="feature-icon me-2">
-                    <i className="bi bi-shield-check"></i>
+                  <div className="feature-icon me-2 text-success">
+                    <i className="bi bi-shield-check fs-5"></i>
                   </div>
-                  <span>Verified Professionals</span>
+                  <span className="small fw-semibold">RCI Verified Professionals</span>
                 </div>
                 <div className="feature-item d-flex align-items-center">
-                  <div className="feature-icon me-2">
-                    <i className="bi bi-camera-video"></i>
+                  <div className="feature-icon me-2 text-primary">
+                    <i className="bi bi-camera-video fs-5"></i>
                   </div>
-                  <span>Secure Video Sessions</span>
+                  <span className="small fw-semibold">Secure Video & Clinic</span>
                 </div>
                 <div className="feature-item d-flex align-items-center">
-                  <div className="feature-icon me-2">
-                    <i className="bi bi-calendar-check"></i>
+                  <div className="feature-icon me-2 text-teal">
+                    <i className="bi bi-calendar-check fs-5"></i>
                   </div>
-                  <span>Flexible Scheduling</span>
+                  <span className="small fw-semibold">Flexible Scheduling</span>
                 </div>
               </div>
             </div>
-            <div className="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
-              <div className="hero-image-container">
-                <img src={HeroImage} alt="Mental Health Support" className="img-fluid hero-image" />
-                <div className="hero-shape-1"></div>
-                <div className="hero-shape-2"></div>
+            
+            {/* Hero Image */}
+            <div className="col-lg-6 order-2 order-lg-2 mb-4 mb-lg-0 mt-4 mt-lg-0">
+              <div className="hero-image-container text-center">
+                <img 
+                  src={HeroImage} 
+                  alt="Mental Health Psychologist Consultation" 
+                  className="img-fluid hero-image rounded-4 shadow"
+                  style={{ maxHeight: '420px', width: 'auto', objectFit: 'cover' }}
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-     
-
+      {/* Marquee Banner */}
       <MarqueeBanner 
         items={[
-          { icon: 'bi bi-star-fill', text: 'Online Sessions Starting from ₹850 per Hour' }
+          { icon: 'bi bi-star-fill', text: 'Online Sessions Starting from ₹850 per Hour' },
+          { icon: 'bi bi-geo-alt-fill', text: 'Main Branch: Paschim Vihar | Branches in Dwarka & Vasant Kunj' },
+          { icon: 'bi bi-shield-check', text: '100% Confidential Clinical Well-Being Screeners' }
         ]} 
         speed={25} 
       />
+
+      {/* ========================================================
+          Clinical Self-Assessment Section (First Page Section)
+          ======================================================== */}
+      <section id="clinical-assessments" className="py-5 clinical-assessments-home-section">
+        <div className="container">
+          <div className="text-center mb-4">
+            <span className="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill fw-bold text-uppercase mb-2" style={{ fontSize: '0.78rem', letterSpacing: '0.05em' }}>
+              <i className="bi bi-patch-check-fill me-1"></i> Standardized Clinical Tools
+            </span>
+            <h2 className="display-6 fw-bold mb-2" style={{ color: '#1b3c59' }}>
+              Free & Confidential Psychological Assessments
+            </h2>
+            <p className="text-muted mx-auto" style={{ maxWidth: '720px', fontSize: '1rem', lineHeight: 1.6 }}>
+              Take 2-to-4 minute evidence-based clinical screeners curated by licensed psychologists to gain immediate clarity on your symptoms and emotional well-being.
+            </p>
+          </div>
+
+          {/* Featured Assessments Grid */}
+          <div className="row g-3 g-md-4 mb-4">
+            {featuredAssessments.map((test) => (
+              <div className="col-12 col-md-6 col-lg-4" key={test.id}>
+                <div className="card h-100 border-0 shadow-sm assessment-home-card bg-white" style={{ borderRadius: '16px' }}>
+                  <div className="card-body p-4 d-flex flex-column">
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                      <span className="badge bg-light text-primary border px-2.5 py-1 rounded-pill" style={{ fontSize: '0.75rem', fontWeight: 600 }}>
+                        {test.scaleName || test.category?.toUpperCase()}
+                      </span>
+                      <span className="text-muted small">
+                        <i className="bi bi-clock me-1"></i>{test.duration}
+                      </span>
+                    </div>
+                    
+                    <h5 className="card-title fw-bold mt-2 mb-2" style={{ color: '#1b3c59', fontSize: '1.125rem' }}>
+                      {test.title}
+                    </h5>
+                    
+                    <p className="card-text text-muted small mb-3 flex-grow-1" style={{ lineHeight: 1.6 }}>
+                      {test.description}
+                    </p>
+                    
+                    <div className="mb-3 text-muted small p-2 rounded bg-light">
+                      <strong className="text-dark">Measures:</strong> {test.measures}
+                    </div>
+                    
+                    <Link
+                      to={test.id === 'wellness-game' ? '/game' : `/assessments/${test.id}`}
+                      className="btn btn-outline-success w-100 fw-bold d-flex align-items-center justify-content-center gap-2 py-2 mt-auto"
+                      style={{ borderRadius: '10px' }}
+                    >
+                      <span>Start Assessment</span>
+                      <i className="bi bi-arrow-right"></i>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Clinical Assessment Disclaimer Box */}
+          <div className="card border-0 shadow-sm mb-4" style={{ backgroundColor: '#ffffff', borderRadius: '14px', borderLeft: '4px solid #10b981' }}>
+            <div className="card-body p-3 p-md-4 d-flex align-items-start gap-3">
+              <i className="bi bi-shield-check text-success fs-3 flex-shrink-0 mt-1"></i>
+              <div>
+                <h6 className="fw-bold text-success mb-1">Clinical Assessment & Diagnostic Disclaimer</h6>
+                <p className="mb-0 text-muted small" style={{ lineHeight: 1.6 }}>
+                  The online psychological screening assessments provided here are evidence-informed self-evaluation tools designed solely for informational, reflective, and educational purposes. <strong>They do not constitute a clinical psychiatric diagnosis, formal medical evaluation, or treatment plan.</strong> A formal mental health diagnosis can only be determined by a qualified clinical psychologist or licensed medical psychiatrist through a comprehensive diagnostic consultation. If your results suggest elevated stress or emotional distress, we warmly invite you to book a confidential consultation with our certified clinical team.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="text-center">
+            <Link to="/assessments" className="btn btn-primary btn-lg px-4 me-sm-3 mb-2">
+              <i className="bi bi-grid-3x3-gap me-2"></i>Explore All 10+ Assessments
+            </Link>
+            <Link to="/consilar" className="btn btn-outline-primary btn-lg px-4 mb-2">
+              <i className="bi bi-calendar-check me-2"></i>Book Consultation
+            </Link>
+          </div>
+        </div>
+      </section>
 
        {/* JustDial Section */}
       <section className="py-4 bg-light">
@@ -211,9 +326,9 @@ const Home = () => {
       <FounderSection />
 
       {/* Appointment Request Section */}
+      <AppointmentRequestSection />
 
       <CounsellorGallery />
-
       
       {/* Clinic Gallery */}
       <ClinicGallery />
@@ -272,40 +387,47 @@ const Home = () => {
             <div className="col-lg-6">
               <div className="card border-0 shadow-lg">
                 <div className="card-body p-4">
-                  <h5 className="text-primary mb-3">Our Locations</h5>
+                  <h5 className="text-primary mb-3">Our Clinic Locations</h5>
                   <div className="mb-3">
                     <div className="d-flex align-items-start mb-2">
-                      <i className="bi bi-geo-alt-fill text-primary me-2 mt-1"></i>
+                      <i className="bi bi-geo-alt-fill text-primary me-2 mt-1 fs-5"></i>
                       <div>
-                        <strong>Main Branch - Dwarka</strong>
-                        <p className="mb-0 text-muted">Flat No 30A DDA Flat Pocket 2, Dr Lean, Dwarka Sector 6-110075</p>
+                        <strong className="text-dark">Main Branch - Paschim Vihar</strong>
+                        <p className="mb-0 text-muted">A15 Second Floor LIC Colony, Paschim Vihar, 110087<br/><span className="text-secondary">(Near St Marks School Meerabagh)</span></p>
                       </div>
                     </div>
                   </div>
                   <div className="mb-3">
                     <div className="d-flex align-items-start mb-2">
-                      <i className="bi bi-geo-alt-fill text-success me-2 mt-1"></i>
+                      <i className="bi bi-geo-alt-fill text-success me-2 mt-1 fs-5"></i>
                       <div>
-                        <strong>West Delhi Branch - Paschim Vihar</strong>
-                        <p className="mb-0 text-muted">A15 Second Floor LIC Colony, Paschim Vihar, 110087<br/>(Near St Marks School Meerabagh)</p>
+                        <strong className="text-dark">Dwarka Branch</strong>
+                        <p className="mb-0 text-muted">Flat No 30A DDA Flat Pocket 2, Dr Lean, Dwarka Sector 6 - 110075</p>
                       </div>
                     </div>
                   </div>
                   <div className="mb-3">
                     <div className="d-flex align-items-start mb-2">
-                      <i className="bi bi-geo-alt-fill text-info me-2 mt-1"></i>
+                      <i className="bi bi-geo-alt-fill text-info me-2 mt-1 fs-5"></i>
                       <div>
-                        <strong>South Delhi Branch - Vasant Kunj</strong>
+                        <strong className="text-dark">South Delhi Branch - Vasant Kunj</strong>
                         <p className="mb-0 text-muted">Harcharan Bagh, 773, Sector A Main Rd, near BSES Office, Desu Colony, Vasant Kunj, New Delhi, Delhi 110070</p>
                       </div>
                     </div>
                   </div>
                   <hr />
-                  <div className="d-flex align-items-center mb-2">
-                    <i className="bi bi-telephone-fill text-primary me-2"></i>
-                    <div>
-                      <a href="tel:9716129129" className="text-decoration-none me-3">9716129129</a>
-                      <a href="tel:9899555507" className="text-decoration-none">9899555507</a>
+                  <div className="d-flex align-items-center flex-wrap gap-3">
+                    <div className="d-flex align-items-center">
+                      <i className="bi bi-telephone-fill text-primary me-2"></i>
+                      <a href="tel:9716129129" className="fw-bold text-decoration-none text-dark">+91 97161 29129</a>
+                    </div>
+                    <div className="d-flex align-items-center">
+                      <i className="bi bi-telephone-fill text-success me-2"></i>
+                      <a href="tel:9899555507" className="fw-bold text-decoration-none text-dark">+91 98995 55507</a>
+                    </div>
+                    <div className="d-flex align-items-center">
+                      <i className="bi bi-envelope-fill text-primary me-2"></i>
+                      <a href="mailto:sspsychological5@gmail.com" className="fw-bold text-decoration-none text-dark">sspsychological5@gmail.com</a>
                     </div>
                   </div>
                 </div>
@@ -357,8 +479,6 @@ const Home = () => {
         </div>
       </section>
 
-      
-
       {/* Testimonials */}
       <section className="py-5">
         <div className="container">
@@ -375,9 +495,9 @@ const Home = () => {
             ))}
           </div>
           <div className="text-center mt-4">
-            <button className="btn btn-outline-primary" onClick={(e) => e.preventDefault()}>
-              <i className="bi bi-chat-quote me-2"></i>Read More Testimonials
-            </button>
+            <Link to="/about" className="btn btn-outline-primary">
+              <i className="bi bi-chat-quote me-2"></i>Learn More About Our Clinic & Team
+            </Link>
           </div>
         </div>
       </section>

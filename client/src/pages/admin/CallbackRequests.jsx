@@ -111,6 +111,7 @@ const CallbackRequests = () => {
                 <tr>
                   <th>Name</th>
                   <th>Phone</th>
+                  <th>Email</th>
                   <th>Concern</th>
                   <th>Status</th>
                   <th>Date</th>
@@ -126,6 +127,15 @@ const CallbackRequests = () => {
                         <i className="bi bi-telephone me-1"></i>
                         {callback.phoneNumber}
                       </a>
+                    </td>
+                    <td>
+                      {callback.email ? (
+                        <a href={`mailto:${callback.email}`} className="text-decoration-none small">
+                          {callback.email}
+                        </a>
+                      ) : (
+                        <span className="text-muted small">-</span>
+                      )}
                     </td>
                     <td>
                       <div style={{ maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -177,8 +187,13 @@ const CallbackRequests = () => {
               <div className="mb-3">
                 <strong>Phone:</strong> {selectedCallback.phoneNumber}
               </div>
+              {selectedCallback.email && (
+                <div className="mb-3">
+                  <strong>Email:</strong> {selectedCallback.email}
+                </div>
+              )}
               <div className="mb-3">
-                <strong>Concern:</strong>
+                <strong>Concern / Details:</strong>
                 <p className="mt-1">{selectedCallback.primaryConcern}</p>
               </div>
               <Form.Group className="mb-3">

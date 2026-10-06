@@ -4,7 +4,6 @@ import achievement1 from '../../assets/founder/1.jpg';
 import achievement2 from '../../assets/founder/2.jpg';
 import achievement3 from '../../assets/founder/3.jpg';
 import achievement4 from '../../assets/founder/4.jpg';
-import AppointmentRequestSection from './AppointmentRequestSection';
 
 const FounderSection = () => {
   const achievements = [
@@ -48,8 +47,6 @@ const FounderSection = () => {
               </div>
             </div>
           </div>
-
-                <AppointmentRequestSection />
 
 
           <div className="achievements-section">

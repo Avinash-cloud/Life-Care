@@ -47,7 +47,7 @@ const Terms = () => {
             <div>
               <h5 className="fw-bold text-dark mb-1">Emergency & Crisis Disclaimer</h5>
               <p className="mb-0 text-muted small">
-                SS Psych Life Care does <strong>NOT</strong> provide emergency or acute crisis intervention. If you or someone you know is experiencing severe psychiatric distress, thoughts of self-harm, or a life-threatening medical emergency, please call the national emergency number <strong>112</strong>, the mental health helpline <strong>KIRAN (1800-599-0019)</strong>, or visit your nearest hospital emergency department immediately.
+                SS Psych Life Care provides scheduled psychological consultations. If you or someone you know is experiencing acute psychiatric distress or medical emergency, please call our clinic helplines at <strong>9716129129 / 9899555507</strong>, emergency services at <strong>112</strong>, or visit your nearest hospital emergency department immediately.
               </p>
             </div>
           </div>
@@ -73,7 +73,7 @@ const Terms = () => {
                   SS Psych Life Care provides mental health counselling, psychotherapy, clinical assessments, internship programmes, and self-help educational materials. Our services are provided by certified clinical psychologists and qualified counsellors registered with recognized regulatory bodies (including the Rehabilitation Council of India - RCI where applicable).
                 </p>
                 <p className="text-muted leading-relaxed">
-                  Services may be provided online via secure video call / chat sessions, or offline at our clinical consultation centres located in Dwarka, Paschim Vihar, and Vasant Kunj, New Delhi.
+                  Services may be provided online via secure video call / chat sessions, or offline at our clinical consultation centres located at our Main Branch in Paschim Vihar (A15 LIC Colony), Dwarka Sector 6, and Vasant Kunj, New Delhi.
                 </p>
               </section>
 
@@ -164,9 +164,9 @@ const Terms = () => {
                   If you have questions or concerns regarding our Terms of Service, please reach out to our team:
                 </p>
                 <ul className="list-unstyled text-muted">
-                  <li className="mb-2"><i className="bi bi-envelope-fill me-2 text-primary"></i>Email: <strong>contact@plcc.in</strong></li>
+                  <li className="mb-2"><i className="bi bi-envelope-fill me-2 text-primary"></i>Email: <strong>sspsychological5@gmail.com</strong></li>
                   <li className="mb-2"><i className="bi bi-telephone-fill me-2 text-primary"></i>Phone: <strong>+91 9716129129</strong> / <strong>+91 9899555507</strong></li>
-                  <li><i className="bi bi-geo-alt-fill me-2 text-primary"></i>Main Clinic: <strong>Dwarka Sector 6, New Delhi - 110075</strong></li>
+                  <li><i className="bi bi-geo-alt-fill me-2 text-primary"></i>Main Branch: <strong>A15 Second Floor LIC Colony, Paschim Vihar, 110087 (Near St Marks School Meerabagh)</strong></li>
                 </ul>
               </section>
 

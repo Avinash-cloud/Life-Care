@@ -1233,14 +1233,22 @@ main {
   margin-bottom: 0.75rem;
 }
 
-.single-blog-content ul, 
-.single-blog-content ol {
+.single-blog-content ul {
+  list-style-type: disc !important;
   margin-bottom: 1.75rem;
-  padding-left: 1.5rem;
+  padding-left: 2rem !important;
+}
+
+.single-blog-content ol {
+  list-style-type: decimal !important;
+  margin-bottom: 1.75rem;
+  padding-left: 2rem !important;
 }
 
 .single-blog-content li {
+  display: list-item !important;
   margin-bottom: 0.5rem;
+  line-height: 1.7;
 }
 
 .single-blog-content blockquote {
@@ -1977,4 +1985,76 @@ main {
     height: 50px;
     font-size: 1.3rem;
   }
+}
+
+/* ============================================
+   Enhanced Hero & Homepage Responsive Styles
+   ============================================ */
+.hero-mobile-adjusted {
+  margin-top: -100px;
+  padding-top: 140px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 991px) {
+  .hero-mobile-adjusted {
+    margin-top: -80px !important;
+    padding-top: 95px !important;
+    padding-bottom: 40px !important;
+  }
+  .hero-mobile-adjusted h1 {
+    font-size: 2.1rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-mobile-adjusted {
+    margin-top: -70px !important;
+    padding-top: 85px !important;
+    padding-bottom: 30px !important;
+  }
+  .hero-mobile-adjusted h1 {
+    font-size: 1.65rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.85rem !important;
+  }
+  .hero-mobile-adjusted .lead {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.85rem !important;
+  }
+  .hero-mobile-adjusted p {
+    font-size: 0.875rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .hero-action-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+  }
+  .hero-action-buttons .btn {
+    width: 100% !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+/* Clinical Assessments Home Section */
+.clinical-assessments-home-section {
+  background: linear-gradient(180deg, #f0fdf9 0%, #f7fcfb 100%);
+  position: relative;
+}
+
+.assessment-home-card {
+  transition: all 0.25s ease-in-out;
+  border: 1px solid #e2ece8 !important;
+}
+
+.assessment-home-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.12) !important;
+  border-color: #a7f3d0 !important;
+}
+
+.assessment-disclaimer-card {
+  border-left: 4px solid #10b981 !important;
 }
