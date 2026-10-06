@@ -53,11 +53,19 @@ const Header = () => {
 
   return (
     <nav className={`navbar navbar-expand-lg ${isScrolled ? 'navbar-scrolled' : ''}`}>
-      <div className="container">
-        <Link className="navbar-brand" to="/" onClick={closeNavbar}>
+      <div className="container-fluid px-xl-4 px-3" style={{ maxWidth: '1440px' }}>
+        <Link className="navbar-brand me-2 me-lg-3 py-0" to="/" onClick={closeNavbar}>
           <div className="d-flex align-items-center">
-            <img src={Logo} alt="Life Care Logo" className="logo-img me-2" style={{ height: '70px' }} />
-            <span className="brand-text">SS Psych Life Care</span>
+            <img 
+              src={Logo} 
+              alt="SS Psychological Life Care Centre Logo" 
+              className="logo-img me-2" 
+              style={{ height: '52px', width: 'auto', flexShrink: 0 }} 
+            />
+            <div className="brand-text-wrapper d-flex flex-column text-start justify-content-center">
+              <span className="brand-text-main">SS Psychological</span>
+              <span className="brand-text-sub">Life Care Centre</span>
+            </div>
           </div>
         </Link>
 
@@ -100,20 +108,30 @@ const Header = () => {
           <div className="d-flex align-items-center">
             {!loading && isAuthenticated && user ? (
               <>
-                {user.avatar && <img src={user.avatar} alt={user.name} className="rounded-circle me-2" style={{ width: '32px', height: '32px', objectFit: 'cover' }} />}
-                <Link to={`/${user.role}/dashboard`} className="btn btn-outline-primary me-2" onClick={closeNavbar}>
+                {user.avatar ? (
+                  <img 
+                    src={user.avatar} 
+                    alt={user.name || 'User'} 
+                    className="rounded-circle me-2" 
+                    style={{ width: '32px', height: '32px', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                ) : null}
+                <Link to={`/${user.role}/dashboard`} className="btn btn-outline-primary btn-sm me-2 text-nowrap" onClick={closeNavbar}>
                   <i className="bi bi-speedometer2 me-1"></i> Dashboard
                 </Link>
-                <button onClick={handleLogout} className="btn btn-primary">
+                <button onClick={handleLogout} className="btn btn-primary btn-sm text-nowrap">
                   <i className="bi bi-box-arrow-right me-1"></i> Logout
                 </button>
               </>
             ) : !loading ? (
               <>
-                <Link to="/login" className="btn btn-outline-primary me-2" onClick={closeNavbar}>
+                <Link to="/login" className="btn btn-outline-primary btn-sm me-2 text-nowrap" onClick={closeNavbar}>
                   <i className="bi bi-box-arrow-in-right me-1"></i> Login
                 </Link>
-                <Link to="/register" className="btn btn-primary" onClick={closeNavbar}>
+                <Link to="/register" className="btn btn-primary btn-sm text-nowrap" onClick={closeNavbar}>
                   <i className="bi bi-person-plus me-1"></i> Register
                 </Link>
               </>

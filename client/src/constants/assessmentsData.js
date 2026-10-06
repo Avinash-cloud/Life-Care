@@ -30,11 +30,11 @@ export const FREQUENTLY_ASKED_QUESTIONS = [
   },
   {
     question: "Are these assessments completely free?",
-    answer: "Yes, 100% free. SS Psych Life Care provides these screening tools freely to break mental health stigma, encourage proactive self-awareness, and help you take the first step towards emotional well-being."
+    answer: "Yes, 100% free. SS Psychological Life Care Centre provides these screening tools freely to break mental health stigma, encourage proactive self-awareness, and help you take the first step towards emotional well-being."
   },
   {
     question: "What should I do if my score indicates moderate or severe distress?",
-    answer: "A moderate or severe score indicates that you may be carrying significant emotional or psychological strain. We encourage you to reach out to one of our licensed psychologists for a compassionate, non-judgmental 1-on-1 consultation. In urgent or crisis situations, please reach out immediately to telephonic helplines like Tele-MANAS (14416) or KIRAN (1800-599-0019)."
+    answer: "A moderate or severe score indicates that you may be carrying significant emotional or psychological strain. We encourage you to reach out to one of our licensed psychologists for a compassionate, non-judgmental 1-on-1 consultation. In urgent or crisis situations, please reach out immediately to our clinic helplines at 9716129129 / 9899555507."
   }
 ];
 

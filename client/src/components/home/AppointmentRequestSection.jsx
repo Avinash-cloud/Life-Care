@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { leadAPI } from '../../services/api';
 import './AppointmentRequestSection.css';
 
 const AppointmentRequestSection = () => {
   const [formData, setFormData] = useState({
     name: '',
     phoneNumber: '',
+    email: '',
     primaryConcern: ''
   });
   const [loading, setLoading] = useState(false);
@@ -22,12 +23,16 @@ const AppointmentRequestSection = () => {
     setError('');
     
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/callback`, formData);
+      await leadAPI.createCallback({
+        ...formData,
+        subject: `Callback Request - ${formData.primaryConcern?.substring(0, 40) || 'General'}`,
+        source: 'Homepage Callback Form'
+      });
       setSuccess(true);
-      setFormData({ name: '', phoneNumber: '', primaryConcern: '' });
-      setTimeout(() => setSuccess(false), 5000);
+      setFormData({ name: '', phoneNumber: '', email: '', primaryConcern: '' });
+      setTimeout(() => setSuccess(false), 6000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to submit request');
+      setError(err.response?.data?.message || 'Failed to submit callback request. Please try calling us directly.');
     } finally {
       setLoading(false);
     }
@@ -84,7 +89,20 @@ const AppointmentRequestSection = () => {
                     value={formData.phoneNumber}
                     onChange={handleChange}
                     required
-                    placeholder="Enter your phone number"
+                    placeholder="Enter your 10-digit phone number"
+                  />
+                </div>
+                
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">Email Address (Optional)</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Enter your email address"
                   />
                 </div>
                 

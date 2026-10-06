@@ -9,13 +9,13 @@ const FAQ = () => {
   const faqs = [
     {
       category: 'general',
-      q: 'What is SS Psych Life Care?',
-      a: 'SS Psych Life Care is a premier clinical psychology and mental health platform led by RCI-registered psychologists with over 20 years of counselling and clinical experience. We provide individual psychotherapy, couples counselling, child/adolescent guidance, clinical assessments, and professional internship training.'
+      q: 'What is SS Psychological Life Care Centre?',
+      a: 'SS Psychological Life Care Centre is a premier clinical psychology and mental health platform led by RCI-registered psychologists with over 20 years of counselling and clinical experience. We provide individual psychotherapy, couples counselling, child/adolescent guidance, clinical assessments, and professional internship training.'
     },
     {
       category: 'general',
       q: 'Where are your clinical consultation centres located?',
-      a: 'We offer in-person consultations at our three New Delhi centres: Dwarka Sector 6, Paschim Vihar (A15), and Vasant Kunj (773, Sector A). We also offer online video sessions accessible worldwide.'
+      a: 'We offer in-person consultations at our three New Delhi centres: Main Branch at Paschim Vihar (A15 LIC Colony, near St Marks School), Dwarka Sector 6 (Flat 30A DDA Flats), and Vasant Kunj (773, Sector A). We also offer online video sessions accessible worldwide.'
     },
     {
       category: 'sessions',
@@ -40,12 +40,12 @@ const FAQ = () => {
     {
       category: 'booking',
       q: 'How do I book an appointment?',
-      a: 'You can book directly on our website by visiting our "Counsellors" or "Talk to a Counsellor" page, selecting your preferred psychologist, date, and time slot, or by calling our care coordinators at +91 9716129129.'
+      a: 'You can book directly on our website by visiting our "Book Consultation" page, selecting your preferred psychologist, date, and time slot, or by calling our care coordinators at +91 9716129129 / +91 9899555507.'
     },
     {
       category: 'emergency',
       q: 'What should I do in a psychiatric emergency?',
-      a: 'SS Psych Life Care is a scheduled therapy service and does NOT provide emergency or acute suicide crisis support. If you or someone you know is in immediate crisis, please call national emergency helpline 112, the KIRAN mental health helpline at 1800-599-0019, or visit the nearest hospital emergency room immediately.'
+      a: 'SS Psychological Life Care Centre provides scheduled therapy consultations. If you or someone you know is in immediate crisis, please call our direct clinic helplines at 9716129129 / 9899555507, national emergency services at 112, or visit the nearest hospital emergency room immediately.'
     }
   ];
 
@@ -57,7 +57,7 @@ const FAQ = () => {
     <div className="faq-page py-5" style={{ backgroundColor: '#fcfcfd' }}>
       <SEOHead
         title="Frequently Asked Questions"
-        description="Find answers to common questions about mental health counselling, appointments, confidentiality, and services at SS Psych Life Care."
+        description="Find answers to common questions about mental health counselling, appointments, confidentiality, and services at SS Psychological Life Care Centre."
         url="/faq"
       />
 

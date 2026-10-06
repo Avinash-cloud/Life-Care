@@ -435,7 +435,7 @@ const AssessmentRunnerModal = ({ show, onHide, assessment }) => {
 
                 <a
                   href={`https://wa.me/9716129129?text=${encodeURIComponent(
-                    `Hello SS Psych Life Care, I took the ${assessment.title} assessment (Score: ${finalScore}/${assessment.maxScore} - ${resultBand?.label}) and would like to speak with a psychologist.`
+                    `Hello SS Psychological Life Care Centre, I took the ${assessment.title} assessment (Score: ${finalScore}/${assessment.maxScore} - ${resultBand?.label}) and would like to speak with a psychologist.`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"

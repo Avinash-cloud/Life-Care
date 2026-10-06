@@ -328,9 +328,8 @@ a:hover {
   font-family: var(--font-heading) !important;
 }
 
-.brand-text {
+.brand-text, .brand-text-main, .brand-text-sub {
   font-family: var(--font-heading) !important;
-  color: var(--color-primary-600) !important;
   background: none !important;
   -webkit-text-fill-color: unset !important;
 }

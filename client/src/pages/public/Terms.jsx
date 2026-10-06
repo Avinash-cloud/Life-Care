@@ -7,7 +7,7 @@ const Terms = () => {
     <div className="terms-page py-5" style={{ backgroundColor: '#fcfcfd' }}>
       <SEOHead
         title="Terms of Service"
-        description="Terms of Service and Conditions of Use for SS Psych Life Care. Learn about our appointment guidelines, confidentiality, and client policies."
+        description="Terms of Service and Conditions of Use for SS Psychological Life Care Centre. Learn about our appointment guidelines, confidentiality, and client policies."
         url="/terms"
       />
 
@@ -47,7 +47,7 @@ const Terms = () => {
             <div>
               <h5 className="fw-bold text-dark mb-1">Emergency & Crisis Disclaimer</h5>
               <p className="mb-0 text-muted small">
-                SS Psych Life Care does <strong>NOT</strong> provide emergency or acute crisis intervention. If you or someone you know is experiencing severe psychiatric distress, thoughts of self-harm, or a life-threatening medical emergency, please call the national emergency number <strong>112</strong>, the mental health helpline <strong>KIRAN (1800-599-0019)</strong>, or visit your nearest hospital emergency department immediately.
+                SS Psychological Life Care Centre provides scheduled psychological consultations. If you or someone you know is experiencing acute psychiatric distress or medical emergency, please call our clinic helplines at <strong>9716129129 / 9899555507</strong>, emergency services at <strong>112</strong>, or visit your nearest hospital emergency department immediately.
               </p>
             </div>
           </div>
@@ -62,7 +62,7 @@ const Terms = () => {
               <section className="mb-5">
                 <h3 className="fw-bold text-dark mb-3">1. Acceptance of Terms</h3>
                 <p className="text-muted leading-relaxed">
-                  By accessing or using the website, mobile services, booking tools, and therapy services provided by <strong>SS Psych Life Care</strong> (collectively referred to as "the Platform", "we", "us", or "our"), you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree to these terms, please refrain from using our services.
+                  By accessing or using the website, mobile services, booking tools, and therapy services provided by <strong>SS Psychological Life Care Centre</strong> (collectively referred to as "the Platform", "we", "us", or "our"), you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree to these terms, please refrain from using our services.
                 </p>
               </section>
 
@@ -70,10 +70,10 @@ const Terms = () => {
               <section className="mb-5">
                 <h3 className="fw-bold text-dark mb-3">2. Description of Services</h3>
                 <p className="text-muted leading-relaxed">
-                  SS Psych Life Care provides mental health counselling, psychotherapy, clinical assessments, internship programmes, and self-help educational materials. Our services are provided by certified clinical psychologists and qualified counsellors registered with recognized regulatory bodies (including the Rehabilitation Council of India - RCI where applicable).
+                  SS Psychological Life Care Centre provides mental health counselling, psychotherapy, clinical assessments, internship programmes, and self-help educational materials. Our services are provided by certified clinical psychologists and qualified counsellors registered with recognized regulatory bodies (including the Rehabilitation Council of India - RCI where applicable).
                 </p>
                 <p className="text-muted leading-relaxed">
-                  Services may be provided online via secure video call / chat sessions, or offline at our clinical consultation centres located in Dwarka, Paschim Vihar, and Vasant Kunj, New Delhi.
+                  Services may be provided online via secure video call / chat sessions, or offline at our clinical consultation centres located at our Main Branch in Paschim Vihar (A15 LIC Colony), Dwarka Sector 6, and Vasant Kunj, New Delhi.
                 </p>
               </section>
 
@@ -145,7 +145,7 @@ const Terms = () => {
               <section className="mb-5">
                 <h3 className="fw-bold text-dark mb-3">8. Intellectual Property</h3>
                 <p className="text-muted leading-relaxed">
-                  All content, articles, logos, graphics, psychological tests, and educational materials displayed on this platform are the proprietary intellectual property of SS Psych Life Care and are protected by applicable copyright and trademark laws.
+                  All content, articles, logos, graphics, psychological tests, and educational materials displayed on this platform are the proprietary intellectual property of SS Psychological Life Care Centre and are protected by applicable copyright and trademark laws.
                 </p>
               </section>
 
@@ -164,9 +164,9 @@ const Terms = () => {
                   If you have questions or concerns regarding our Terms of Service, please reach out to our team:
                 </p>
                 <ul className="list-unstyled text-muted">
-                  <li className="mb-2"><i className="bi bi-envelope-fill me-2 text-primary"></i>Email: <strong>contact@plcc.in</strong></li>
+                  <li className="mb-2"><i className="bi bi-envelope-fill me-2 text-primary"></i>Email: <strong>sspsychological5@gmail.com</strong></li>
                   <li className="mb-2"><i className="bi bi-telephone-fill me-2 text-primary"></i>Phone: <strong>+91 9716129129</strong> / <strong>+91 9899555507</strong></li>
-                  <li><i className="bi bi-geo-alt-fill me-2 text-primary"></i>Main Clinic: <strong>Dwarka Sector 6, New Delhi - 110075</strong></li>
+                  <li><i className="bi bi-geo-alt-fill me-2 text-primary"></i>Main Branch: <strong>A15 Second Floor LIC Colony, Paschim Vihar, 110087 (Near St Marks School Meerabagh)</strong></li>
                 </ul>
               </section>
 

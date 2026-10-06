@@ -36,15 +36,27 @@ exports.getAvailableSlots = async (req, res, next) => {
       });
     }
 
-    const counsellor = await Counsellor.findById(counsellorId);
+    let counsellor;
+    if (counsellorId === 'any') {
+      counsellor = await Counsellor.findOne({ isVerified: true, active: true });
+    } else {
+      counsellor = await Counsellor.findById(counsellorId);
+    }
+
     if (!counsellor) {
       return next(new ErrorResponse('Counsellor not found', 404));
     }
     const dayOfWeek = selectedDate.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
     
     // Get counsellor's availability for the day
-    const dayAvailability = counsellor.availability && counsellor.availability[dayOfWeek];
-    if (!dayAvailability || !dayAvailability.isAvailable) {
+    let dayAvailability = counsellor.availability && counsellor.availability[dayOfWeek];
+    if (!dayAvailability || typeof dayAvailability.isAvailable === 'undefined') {
+      dayAvailability = {
+        isAvailable: true,
+        startTime: '09:00',
+        endTime: '18:00'
+      };
+    } else if (!dayAvailability.isAvailable) {
       return res.status(200).json({
         success: true,
         slots: [],
@@ -54,7 +66,7 @@ exports.getAvailableSlots = async (req, res, next) => {
 
     // Get existing appointments for the date
     const existingAppointments = await Appointment.find({
-      counsellor: counsellorId,
+      counsellor: counsellor._id,
       date: {
         $gte: new Date(date + 'T00:00:00.000Z'),
         $lt: new Date(date + 'T23:59:59.999Z')
@@ -286,6 +298,154 @@ exports.verifyPayment = async (req, res, next) => {
       success: true,
       message: 'Payment verified and appointment confirmed',
       data: appointment
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Public Book Consultation (Website Visitors & Clients)
+// @route   POST /api/appointments/public-book
+// @access  Public
+exports.publicBookAppointment = async (req, res, next) => {
+  try {
+    let { 
+      counsellorId, 
+      date, 
+      startTime, 
+      endTime, 
+      sessionType, 
+      notes, 
+      name, 
+      email, 
+      phone,
+      offerCode 
+    } = req.body;
+
+    if (!startTime && req.body.time) {
+      startTime = req.body.time;
+    }
+    if (startTime && !endTime) {
+      endTime = addMinutes(startTime, 60);
+    }
+
+    if (!date || !startTime || !endTime) {
+      return next(new ErrorResponse('Date, start time, and end time are required', 400));
+    }
+    if (!name || !phone) {
+      return next(new ErrorResponse('Please provide your name and phone number', 400));
+    }
+
+    // If counsellorId is 'any' or missing, pick first active verified counsellor
+    let counsellor;
+    if (!counsellorId || counsellorId === 'any') {
+      counsellor = await Counsellor.findOne({ isVerified: true, active: true }).populate('user');
+      if (counsellor) {
+        counsellorId = counsellor._id;
+      }
+    } else {
+      counsellor = await Counsellor.findById(counsellorId).populate('user');
+    }
+
+    if (!counsellor) {
+      return next(new ErrorResponse('Counsellor not found', 404));
+    }
+
+    // Find or create user
+    let clientUserId;
+    if (req.user) {
+      clientUserId = req.user.id;
+    } else {
+      const sanitizedPhone = phone.trim().replace(/\s+/g, '');
+      const userEmail = email && email.trim() ? email.trim().toLowerCase() : `client_${sanitizedPhone.replace(/\D/g, '')}@plcc.in`;
+      let user = await User.findOne({ $or: [{ phone: sanitizedPhone }, { email: userEmail }] });
+      if (!user) {
+        const bcrypt = require('bcryptjs');
+        const defaultPassword = await bcrypt.hash('Client@123', 10);
+        user = await User.create({
+          name: name.trim(),
+          email: userEmail,
+          phone: sanitizedPhone,
+          password: defaultPassword,
+          role: 'client',
+          isEmailVerified: true,
+          active: true
+        });
+      }
+      clientUserId = user._id;
+    }
+
+    // Calculate duration & amount
+    const duration = getTimeDifference(startTime, endTime);
+    let baseAmount = 850;
+    if (counsellor.fees) {
+      if (sessionType === 'chat' && counsellor.fees.chat) baseAmount = counsellor.fees.chat;
+      else if (sessionType === 'in-person' && counsellor.fees.inPerson) baseAmount = counsellor.fees.inPerson;
+      else if (counsellor.fees.video) baseAmount = counsellor.fees.video;
+      else if (typeof counsellor.fees === 'number') baseAmount = counsellor.fees;
+    }
+
+    let amount = baseAmount;
+    let discountAmount = 0;
+    let appliedOfferId = null;
+
+    if (offerCode) {
+      const Offer = require('../models/Offer');
+      const offer = await Offer.findOne({ offerCode: offerCode.toUpperCase(), isActive: true });
+      if (offer && (!offer.validUntil || new Date(offer.validUntil) >= new Date())) {
+        discountAmount = (baseAmount * offer.discountPercentage) / 100;
+        amount = Math.max(0, baseAmount - discountAmount);
+        appliedOfferId = offer._id;
+      }
+    }
+
+    // Create Appointment
+    const appointment = await Appointment.create({
+      client: clientUserId,
+      counsellor: counsellorId,
+      date: new Date(date),
+      startTime,
+      endTime,
+      duration: duration || 60,
+      sessionType: sessionType || 'video',
+      amount,
+      discountAmount,
+      appliedOffer: appliedOfferId,
+      status: 'confirmed',
+      payment: {
+        id: `book_${Date.now()}`,
+        status: 'pending',
+        method: 'consultation_scheduled',
+        totalAmount: amount
+      }
+    });
+
+    // Also record as a Callback/Lead so Admin Panel sees it in Callback Requests / Leads
+    try {
+      const CallbackRequest = require('../models/CallbackRequest');
+      await CallbackRequest.create({
+        name: name.trim(),
+        phoneNumber: phone.trim(),
+        email: email ? email.trim() : '',
+        subject: `Consultation Booking (${sessionType || 'video'})`,
+        source: 'booking_calendar',
+        primaryConcern: `Booked Consultation (${sessionType || 'video'}) on ${date} at ${startTime}-${endTime} with ${counsellor.user?.name || 'Assigned Counsellor'}. Notes: ${notes || 'None'}`
+      });
+    } catch (leadErr) {
+      console.warn('Lead callback creation notice:', leadErr.message);
+    }
+
+    const populatedAppointment = await Appointment.findById(appointment._id)
+      .populate('client', 'name email phone')
+      .populate({
+        path: 'counsellor',
+        populate: { path: 'user', select: 'name email avatar phone' }
+      });
+
+    res.status(201).json({
+      success: true,
+      message: 'Consultation appointment booked successfully',
+      data: populatedAppointment
     });
   } catch (error) {
     next(error);

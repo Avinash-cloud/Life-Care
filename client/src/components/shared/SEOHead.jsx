@@ -12,7 +12,7 @@ const SEOHead = ({
   modifiedTime,
   canonicalUrl
 }) => {
-  const siteTitle = 'SS Psych Life Care';
+  const siteTitle = 'SS Psychological Life Care Centre';
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
   const siteUrl = window.location.origin;
   const fullUrl = url ? `${siteUrl}${url}` : window.location.href;

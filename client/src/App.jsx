@@ -103,6 +103,7 @@ function App() {
             <Route path="videos" element={<Videos />} />
             <Route path="contact" element={<Contact />} />
             <Route path="consilar" element={<Consilar />} />
+            <Route path="book-consultation" element={<Consilar />} />
             <Route path="conditions/:condition" element={<ConditionDetail />} />
             <Route path="anxiety-test" element={<AnxietyTest />} />
             <Route path="assessments" element={<Assessments />} />

@@ -7,7 +7,7 @@ const Privacy = () => {
     <div className="privacy-page py-5" style={{ backgroundColor: '#fcfcfd' }}>
       <SEOHead
         title="Privacy Policy"
-        description="Privacy Policy for SS Psych Life Care. Learn how we collect, protect, and handle confidential psychological and health data."
+        description="Privacy Policy for SS Psychological Life Care Centre. Learn how we collect, protect, and handle confidential psychological and health data."
         url="/privacy"
       />
 
@@ -33,7 +33,7 @@ const Privacy = () => {
           </span>
           <h1 className="fw-bold display-5 mb-3 text-dark">Privacy Policy</h1>
           <p className="text-muted mx-auto" style={{ maxWidth: '720px' }}>
-            Your trust and confidentiality are central to psychological therapy. Here is how SS Psych Life Care safeguards your personal and clinical records.
+            Your trust and confidentiality are central to psychological therapy. Here is how SS Psychological Life Care Centre safeguards your personal and clinical records.
           </p>
           <small className="text-muted">
             <i className="bi bi-shield-lock me-1"></i> Last updated: September 2025
@@ -48,7 +48,7 @@ const Privacy = () => {
               <section className="mb-5">
                 <h3 className="fw-bold text-dark mb-3">1. Introduction</h3>
                 <p className="text-muted leading-relaxed">
-                  At <strong>SS Psych Life Care</strong>, we recognize the deeply personal nature of mental health counselling. We are firmly committed to upholding the highest standards of confidentiality, patient privacy, and data protection in compliance with professional psychological codes of ethics (including Rehabilitation Council of India guidelines) and applicable data privacy regulations.
+                  At <strong>SS Psychological Life Care Centre</strong>, we recognize the deeply personal nature of mental health counselling. We are firmly committed to upholding the highest standards of confidentiality, patient privacy, and data protection in compliance with professional psychological codes of ethics (including Rehabilitation Council of India guidelines) and applicable data privacy regulations.
                 </p>
               </section>
 
@@ -100,7 +100,7 @@ const Privacy = () => {
               <section className="mb-5">
                 <h3 className="fw-bold text-dark mb-3">6. Your Rights</h3>
                 <p className="text-muted leading-relaxed">
-                  You have the right to request a summary of your treatment records, update personal contact details, or request account closure at any time through your client portal or by emailing our privacy desk at <strong>contact@plcc.in</strong>.
+                  You have the right to request a summary of your treatment records, update personal contact details, or request account closure at any time through your client portal or by emailing our privacy desk at <strong>sspsychological5@gmail.com</strong>.
                 </p>
               </section>
 
@@ -110,10 +110,10 @@ const Privacy = () => {
                   For privacy inquiries or records requests, please contact:
                 </p>
                 <p className="text-muted mb-0">
-                  <strong>SS Psych Life Care</strong><br />
-                  Dwarka Sector 6, New Delhi - 110075<br />
-                  Email: <a href="mailto:contact@plcc.in" className="text-primary text-decoration-none">contact@plcc.in</a><br />
-                  Phone: <a href="tel:9716129129" className="text-primary text-decoration-none">+91 9716129129</a>
+                  <strong>SS Psychological Life Care Centre</strong><br />
+                  Main Branch: A15 Second Floor LIC Colony, Paschim Vihar, 110087<br />
+                  Email: <a href="mailto:sspsychological5@gmail.com" className="text-primary text-decoration-none">sspsychological5@gmail.com</a><br />
+                  Phone: <a href="tel:9716129129" className="text-primary text-decoration-none">+91 9716129129</a> / <a href="tel:9899555507" className="text-primary text-decoration-none">+91 9899555507</a>
                 </p>
               </section>
 

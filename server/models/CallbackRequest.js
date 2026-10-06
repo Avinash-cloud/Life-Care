@@ -11,6 +11,18 @@ const callbackRequestSchema = new mongoose.Schema({
     required: [true, 'Please provide your phone number'],
     trim: true
   },
+  email: {
+    type: String,
+    trim: true
+  },
+  subject: {
+    type: String,
+    trim: true
+  },
+  source: {
+    type: String,
+    default: 'website'
+  },
   primaryConcern: {
     type: String,
     required: [true, 'Please provide your primary concern'],

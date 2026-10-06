@@ -397,31 +397,44 @@ const Assessments = () => {
       </section>
 
       {/* ========================================================
-          6. Emergency Helplines Notice
+          6. Clinical Assessment Disclaimer & Helplines Notice
           ======================================================== */}
       <section className="crisis-helpline-section">
         <div className="container">
+          {/* Prominent Clinical Disclaimer */}
+          <div className="assessment-disclaimer-box mb-4">
+            <div className="d-flex align-items-start gap-3">
+              <ShieldCheck size={28} className="text-emerald-700 flex-shrink-0 mt-1" />
+              <div>
+                <h5 className="disclaimer-heading">Clinical Assessment & Diagnostic Disclaimer</h5>
+                <p className="disclaimer-body mb-0">
+                  The online psychological screening assessments provided here are evidence-informed self-evaluation tools designed solely for informational, reflective, and educational purposes. <strong>They do not constitute a clinical psychiatric diagnosis, formal medical evaluation, or treatment plan.</strong> A formal mental health diagnosis can only be determined by a qualified clinical psychologist or licensed medical psychiatrist through a comprehensive diagnostic consultation. If your results suggest elevated stress or emotional distress, we warmly invite you to book a confidential consultation with our certified clinical team.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="crisis-card">
             <div className="crisis-icon-circle">
-              <AlertTriangle size={24} className="text-amber-600" />
+              <PhoneCall size={24} className="text-emerald-700" />
             </div>
             <div className="crisis-content">
-              <h5 className="crisis-title">In Immediate Emotional Distress or Crisis?</h5>
+              <h5 className="crisis-title">Need Immediate Psychological Support or Guidance?</h5>
               <p className="crisis-desc">
-                If you or a loved one are experiencing acute distress or suicidal thoughts, please don't wait. Free 24/7 confidential helplines in India are ready to support you:
+                If you or a loved one are experiencing acute distress, emotional overwhelm, or need immediate assistance, please connect directly with our clinic team:
               </p>
               <div className="crisis-numbers-row">
-                <a href="tel:14416" className="crisis-number-pill">
+                <a href="tel:9716129129" className="crisis-number-pill">
                   <PhoneCall size={14} className="me-1" />
-                  <strong>Tele-MANAS:</strong> 14416 / 1800-891-4416
+                  <strong>Helpline:</strong> +91 97161 29129
                 </a>
-                <a href="tel:18005990019" className="crisis-number-pill">
+                <a href="tel:9899555507" className="crisis-number-pill">
                   <PhoneCall size={14} className="me-1" />
-                  <strong>KIRAN Helpline:</strong> 1800-599-0019
+                  <strong>Clinic:</strong> +91 98995 55507
                 </a>
-                <a href="tel:9999666555" className="crisis-number-pill">
-                  <PhoneCall size={14} className="me-1" />
-                  <strong>Vandrevala Foundation:</strong> +91 9999 666 555
+                <a href="mailto:sspsychological5@gmail.com" className="crisis-number-pill">
+                  <i className="bi bi-envelope me-1"></i>
+                  <strong>Email:</strong> sspsychological5@gmail.com
                 </a>
               </div>
             </div>

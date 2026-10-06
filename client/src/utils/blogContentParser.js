@@ -35,7 +35,7 @@ export function lexicalNodeToHtml(node) {
       return `<blockquote>${content}</blockquote>`;
     }
     case 'list': {
-      const tag = node.listType === 'number' ? 'ol' : 'ul';
+      const tag = (node.listType === 'number' || node.tag === 'ol') ? 'ol' : 'ul';
       const content = (node.children || []).map(lexicalNodeToHtml).join('');
       return `<${tag}>${content}</${tag}>`;
     }

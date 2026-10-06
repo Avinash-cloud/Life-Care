@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
-  name: 'SS Psych Life Care',
-  email: 'contact@plcc.in',
+  name: 'SS Psychological Life Care Centre',
+  email: 'sspsychological5@gmail.com',
   phones: ['9716129129', '9899555507']
 };
 
@@ -11,8 +11,8 @@ export const TESTIMONIALS = [
 ];
 
 export const CARE_OPTIONS = [
-  { id: 1, icon: 'bi-person-video3', title: 'One-on-One Therapy', description: 'Individual sessions with a licensed therapist tailored to your specific needs.', link: '/client/counsellors', buttonText: 'Book a Session' },
-  { id: 2, icon: 'bi-people-fill', title: 'Couples Counseling', description: 'Work through relationship challenges with your partner.', link: '/client/counsellors', buttonText: 'Find a Counselor' },
+  { id: 1, icon: 'bi-person-video3', title: 'One-on-One Therapy', description: 'Individual sessions with a licensed therapist tailored to your specific needs.', link: '/consilar', buttonText: 'Book Consultation' },
+  { id: 2, icon: 'bi-people-fill', title: 'Couples Counseling', description: 'Work through relationship challenges with your partner.', link: '/consilar', buttonText: 'Find a Counselor' },
   { id: 3, icon: 'bi-journal-text', title: 'Self-Help Resources', description: 'Access our library of articles, videos, and tools.', link: '/blog', buttonText: 'Explore Resources' }
 ];
 
