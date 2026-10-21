@@ -40,6 +40,370 @@ export const FREQUENTLY_ASKED_QUESTIONS = [
 
 export const ASSESSMENTS_LIST = [
   {
+  "id": "somantic-symptoms",
+  "title": "DSM-5-TR Level 2 Somatic Symptom Measure",
+  "scaleName": "15-Item Clinical Questionnaire",
+  "category": "anxiety",
+  "questionsCount": 15,
+  "duration": "2-3 mins",
+  "maxScore": 75,
+  "badge": "15 Questions",
+  "badgeColor": "emerald",
+  "icon": "bi-heart-pulse",
+  "existingRoute": "/somantic-symptoms",
+  "description": "A 15-item self-report tool that tracks how much physical symptoms bothered you over the past week.",
+  "whoIsItFor": "Individuals who reported “unexplained aches and pains” or “feeling that your illnesses are not being taken seriously enough” on the DSM-5-TR Level 1 screening, and who want a closer look at their physical symptoms.",
+  "measures": "Pain, Cardiovascular and breathing signs, Digestive issues, Reproductive and sexual health, Energy and sleep",
+  "questionStem": "During the past 7 days, how much have you been bothered by any of the following problems?",
+  "options": [
+    {
+      "text": "Not bothered at all",
+      "score": 0
+    },
+    {
+      "text": "Bothered a little",
+      "score": 2.5
+    },
+    {
+      "text": "Bothered a lot",
+      "score": 5
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "sectionTitle": "Pain",
+      "text": "Stomach pain",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "sectionTitle": "Pain",
+      "text": "Back pain",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "sectionTitle": "Pain",
+      "text": "Pain in your arms, legs, or joints (knees, hips, etc.)",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "sectionTitle": "Reproductive Health",
+      "text": "Menstrual cramps or other problems with your periods (women only)",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "sectionTitle": "Pain",
+      "text": "Headaches",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "sectionTitle": "Pain",
+      "text": "Chest pain",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "sectionTitle": "Heart & Balance",
+      "text": "Dizziness",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "sectionTitle": "Heart & Balance",
+      "text": "Fainting spells",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "sectionTitle": "Heart & Balance",
+      "text": "Feeling your heart pound or race",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "sectionTitle": "Breathing",
+      "text": "Shortness of breath",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "sectionTitle": "Sexual Health",
+      "text": "Pain or problems during sexual intercourse",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "sectionTitle": "Digestive",
+      "text": "Constipation, loose bowels, or diarrhea",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "sectionTitle": "Digestive",
+      "text": "Nausea, gas, or indigestion",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "sectionTitle": "Energy",
+      "text": "Feeling tired or having low energy",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "sectionTitle": "Sleep",
+      "text": "Trouble sleeping",
+      "options": [
+        {
+          "text": "Not bothered at all",
+          "score": 0
+        },
+        {
+          "text": "Bothered a little",
+          "score": 2.5
+        },
+        {
+          "text": "Bothered a lot",
+          "score": 5
+        }
+      ]
+    }
+  ],
+  "bands": [
+    {
+      "min": 0,
+      "max": 11,
+      "label": "Minimal Somatic Symptoms",
+      "level": "minimal",
+      "badgeClass": "badge-minimal",
+      "description": "Your responses suggest very little bother from physical symptoms over the past 7 days.",
+      "recommendation": "Keep up healthy habits such as regular movement, good sleep, hydration, and stress management, and re-check if symptoms change."
+    },
+    {
+      "min": 12,
+      "max": 23,
+      "label": "Low Somatic Symptom Severity",
+      "level": "mild",
+      "badgeClass": "badge-mild",
+      "description": "You are experiencing some physical symptoms that bother you a little. This is common and often manageable.",
+      "recommendation": "Track your symptoms, practice relaxation and gentle exercise, and mention persistent symptoms at your next routine health visit."
+    },
+    {
+      "min": 24,
+      "max": 36,
+      "label": "Medium Somatic Symptom Severity",
+      "level": "moderate",
+      "badgeClass": "badge-moderate",
+      "description": "Your responses suggest physical symptoms are bothering you noticeably and may be affecting your daily life.",
+      "recommendation": "Consider discussing these symptoms with a doctor or mental health professional to explore causes and supportive strategies."
+    },
+    {
+      "min": 37,
+      "max": 75,
+      "label": "High Somatic Symptom Severity",
+      "level": "severe",
+      "badgeClass": "badge-severe",
+      "description": "Your responses suggest a high level of bother from physical symptoms. You do not have to manage this alone.",
+      "recommendation": "We recommend a comprehensive evaluation with a healthcare provider or licensed clinician for further assessment and treatment planning."
+    }
+  ],
+  "scoringNotes": {
+    "range": "0-75 (15 items x 0-5; each item scored 0, 2.5 or 5)",
+    "scaling": "Scores are the official PHQ-15 item scores (0/1/2) multiplied by 2.5, so the official 0-30 raw score equals the displayed score divided by 2.5.",
+    "officialRawBands": "Minimal 0-4, Low 5-9, Medium 10-14, High 15-30 (raw) = Minimal 0-11, Low 12-23, Medium 24-36, High 37-75 (scaled)",
+    "missingItems": "If 4 or more items are unanswered, do not calculate the total. If 1-3 items are unanswered, prorate: (partial score x 15) / items answered, then match to the band.",
+    "disclaimer": "This is a screening and monitoring tool, not a standalone diagnosis. Results should be reviewed by a qualified clinician."
+  }
+},
+
+  {
     "id": "anxiety",
     "title": "Comprehensive Anxiety & Mental Health Assessment",
     "scaleName": "25-Item Clinical Questionnaire",
