@@ -43,7 +43,31 @@ class ImageNode extends DecoratorNode {
   constructor(src, alt, key) {
     super(key);
     this.__src = src;
-    this.__alt = alt;
+    this.__alt = alt || '';
+  }
+
+  static importDOM() {
+    return {
+      img: (domNode) => ({
+        conversion: (element) => {
+          if (element instanceof HTMLImageElement) {
+            const { src, alt } = element;
+            const node = $createImageNode(src, alt);
+            return { node };
+          }
+          return null;
+        },
+        priority: 0,
+      }),
+    };
+  }
+
+  exportDOM() {
+    const element = document.createElement('img');
+    element.setAttribute('src', this.__src);
+    element.setAttribute('alt', this.__alt || '');
+    element.className = 'img-fluid rounded my-3';
+    return { element };
   }
 
   createDOM() {
@@ -662,10 +686,10 @@ function ToolbarPlugin() {
           <Form.Group className="mb-3">
             <Form.Label>Or Image URL</Form.Label>
             <Form.Control
-              type="url"
+              type="text"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="https://example.com/image.jpg"
+              placeholder="https://example.com/image.jpg or /uploads/blogs/..."
             />
           </Form.Group>
           <Form.Group className="mb-3">

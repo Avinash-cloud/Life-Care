@@ -120,7 +120,7 @@ const Blog = () => {
                   </div>
                   <div className="card-footer bg-white border-0 p-4 pt-0">
                     <small className="text-muted">
-                      <i className="bi bi-calendar3 me-1"></i> {new Date(post.publishedAt).toLocaleDateString()}
+                      <i className="bi bi-calendar3 me-1"></i> {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
                     </small>
                   </div>
                 </div>

@@ -75,10 +75,10 @@ const WelcomePopup = () => {
             </Link>
             <div className="d-flex gap-3">
               <Link to="/anxiety-test" className="btn btn-test btn-lg flex-grow-1 text-white" onClick={handleClose}>
-                <i className="bi bi-clipboard2-pulse me-2"></i>Anxiety Test
+                <i className="bi bi-clipboard2-pulse me-2"></i>Self Assessment
               </Link>
               <Link to="/game" className="btn btn-game btn-lg flex-grow-1 text-white" onClick={handleClose}>
-                <i className="bi bi-check-circle me-2"></i>Check your anxiety
+                <i className="bi bi-check-circle me-2"></i>Calm Your Stress
               </Link>
             </div>
             <button className="btn btn-outline-secondary btn-lg" onClick={handleClose}>
