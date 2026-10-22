@@ -73,19 +73,30 @@ exports.getBlogs = async (req, res, next) => {
 exports.getBlog = async (req, res, next) => {
   try {
     const isObjectId = mongoose.Types.ObjectId.isValid(req.params.slug);
-    const filter = isObjectId
-      ? { $or: [{ slug: req.params.slug }, { _id: req.params.slug }], status: 'published' }
-      : { slug: req.params.slug, status: 'published' };
+    const idFilter = isObjectId
+      ? { $or: [{ slug: req.params.slug }, { _id: req.params.slug }] }
+      : { slug: req.params.slug };
 
-    const blog = await Blog.findOne(filter).populate('author', 'name avatar');
+    const blog = await Blog.findOne(idFilter).populate('author', 'name avatar');
     
     if (!blog) {
       return next(new ErrorResponse(`Blog not found with identifier of ${req.params.slug}`, 404));
     }
     
-    // Increment view count
-    blog.viewCount = (blog.viewCount || 0) + 1;
-    await blog.save();
+    // Check authorization: admins and original authors can view unpublished/draft posts
+    const isAdmin = req.user && req.user.role === 'admin';
+    const authorId = blog.author ? (blog.author._id ? blog.author._id.toString() : blog.author.toString()) : null;
+    const isAuthor = req.user && authorId && req.user.id && authorId === req.user.id.toString();
+    
+    if (blog.status !== 'published' && !isAdmin && !isAuthor) {
+      return next(new ErrorResponse(`Blog not found with identifier of ${req.params.slug}`, 404));
+    }
+    
+    // Only increment view count for regular public visitors on published blogs
+    if (blog.status === 'published' && !isAdmin && !isAuthor) {
+      blog.viewCount = (blog.viewCount || 0) + 1;
+      await blog.save();
+    }
     
     res.status(200).json({
       success: true,

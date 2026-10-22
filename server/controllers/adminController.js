@@ -853,20 +853,37 @@ exports.createBlog = async (req, res, next) => {
 // @access  Private (Admin only)
 exports.updateBlog = async (req, res, next) => {
   try {
+    let blog = await Blog.findById(req.params.id);
+    
+    if (!blog) {
+      return next(new ErrorResponse(`Blog not found with id of ${req.params.id}`, 404));
+    }
+
     // Handle featured image upload
     if (req.file) {
       req.body.featuredImage = `/${req.file.path.replace(/\\/g, '/')}`;
     }
     
-    const blog = await Blog.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    
-    if (!blog) {
-      return next(new ErrorResponse(`Blog not found with id of ${req.params.id}`, 404));
+    // Clean author if it was populated as an object to prevent casting errors
+    if (req.body.author && typeof req.body.author === 'object') {
+      req.body.author = req.body.author._id || req.body.author.id;
     }
+
+    // Set publishedAt if transitioning to published
+    if (req.body.status === 'published' && !blog.publishedAt) {
+      req.body.publishedAt = Date.now();
+    }
+
+    // Protect immutable / system fields
+    delete req.body._id;
+    delete req.body.createdAt;
+    delete req.body.updatedAt;
+
+    // Apply updates and run save so all pre-save hooks execute
+    Object.assign(blog, req.body);
+    await blog.save();
+    
+    await blog.populate('author', 'name avatar');
     
     res.status(200).json({
       success: true,

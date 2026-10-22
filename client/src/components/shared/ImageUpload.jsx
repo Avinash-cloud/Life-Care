@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button, Image } from 'react-bootstrap';
 import { uploadAPI } from '../../services/api';
 import { getImageUrl } from '../../utils/imageUtils';
@@ -14,11 +14,16 @@ const ImageUpload = ({
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(currentImage);
 
+  // Sync preview with currentImage whenever prop changes (e.g. after async fetch)
+  useEffect(() => {
+    setPreview(currentImage);
+  }, [currentImage]);
+
   const handleFileSelect = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Show preview
+    // Show local preview immediately
     const reader = new FileReader();
     reader.onload = (e) => setPreview(e.target.result);
     reader.readAsDataURL(file);
@@ -47,9 +52,11 @@ const ImageUpload = ({
           response = await uploadAPI.uploadAvatar(file);
       }
 
-      const imageUrl = response.data.data.url;
-      setPreview(imageUrl);
-      onImageUploaded?.(imageUrl);
+      const imageUrl = response.data?.data?.url || response.data?.url;
+      if (imageUrl) {
+        setPreview(imageUrl);
+        onImageUploaded?.(imageUrl);
+      }
     } catch (error) {
       console.error('Upload failed:', error);
       setPreview(currentImage);
@@ -58,19 +65,41 @@ const ImageUpload = ({
     }
   };
 
+  const handleRemove = () => {
+    setPreview(null);
+    onImageUploaded?.('');
+  };
+
+  const defaultPlaceholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjZTllY2VmIi8+CjxjaXJjbGUgY3g9Ijc1IiBjeT0iNjAiIHI9IjI1IiBmaWxsPSIjNmM3NTdkIi8+CjxwYXRoIGQ9Ik0zMCAxMjBjMC0yNSAyMC00NSA0NS00NXM0NSAyMCA0NSA0NXYzMEgzMHoiIGZpbGw9IiM2Yzc1N2QiLz4KPHN2Zz4K';
+
   return (
     <div className={`text-center ${className}`}>
-      <div className="mb-3">
+      <div className="mb-3 position-relative d-inline-block w-100">
         <Image
-          src={getImageUrl(preview) || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjZTllY2VmIi8+CjxjaXJjbGUgY3g9Ijc1IiBjeT0iNjAiIHI9IjI1IiBmaWxsPSIjNmM3NTdkIi8+CjxwYXRoIGQ9Ik0zMCAxMjBjMC0yNSAyMC00NSA0NS00NXM0NSAyMCA0NSA0NXYzMEgzMHoiIGZpbGw9IiM2Yzc1N2QiLz4KPHN2Zz4K'}
+          src={getImageUrl(preview) || defaultPlaceholder}
           roundedCircle={type === 'avatar'}
+          className={type === 'featured' ? 'rounded' : ''}
           style={{ 
             width: size, 
-            height: size, 
+            height: type === 'featured' ? '180px' : size, 
             objectFit: 'cover',
-            border: '2px solid #dee2e6'
+            border: '2px solid #dee2e6',
+            display: 'block',
+            margin: '0 auto'
           }}
         />
+        {preview && (
+          <Button 
+            variant="danger" 
+            size="sm" 
+            className="position-absolute top-0 end-0 m-1 py-0 px-2 rounded-circle"
+            title="Remove image"
+            onClick={handleRemove}
+            type="button"
+          >
+            ×
+          </Button>
+        )}
       </div>
       <Form.Control
         type="file"

@@ -486,7 +486,7 @@ const Content = () => {
                                 onChange={() => handleToggleFeatured(blog._id, !blog.isFeatured)}
                               />
                             </td>
-                            <td>{formatDate(blog.publishedAt)}</td>
+                            <td>{formatDate(blog.publishedAt || (blog.status === 'published' ? blog.createdAt : null))}</td>
                             <td>{blog.viewCount}</td>
                             <td>
                               <div className="d-flex gap-1">

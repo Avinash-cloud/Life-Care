@@ -74,21 +74,72 @@ const blogSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// Create slug from title before saving
-blogSchema.pre('save', function(next) {
-  if (this.isModified('title')) {
-    this.slug = this.title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+// Helper to calculate reading time from Lexical JSON or HTML
+function calculateReadTime(content) {
+  if (!content || typeof content !== 'string') return 1;
+  let text = content;
+  if ((content.startsWith('{') || content.startsWith('[')) && content.includes('"root"')) {
+    try {
+      const parsed = JSON.parse(content);
+      const extract = (node) => {
+        if (!node) return '';
+        if (node.text) return node.text;
+        if (Array.isArray(node.children)) return node.children.map(extract).join(' ');
+        return '';
+      };
+      text = extract(parsed.root);
+    } catch {
+      text = content;
+    }
   }
-  
-  // Set published date if status is changed to published
-  if (this.isModified('status') && this.status === 'published' && !this.publishedAt) {
-    this.publishedAt = Date.now();
+  text = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
+// Pre-save hook: slug resolution, duplicate handling, publishedAt and readTime
+blogSchema.pre('save', async function(next) {
+  try {
+    // 1. Slug handling: only generate from title if slug is empty
+    let baseSlug = '';
+    if (this.slug && this.slug.trim()) {
+      baseSlug = this.slug
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    } else if (this.title) {
+      baseSlug = this.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+    if (!baseSlug) baseSlug = 'blog-post';
+
+    // Resolve duplicate slugs by checking existence in database
+    if (this.isModified('slug') || this.isModified('title') || this.isNew) {
+      let candidateSlug = baseSlug;
+      let counter = 1;
+      const BlogModel = this.constructor;
+      while (await BlogModel.exists({ slug: candidateSlug, _id: { $ne: this._id } })) {
+        candidateSlug = `${baseSlug}-${counter++}`;
+      }
+      this.slug = candidateSlug;
+    }
+
+    // 2. Set published date if status is changed to published
+    if (this.status === 'published' && !this.publishedAt) {
+      this.publishedAt = Date.now();
+    }
+
+    // 3. Auto-calculate read time
+    if (this.isModified('content')) {
+      this.readTime = calculateReadTime(this.content);
+    }
+
+    next();
+  } catch (error) {
+    next(error);
   }
-  
-  next();
 });
 
 // Virtual for comments (if implemented)
